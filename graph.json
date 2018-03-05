@@ -1,0 +1,7546 @@
+{
+  "node": [
+    {
+      "name": "input/x-input",
+      "op": "Placeholder",
+      "attr": {
+        "dtype": {
+          "type": "DT_FLOAT"
+        },
+        "shape": {
+          "shape": {
+            "dim": [
+              {
+                "size": "-1"
+              },
+              {
+                "size": "784"
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "name": "input/y-input",
+      "op": "Placeholder",
+      "attr": {
+        "dtype": {
+          "type": "DT_INT64"
+        },
+        "shape": {
+          "shape": {
+            "dim": [
+              {
+                "size": "-1"
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "name": "input_reshape/Reshape/shape",
+      "op": "Const",
+      "attr": {
+        "value": {
+          "tensor": {
+            "dtype": "DT_INT32",
+            "tensorShape": {
+              "dim": [
+                {
+                  "size": "4"
+                }
+              ]
+            },
+            "tensorContent": "/////xwAAAAcAAAAAQAAAA=="
+          }
+        },
+        "dtype": {
+          "type": "DT_INT32"
+        }
+      }
+    },
+    {
+      "name": "input_reshape/Reshape",
+      "op": "Reshape",
+      "input": [
+        "input/x-input",
+        "input_reshape/Reshape/shape"
+      ],
+      "attr": {
+        "T": {
+          "type": "DT_FLOAT"
+        },
+        "Tshape": {
+          "type": "DT_INT32"
+        }
+      }
+    },
+    {
+      "name": "input_reshape/input/tag",
+      "op": "Const",
+      "attr": {
+        "value": {
+          "tensor": {
+            "dtype": "DT_STRING",
+            "tensorShape": {},
+            "stringVal": [
+              "aW5wdXRfcmVzaGFwZS9pbnB1dA=="
+            ]
+          }
+        },
+        "dtype": {
+          "type": "DT_STRING"
+        }
+      }
+    },
+    {
+      "name": "input_reshape/input",
+      "op": "ImageSummary",
+      "input": [
+        "input_reshape/input/tag",
+        "input_reshape/Reshape"
+      ],
+      "attr": {
+        "max_images": {
+          "i": "10"
+        },
+        "T": {
+          "type": "DT_FLOAT"
+        },
+        "bad_color": {
+          "tensor": {
+            "dtype": "DT_UINT8",
+            "tensorShape": {
+              "dim": [
+                {
+                  "size": "4"
+                }
+              ]
+            },
+            "intVal": [
+              255,
+              0,
+              0,
+              255
+            ]
+          }
+        }
+      }
+    },
+    {
+      "name": "layer1/weights/truncated_normal/shape",
+      "op": "Const",
+      "attr": {
+        "value": {
+          "tensor": {
+            "dtype": "DT_INT32",
+            "tensorShape": {
+              "dim": [
+                {
+                  "size": "2"
+                }
+              ]
+            },
+            "tensorContent": "EAMAAPQBAAA="
+          }
+        },
+        "dtype": {
+          "type": "DT_INT32"
+        }
+      }
+    },
+    {
+      "name": "layer1/weights/truncated_normal/mean",
+      "op": "Const",
+      "attr": {
+        "value": {
+          "tensor": {
+            "dtype": "DT_FLOAT",
+            "tensorShape": {},
+            "floatVal": [
+              0.0
+            ]
+          }
+        },
+        "dtype": {
+          "type": "DT_FLOAT"
+        }
+      }
+    },
+    {
+      "name": "layer1/weights/truncated_normal/stddev",
+      "op": "Const",
+      "attr": {
+        "value": {
+          "tensor": {
+            "dtype": "DT_FLOAT",
+            "tensorShape": {},
+            "floatVal": [
+              0.10000000149011612
+            ]
+          }
+        },
+        "dtype": {
+          "type": "DT_FLOAT"
+        }
+      }
+    },
+    {
+      "name": "layer1/weights/truncated_normal/TruncatedNormal",
+      "op": "TruncatedNormal",
+      "input": [
+        "layer1/weights/truncated_normal/shape"
+      ],
+      "attr": {
+        "seed": {
+          "i": "0"
+        },
+        "seed2": {
+          "i": "0"
+        },
+        "dtype": {
+          "type": "DT_FLOAT"
+        },
+        "T": {
+          "type": "DT_INT32"
+        }
+      }
+    },
+    {
+      "name": "layer1/weights/truncated_normal/mul",
+      "op": "Mul",
+      "input": [
+        "layer1/weights/truncated_normal/TruncatedNormal",
+        "layer1/weights/truncated_normal/stddev"
+      ],
+      "attr": {
+        "T": {
+          "type": "DT_FLOAT"
+        }
+      }
+    },
+    {
+      "name": "layer1/weights/truncated_normal",
+      "op": "Add",
+      "input": [
+        "layer1/weights/truncated_normal/mul",
+        "layer1/weights/truncated_normal/mean"
+      ],
+      "attr": {
+        "T": {
+          "type": "DT_FLOAT"
+        }
+      }
+    },
+    {
+      "name": "layer1/weights/Variable",
+      "op": "VariableV2",
+      "attr": {
+        "shape": {
+          "shape": {
+            "dim": [
+              {
+                "size": "784"
+              },
+              {
+                "size": "500"
+              }
+            ]
+          }
+        },
+        "dtype": {
+          "type": "DT_FLOAT"
+        },
+        "container": {
+          "s": ""
+        },
+        "shared_name": {
+          "s": ""
+        }
+      }
+    },
+    {
+      "name": "layer1/weights/Variable/Assign",
+      "op": "Assign",
+      "input": [
+        "layer1/weights/Variable",
+        "layer1/weights/truncated_normal"
+      ],
+      "attr": {
+        "T": {
+          "type": "DT_FLOAT"
+        },
+        "validate_shape": {
+          "b": true
+        },
+        "use_locking": {
+          "b": true
+        },
+        "_class": {
+          "list": {
+            "s": [
+              "bG9jOkBsYXllcjEvd2VpZ2h0cy9WYXJpYWJsZQ=="
+            ]
+          }
+        }
+      }
+    },
+    {
+      "name": "layer1/weights/Variable/read",
+      "op": "Identity",
+      "input": [
+        "layer1/weights/Variable"
+      ],
+      "attr": {
+        "T": {
+          "type": "DT_FLOAT"
+        },
+        "_class": {
+          "list": {
+            "s": [
+              "bG9jOkBsYXllcjEvd2VpZ2h0cy9WYXJpYWJsZQ=="
+            ]
+          }
+        }
+      }
+    },
+    {
+      "name": "layer1/weights/summaries/Rank",
+      "op": "Const",
+      "attr": {
+        "value": {
+          "tensor": {
+            "dtype": "DT_INT32",
+            "tensorShape": {},
+            "intVal": [
+              2
+            ]
+          }
+        },
+        "dtype": {
+          "type": "DT_INT32"
+        }
+      }
+    },
+    {
+      "name": "layer1/weights/summaries/range/start",
+      "op": "Const",
+      "attr": {
+        "value": {
+          "tensor": {
+            "dtype": "DT_INT32",
+            "tensorShape": {},
+            "intVal": [
+              0
+            ]
+          }
+        },
+        "dtype": {
+          "type": "DT_INT32"
+        }
+      }
+    },
+    {
+      "name": "layer1/weights/summaries/range/delta",
+      "op": "Const",
+      "attr": {
+        "value": {
+          "tensor": {
+            "dtype": "DT_INT32",
+            "tensorShape": {},
+            "intVal": [
+              1
+            ]
+          }
+        },
+        "dtype": {
+          "type": "DT_INT32"
+        }
+      }
+    },
+    {
+      "name": "layer1/weights/summaries/range",
+      "op": "Range",
+      "input": [
+        "layer1/weights/summaries/range/start",
+        "layer1/weights/summaries/Rank",
+        "layer1/weights/summaries/range/delta"
+      ],
+      "attr": {
+        "Tidx": {
+          "type": "DT_INT32"
+        }
+      }
+    },
+    {
+      "name": "layer1/weights/summaries/Mean",
+      "op": "Mean",
+      "input": [
+        "layer1/weights/Variable/read",
+        "layer1/weights/summaries/range"
+      ],
+      "attr": {
+        "keep_dims": {
+          "b": false
+        },
+        "T": {
+          "type": "DT_FLOAT"
+        },
+        "Tidx": {
+          "type": "DT_INT32"
+        }
+      }
+    },
+    {
+      "name": "layer1/weights/summaries/mean/tags",
+      "op": "Const",
+      "attr": {
+        "value": {
+          "tensor": {
+            "dtype": "DT_STRING",
+            "tensorShape": {},
+            "stringVal": [
+              "bGF5ZXIxL3dlaWdodHMvc3VtbWFyaWVzL21lYW4="
+            ]
+          }
+        },
+        "dtype": {
+          "type": "DT_STRING"
+        }
+      }
+    },
+    {
+      "name": "layer1/weights/summaries/mean",
+      "op": "ScalarSummary",
+      "input": [
+        "layer1/weights/summaries/mean/tags",
+        "layer1/weights/summaries/Mean"
+      ],
+      "attr": {
+        "T": {
+          "type": "DT_FLOAT"
+        }
+      }
+    },
+    {
+      "name": "layer1/weights/summaries/stddev/sub",
+      "op": "Sub",
+      "input": [
+        "layer1/weights/Variable/read",
+        "layer1/weights/summaries/Mean"
+      ],
+      "attr": {
+        "T": {
+          "type": "DT_FLOAT"
+        }
+      }
+    },
+    {
+      "name": "layer1/weights/summaries/stddev/Square",
+      "op": "Square",
+      "input": [
+        "layer1/weights/summaries/stddev/sub"
+      ],
+      "attr": {
+        "T": {
+          "type": "DT_FLOAT"
+        }
+      }
+    },
+    {
+      "name": "layer1/weights/summaries/stddev/Const",
+      "op": "Const",
+      "attr": {
+        "value": {
+          "tensor": {
+            "dtype": "DT_INT32",
+            "tensorShape": {
+              "dim": [
+                {
+                  "size": "2"
+                }
+              ]
+            },
+            "tensorContent": "AAAAAAEAAAA="
+          }
+        },
+        "dtype": {
+          "type": "DT_INT32"
+        }
+      }
+    },
+    {
+      "name": "layer1/weights/summaries/stddev/Mean",
+      "op": "Mean",
+      "input": [
+        "layer1/weights/summaries/stddev/Square",
+        "layer1/weights/summaries/stddev/Const"
+      ],
+      "attr": {
+        "keep_dims": {
+          "b": false
+        },
+        "T": {
+          "type": "DT_FLOAT"
+        },
+        "Tidx": {
+          "type": "DT_INT32"
+        }
+      }
+    },
+    {
+      "name": "layer1/weights/summaries/stddev/Sqrt",
+      "op": "Sqrt",
+      "input": [
+        "layer1/weights/summaries/stddev/Mean"
+      ],
+      "attr": {
+        "T": {
+          "type": "DT_FLOAT"
+        }
+      }
+    },
+    {
+      "name": "layer1/weights/summaries/stddev_1/tags",
+      "op": "Const",
+      "attr": {
+        "value": {
+          "tensor": {
+            "dtype": "DT_STRING",
+            "tensorShape": {},
+            "stringVal": [
+              "bGF5ZXIxL3dlaWdodHMvc3VtbWFyaWVzL3N0ZGRldl8x"
+            ]
+          }
+        },
+        "dtype": {
+          "type": "DT_STRING"
+        }
+      }
+    },
+    {
+      "name": "layer1/weights/summaries/stddev_1",
+      "op": "ScalarSummary",
+      "input": [
+        "layer1/weights/summaries/stddev_1/tags",
+        "layer1/weights/summaries/stddev/Sqrt"
+      ],
+      "attr": {
+        "T": {
+          "type": "DT_FLOAT"
+        }
+      }
+    },
+    {
+      "name": "layer1/weights/summaries/Rank_1",
+      "op": "Const",
+      "attr": {
+        "value": {
+          "tensor": {
+            "dtype": "DT_INT32",
+            "tensorShape": {},
+            "intVal": [
+              2
+            ]
+          }
+        },
+        "dtype": {
+          "type": "DT_INT32"
+        }
+      }
+    },
+    {
+      "name": "layer1/weights/summaries/range_1/start",
+      "op": "Const",
+      "attr": {
+        "value": {
+          "tensor": {
+            "dtype": "DT_INT32",
+            "tensorShape": {},
+            "intVal": [
+              0
+            ]
+          }
+        },
+        "dtype": {
+          "type": "DT_INT32"
+        }
+      }
+    },
+    {
+      "name": "layer1/weights/summaries/range_1/delta",
+      "op": "Const",
+      "attr": {
+        "value": {
+          "tensor": {
+            "dtype": "DT_INT32",
+            "tensorShape": {},
+            "intVal": [
+              1
+            ]
+          }
+        },
+        "dtype": {
+          "type": "DT_INT32"
+        }
+      }
+    },
+    {
+      "name": "layer1/weights/summaries/range_1",
+      "op": "Range",
+      "input": [
+        "layer1/weights/summaries/range_1/start",
+        "layer1/weights/summaries/Rank_1",
+        "layer1/weights/summaries/range_1/delta"
+      ],
+      "attr": {
+        "Tidx": {
+          "type": "DT_INT32"
+        }
+      }
+    },
+    {
+      "name": "layer1/weights/summaries/Max",
+      "op": "Max",
+      "input": [
+        "layer1/weights/Variable/read",
+        "layer1/weights/summaries/range_1"
+      ],
+      "attr": {
+        "keep_dims": {
+          "b": false
+        },
+        "T": {
+          "type": "DT_FLOAT"
+        },
+        "Tidx": {
+          "type": "DT_INT32"
+        }
+      }
+    },
+    {
+      "name": "layer1/weights/summaries/max/tags",
+      "op": "Const",
+      "attr": {
+        "value": {
+          "tensor": {
+            "dtype": "DT_STRING",
+            "tensorShape": {},
+            "stringVal": [
+              "bGF5ZXIxL3dlaWdodHMvc3VtbWFyaWVzL21heA=="
+            ]
+          }
+        },
+        "dtype": {
+          "type": "DT_STRING"
+        }
+      }
+    },
+    {
+      "name": "layer1/weights/summaries/max",
+      "op": "ScalarSummary",
+      "input": [
+        "layer1/weights/summaries/max/tags",
+        "layer1/weights/summaries/Max"
+      ],
+      "attr": {
+        "T": {
+          "type": "DT_FLOAT"
+        }
+      }
+    },
+    {
+      "name": "layer1/weights/summaries/Rank_2",
+      "op": "Const",
+      "attr": {
+        "value": {
+          "tensor": {
+            "dtype": "DT_INT32",
+            "tensorShape": {},
+            "intVal": [
+              2
+            ]
+          }
+        },
+        "dtype": {
+          "type": "DT_INT32"
+        }
+      }
+    },
+    {
+      "name": "layer1/weights/summaries/range_2/start",
+      "op": "Const",
+      "attr": {
+        "value": {
+          "tensor": {
+            "dtype": "DT_INT32",
+            "tensorShape": {},
+            "intVal": [
+              0
+            ]
+          }
+        },
+        "dtype": {
+          "type": "DT_INT32"
+        }
+      }
+    },
+    {
+      "name": "layer1/weights/summaries/range_2/delta",
+      "op": "Const",
+      "attr": {
+        "value": {
+          "tensor": {
+            "dtype": "DT_INT32",
+            "tensorShape": {},
+            "intVal": [
+              1
+            ]
+          }
+        },
+        "dtype": {
+          "type": "DT_INT32"
+        }
+      }
+    },
+    {
+      "name": "layer1/weights/summaries/range_2",
+      "op": "Range",
+      "input": [
+        "layer1/weights/summaries/range_2/start",
+        "layer1/weights/summaries/Rank_2",
+        "layer1/weights/summaries/range_2/delta"
+      ],
+      "attr": {
+        "Tidx": {
+          "type": "DT_INT32"
+        }
+      }
+    },
+    {
+      "name": "layer1/weights/summaries/Min",
+      "op": "Min",
+      "input": [
+        "layer1/weights/Variable/read",
+        "layer1/weights/summaries/range_2"
+      ],
+      "attr": {
+        "keep_dims": {
+          "b": false
+        },
+        "T": {
+          "type": "DT_FLOAT"
+        },
+        "Tidx": {
+          "type": "DT_INT32"
+        }
+      }
+    },
+    {
+      "name": "layer1/weights/summaries/min/tags",
+      "op": "Const",
+      "attr": {
+        "value": {
+          "tensor": {
+            "dtype": "DT_STRING",
+            "tensorShape": {},
+            "stringVal": [
+              "bGF5ZXIxL3dlaWdodHMvc3VtbWFyaWVzL21pbg=="
+            ]
+          }
+        },
+        "dtype": {
+          "type": "DT_STRING"
+        }
+      }
+    },
+    {
+      "name": "layer1/weights/summaries/min",
+      "op": "ScalarSummary",
+      "input": [
+        "layer1/weights/summaries/min/tags",
+        "layer1/weights/summaries/Min"
+      ],
+      "attr": {
+        "T": {
+          "type": "DT_FLOAT"
+        }
+      }
+    },
+    {
+      "name": "layer1/weights/summaries/histogram/tag",
+      "op": "Const",
+      "attr": {
+        "value": {
+          "tensor": {
+            "dtype": "DT_STRING",
+            "tensorShape": {},
+            "stringVal": [
+              "bGF5ZXIxL3dlaWdodHMvc3VtbWFyaWVzL2hpc3RvZ3JhbQ=="
+            ]
+          }
+        },
+        "dtype": {
+          "type": "DT_STRING"
+        }
+      }
+    },
+    {
+      "name": "layer1/weights/summaries/histogram",
+      "op": "HistogramSummary",
+      "input": [
+        "layer1/weights/summaries/histogram/tag",
+        "layer1/weights/Variable/read"
+      ],
+      "attr": {
+        "T": {
+          "type": "DT_FLOAT"
+        }
+      }
+    },
+    {
+      "name": "layer1/biases/Const",
+      "op": "Const",
+      "attr": {
+        "value": {
+          "tensor": {
+            "dtype": "DT_FLOAT",
+            "tensorShape": {
+              "dim": [
+                {
+                  "size": "500"
+                }
+              ]
+            },
+            "floatVal": [
+              0.10000000149011612
+            ]
+          }
+        },
+        "dtype": {
+          "type": "DT_FLOAT"
+        }
+      }
+    },
+    {
+      "name": "layer1/biases/Variable",
+      "op": "VariableV2",
+      "attr": {
+        "shape": {
+          "shape": {
+            "dim": [
+              {
+                "size": "500"
+              }
+            ]
+          }
+        },
+        "dtype": {
+          "type": "DT_FLOAT"
+        },
+        "container": {
+          "s": ""
+        },
+        "shared_name": {
+          "s": ""
+        }
+      }
+    },
+    {
+      "name": "layer1/biases/Variable/Assign",
+      "op": "Assign",
+      "input": [
+        "layer1/biases/Variable",
+        "layer1/biases/Const"
+      ],
+      "attr": {
+        "T": {
+          "type": "DT_FLOAT"
+        },
+        "validate_shape": {
+          "b": true
+        },
+        "use_locking": {
+          "b": true
+        },
+        "_class": {
+          "list": {
+            "s": [
+              "bG9jOkBsYXllcjEvYmlhc2VzL1ZhcmlhYmxl"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "name": "layer1/biases/Variable/read",
+      "op": "Identity",
+      "input": [
+        "layer1/biases/Variable"
+      ],
+      "attr": {
+        "T": {
+          "type": "DT_FLOAT"
+        },
+        "_class": {
+          "list": {
+            "s": [
+              "bG9jOkBsYXllcjEvYmlhc2VzL1ZhcmlhYmxl"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "name": "layer1/biases/summaries/Rank",
+      "op": "Const",
+      "attr": {
+        "value": {
+          "tensor": {
+            "dtype": "DT_INT32",
+            "tensorShape": {},
+            "intVal": [
+              1
+            ]
+          }
+        },
+        "dtype": {
+          "type": "DT_INT32"
+        }
+      }
+    },
+    {
+      "name": "layer1/biases/summaries/range/start",
+      "op": "Const",
+      "attr": {
+        "value": {
+          "tensor": {
+            "dtype": "DT_INT32",
+            "tensorShape": {},
+            "intVal": [
+              0
+            ]
+          }
+        },
+        "dtype": {
+          "type": "DT_INT32"
+        }
+      }
+    },
+    {
+      "name": "layer1/biases/summaries/range/delta",
+      "op": "Const",
+      "attr": {
+        "value": {
+          "tensor": {
+            "dtype": "DT_INT32",
+            "tensorShape": {},
+            "intVal": [
+              1
+            ]
+          }
+        },
+        "dtype": {
+          "type": "DT_INT32"
+        }
+      }
+    },
+    {
+      "name": "layer1/biases/summaries/range",
+      "op": "Range",
+      "input": [
+        "layer1/biases/summaries/range/start",
+        "layer1/biases/summaries/Rank",
+        "layer1/biases/summaries/range/delta"
+      ],
+      "attr": {
+        "Tidx": {
+          "type": "DT_INT32"
+        }
+      }
+    },
+    {
+      "name": "layer1/biases/summaries/Mean",
+      "op": "Mean",
+      "input": [
+        "layer1/biases/Variable/read",
+        "layer1/biases/summaries/range"
+      ],
+      "attr": {
+        "keep_dims": {
+          "b": false
+        },
+        "T": {
+          "type": "DT_FLOAT"
+        },
+        "Tidx": {
+          "type": "DT_INT32"
+        }
+      }
+    },
+    {
+      "name": "layer1/biases/summaries/mean/tags",
+      "op": "Const",
+      "attr": {
+        "value": {
+          "tensor": {
+            "dtype": "DT_STRING",
+            "tensorShape": {},
+            "stringVal": [
+              "bGF5ZXIxL2JpYXNlcy9zdW1tYXJpZXMvbWVhbg=="
+            ]
+          }
+        },
+        "dtype": {
+          "type": "DT_STRING"
+        }
+      }
+    },
+    {
+      "name": "layer1/biases/summaries/mean",
+      "op": "ScalarSummary",
+      "input": [
+        "layer1/biases/summaries/mean/tags",
+        "layer1/biases/summaries/Mean"
+      ],
+      "attr": {
+        "T": {
+          "type": "DT_FLOAT"
+        }
+      }
+    },
+    {
+      "name": "layer1/biases/summaries/stddev/sub",
+      "op": "Sub",
+      "input": [
+        "layer1/biases/Variable/read",
+        "layer1/biases/summaries/Mean"
+      ],
+      "attr": {
+        "T": {
+          "type": "DT_FLOAT"
+        }
+      }
+    },
+    {
+      "name": "layer1/biases/summaries/stddev/Square",
+      "op": "Square",
+      "input": [
+        "layer1/biases/summaries/stddev/sub"
+      ],
+      "attr": {
+        "T": {
+          "type": "DT_FLOAT"
+        }
+      }
+    },
+    {
+      "name": "layer1/biases/summaries/stddev/Const",
+      "op": "Const",
+      "attr": {
+        "value": {
+          "tensor": {
+            "dtype": "DT_INT32",
+            "tensorShape": {
+              "dim": [
+                {
+                  "size": "1"
+                }
+              ]
+            },
+            "intVal": [
+              0
+            ]
+          }
+        },
+        "dtype": {
+          "type": "DT_INT32"
+        }
+      }
+    },
+    {
+      "name": "layer1/biases/summaries/stddev/Mean",
+      "op": "Mean",
+      "input": [
+        "layer1/biases/summaries/stddev/Square",
+        "layer1/biases/summaries/stddev/Const"
+      ],
+      "attr": {
+        "keep_dims": {
+          "b": false
+        },
+        "T": {
+          "type": "DT_FLOAT"
+        },
+        "Tidx": {
+          "type": "DT_INT32"
+        }
+      }
+    },
+    {
+      "name": "layer1/biases/summaries/stddev/Sqrt",
+      "op": "Sqrt",
+      "input": [
+        "layer1/biases/summaries/stddev/Mean"
+      ],
+      "attr": {
+        "T": {
+          "type": "DT_FLOAT"
+        }
+      }
+    },
+    {
+      "name": "layer1/biases/summaries/stddev_1/tags",
+      "op": "Const",
+      "attr": {
+        "value": {
+          "tensor": {
+            "dtype": "DT_STRING",
+            "tensorShape": {},
+            "stringVal": [
+              "bGF5ZXIxL2JpYXNlcy9zdW1tYXJpZXMvc3RkZGV2XzE="
+            ]
+          }
+        },
+        "dtype": {
+          "type": "DT_STRING"
+        }
+      }
+    },
+    {
+      "name": "layer1/biases/summaries/stddev_1",
+      "op": "ScalarSummary",
+      "input": [
+        "layer1/biases/summaries/stddev_1/tags",
+        "layer1/biases/summaries/stddev/Sqrt"
+      ],
+      "attr": {
+        "T": {
+          "type": "DT_FLOAT"
+        }
+      }
+    },
+    {
+      "name": "layer1/biases/summaries/Rank_1",
+      "op": "Const",
+      "attr": {
+        "value": {
+          "tensor": {
+            "dtype": "DT_INT32",
+            "tensorShape": {},
+            "intVal": [
+              1
+            ]
+          }
+        },
+        "dtype": {
+          "type": "DT_INT32"
+        }
+      }
+    },
+    {
+      "name": "layer1/biases/summaries/range_1/start",
+      "op": "Const",
+      "attr": {
+        "value": {
+          "tensor": {
+            "dtype": "DT_INT32",
+            "tensorShape": {},
+            "intVal": [
+              0
+            ]
+          }
+        },
+        "dtype": {
+          "type": "DT_INT32"
+        }
+      }
+    },
+    {
+      "name": "layer1/biases/summaries/range_1/delta",
+      "op": "Const",
+      "attr": {
+        "value": {
+          "tensor": {
+            "dtype": "DT_INT32",
+            "tensorShape": {},
+            "intVal": [
+              1
+            ]
+          }
+        },
+        "dtype": {
+          "type": "DT_INT32"
+        }
+      }
+    },
+    {
+      "name": "layer1/biases/summaries/range_1",
+      "op": "Range",
+      "input": [
+        "layer1/biases/summaries/range_1/start",
+        "layer1/biases/summaries/Rank_1",
+        "layer1/biases/summaries/range_1/delta"
+      ],
+      "attr": {
+        "Tidx": {
+          "type": "DT_INT32"
+        }
+      }
+    },
+    {
+      "name": "layer1/biases/summaries/Max",
+      "op": "Max",
+      "input": [
+        "layer1/biases/Variable/read",
+        "layer1/biases/summaries/range_1"
+      ],
+      "attr": {
+        "keep_dims": {
+          "b": false
+        },
+        "T": {
+          "type": "DT_FLOAT"
+        },
+        "Tidx": {
+          "type": "DT_INT32"
+        }
+      }
+    },
+    {
+      "name": "layer1/biases/summaries/max/tags",
+      "op": "Const",
+      "attr": {
+        "value": {
+          "tensor": {
+            "dtype": "DT_STRING",
+            "tensorShape": {},
+            "stringVal": [
+              "bGF5ZXIxL2JpYXNlcy9zdW1tYXJpZXMvbWF4"
+            ]
+          }
+        },
+        "dtype": {
+          "type": "DT_STRING"
+        }
+      }
+    },
+    {
+      "name": "layer1/biases/summaries/max",
+      "op": "ScalarSummary",
+      "input": [
+        "layer1/biases/summaries/max/tags",
+        "layer1/biases/summaries/Max"
+      ],
+      "attr": {
+        "T": {
+          "type": "DT_FLOAT"
+        }
+      }
+    },
+    {
+      "name": "layer1/biases/summaries/Rank_2",
+      "op": "Const",
+      "attr": {
+        "value": {
+          "tensor": {
+            "dtype": "DT_INT32",
+            "tensorShape": {},
+            "intVal": [
+              1
+            ]
+          }
+        },
+        "dtype": {
+          "type": "DT_INT32"
+        }
+      }
+    },
+    {
+      "name": "layer1/biases/summaries/range_2/start",
+      "op": "Const",
+      "attr": {
+        "value": {
+          "tensor": {
+            "dtype": "DT_INT32",
+            "tensorShape": {},
+            "intVal": [
+              0
+            ]
+          }
+        },
+        "dtype": {
+          "type": "DT_INT32"
+        }
+      }
+    },
+    {
+      "name": "layer1/biases/summaries/range_2/delta",
+      "op": "Const",
+      "attr": {
+        "value": {
+          "tensor": {
+            "dtype": "DT_INT32",
+            "tensorShape": {},
+            "intVal": [
+              1
+            ]
+          }
+        },
+        "dtype": {
+          "type": "DT_INT32"
+        }
+      }
+    },
+    {
+      "name": "layer1/biases/summaries/range_2",
+      "op": "Range",
+      "input": [
+        "layer1/biases/summaries/range_2/start",
+        "layer1/biases/summaries/Rank_2",
+        "layer1/biases/summaries/range_2/delta"
+      ],
+      "attr": {
+        "Tidx": {
+          "type": "DT_INT32"
+        }
+      }
+    },
+    {
+      "name": "layer1/biases/summaries/Min",
+      "op": "Min",
+      "input": [
+        "layer1/biases/Variable/read",
+        "layer1/biases/summaries/range_2"
+      ],
+      "attr": {
+        "keep_dims": {
+          "b": false
+        },
+        "T": {
+          "type": "DT_FLOAT"
+        },
+        "Tidx": {
+          "type": "DT_INT32"
+        }
+      }
+    },
+    {
+      "name": "layer1/biases/summaries/min/tags",
+      "op": "Const",
+      "attr": {
+        "value": {
+          "tensor": {
+            "dtype": "DT_STRING",
+            "tensorShape": {},
+            "stringVal": [
+              "bGF5ZXIxL2JpYXNlcy9zdW1tYXJpZXMvbWlu"
+            ]
+          }
+        },
+        "dtype": {
+          "type": "DT_STRING"
+        }
+      }
+    },
+    {
+      "name": "layer1/biases/summaries/min",
+      "op": "ScalarSummary",
+      "input": [
+        "layer1/biases/summaries/min/tags",
+        "layer1/biases/summaries/Min"
+      ],
+      "attr": {
+        "T": {
+          "type": "DT_FLOAT"
+        }
+      }
+    },
+    {
+      "name": "layer1/biases/summaries/histogram/tag",
+      "op": "Const",
+      "attr": {
+        "value": {
+          "tensor": {
+            "dtype": "DT_STRING",
+            "tensorShape": {},
+            "stringVal": [
+              "bGF5ZXIxL2JpYXNlcy9zdW1tYXJpZXMvaGlzdG9ncmFt"
+            ]
+          }
+        },
+        "dtype": {
+          "type": "DT_STRING"
+        }
+      }
+    },
+    {
+      "name": "layer1/biases/summaries/histogram",
+      "op": "HistogramSummary",
+      "input": [
+        "layer1/biases/summaries/histogram/tag",
+        "layer1/biases/Variable/read"
+      ],
+      "attr": {
+        "T": {
+          "type": "DT_FLOAT"
+        }
+      }
+    },
+    {
+      "name": "layer1/Wx_plus_b/MatMul",
+      "op": "MatMul",
+      "input": [
+        "input/x-input",
+        "layer1/weights/Variable/read"
+      ],
+      "attr": {
+        "transpose_a": {
+          "b": false
+        },
+        "transpose_b": {
+          "b": false
+        },
+        "T": {
+          "type": "DT_FLOAT"
+        }
+      }
+    },
+    {
+      "name": "layer1/Wx_plus_b/add",
+      "op": "Add",
+      "input": [
+        "layer1/Wx_plus_b/MatMul",
+        "layer1/biases/Variable/read"
+      ],
+      "attr": {
+        "T": {
+          "type": "DT_FLOAT"
+        }
+      }
+    },
+    {
+      "name": "layer1/Wx_plus_b/pre_activations/tag",
+      "op": "Const",
+      "attr": {
+        "value": {
+          "tensor": {
+            "dtype": "DT_STRING",
+            "tensorShape": {},
+            "stringVal": [
+              "bGF5ZXIxL1d4X3BsdXNfYi9wcmVfYWN0aXZhdGlvbnM="
+            ]
+          }
+        },
+        "dtype": {
+          "type": "DT_STRING"
+        }
+      }
+    },
+    {
+      "name": "layer1/Wx_plus_b/pre_activations",
+      "op": "HistogramSummary",
+      "input": [
+        "layer1/Wx_plus_b/pre_activations/tag",
+        "layer1/Wx_plus_b/add"
+      ],
+      "attr": {
+        "T": {
+          "type": "DT_FLOAT"
+        }
+      }
+    },
+    {
+      "name": "layer1/activation",
+      "op": "Relu",
+      "input": [
+        "layer1/Wx_plus_b/add"
+      ],
+      "attr": {
+        "T": {
+          "type": "DT_FLOAT"
+        }
+      }
+    },
+    {
+      "name": "layer1/activations/tag",
+      "op": "Const",
+      "attr": {
+        "value": {
+          "tensor": {
+            "dtype": "DT_STRING",
+            "tensorShape": {},
+            "stringVal": [
+              "bGF5ZXIxL2FjdGl2YXRpb25z"
+            ]
+          }
+        },
+        "dtype": {
+          "type": "DT_STRING"
+        }
+      }
+    },
+    {
+      "name": "layer1/activations",
+      "op": "HistogramSummary",
+      "input": [
+        "layer1/activations/tag",
+        "layer1/activation"
+      ],
+      "attr": {
+        "T": {
+          "type": "DT_FLOAT"
+        }
+      }
+    },
+    {
+      "name": "dropout/Placeholder",
+      "op": "Placeholder",
+      "attr": {
+        "dtype": {
+          "type": "DT_FLOAT"
+        },
+        "shape": {
+          "shape": {
+            "unknownRank": true
+          }
+        }
+      }
+    },
+    {
+      "name": "dropout/dropout_keep_probability/tags",
+      "op": "Const",
+      "attr": {
+        "value": {
+          "tensor": {
+            "dtype": "DT_STRING",
+            "tensorShape": {},
+            "stringVal": [
+              "ZHJvcG91dC9kcm9wb3V0X2tlZXBfcHJvYmFiaWxpdHk="
+            ]
+          }
+        },
+        "dtype": {
+          "type": "DT_STRING"
+        }
+      }
+    },
+    {
+      "name": "dropout/dropout_keep_probability",
+      "op": "ScalarSummary",
+      "input": [
+        "dropout/dropout_keep_probability/tags",
+        "dropout/Placeholder"
+      ],
+      "attr": {
+        "T": {
+          "type": "DT_FLOAT"
+        }
+      }
+    },
+    {
+      "name": "dropout/dropout/Shape",
+      "op": "Shape",
+      "input": [
+        "layer1/activation"
+      ],
+      "attr": {
+        "T": {
+          "type": "DT_FLOAT"
+        },
+        "out_type": {
+          "type": "DT_INT32"
+        }
+      }
+    },
+    {
+      "name": "dropout/dropout/random_uniform/min",
+      "op": "Const",
+      "attr": {
+        "value": {
+          "tensor": {
+            "dtype": "DT_FLOAT",
+            "tensorShape": {},
+            "floatVal": [
+              0.0
+            ]
+          }
+        },
+        "dtype": {
+          "type": "DT_FLOAT"
+        }
+      }
+    },
+    {
+      "name": "dropout/dropout/random_uniform/max",
+      "op": "Const",
+      "attr": {
+        "value": {
+          "tensor": {
+            "dtype": "DT_FLOAT",
+            "tensorShape": {},
+            "floatVal": [
+              1.0
+            ]
+          }
+        },
+        "dtype": {
+          "type": "DT_FLOAT"
+        }
+      }
+    },
+    {
+      "name": "dropout/dropout/random_uniform/RandomUniform",
+      "op": "RandomUniform",
+      "input": [
+        "dropout/dropout/Shape"
+      ],
+      "attr": {
+        "seed": {
+          "i": "0"
+        },
+        "seed2": {
+          "i": "0"
+        },
+        "dtype": {
+          "type": "DT_FLOAT"
+        },
+        "T": {
+          "type": "DT_INT32"
+        }
+      }
+    },
+    {
+      "name": "dropout/dropout/random_uniform/sub",
+      "op": "Sub",
+      "input": [
+        "dropout/dropout/random_uniform/max",
+        "dropout/dropout/random_uniform/min"
+      ],
+      "attr": {
+        "T": {
+          "type": "DT_FLOAT"
+        }
+      }
+    },
+    {
+      "name": "dropout/dropout/random_uniform/mul",
+      "op": "Mul",
+      "input": [
+        "dropout/dropout/random_uniform/RandomUniform",
+        "dropout/dropout/random_uniform/sub"
+      ],
+      "attr": {
+        "T": {
+          "type": "DT_FLOAT"
+        }
+      }
+    },
+    {
+      "name": "dropout/dropout/random_uniform",
+      "op": "Add",
+      "input": [
+        "dropout/dropout/random_uniform/mul",
+        "dropout/dropout/random_uniform/min"
+      ],
+      "attr": {
+        "T": {
+          "type": "DT_FLOAT"
+        }
+      }
+    },
+    {
+      "name": "dropout/dropout/add",
+      "op": "Add",
+      "input": [
+        "dropout/Placeholder",
+        "dropout/dropout/random_uniform"
+      ],
+      "attr": {
+        "T": {
+          "type": "DT_FLOAT"
+        }
+      }
+    },
+    {
+      "name": "dropout/dropout/Floor",
+      "op": "Floor",
+      "input": [
+        "dropout/dropout/add"
+      ],
+      "attr": {
+        "T": {
+          "type": "DT_FLOAT"
+        }
+      }
+    },
+    {
+      "name": "dropout/dropout/div",
+      "op": "RealDiv",
+      "input": [
+        "layer1/activation",
+        "dropout/Placeholder"
+      ],
+      "attr": {
+        "T": {
+          "type": "DT_FLOAT"
+        }
+      }
+    },
+    {
+      "name": "dropout/dropout/mul",
+      "op": "Mul",
+      "input": [
+        "dropout/dropout/div",
+        "dropout/dropout/Floor"
+      ],
+      "attr": {
+        "T": {
+          "type": "DT_FLOAT"
+        }
+      }
+    },
+    {
+      "name": "layer2/weights/truncated_normal/shape",
+      "op": "Const",
+      "attr": {
+        "value": {
+          "tensor": {
+            "dtype": "DT_INT32",
+            "tensorShape": {
+              "dim": [
+                {
+                  "size": "2"
+                }
+              ]
+            },
+            "tensorContent": "9AEAAAoAAAA="
+          }
+        },
+        "dtype": {
+          "type": "DT_INT32"
+        }
+      }
+    },
+    {
+      "name": "layer2/weights/truncated_normal/mean",
+      "op": "Const",
+      "attr": {
+        "value": {
+          "tensor": {
+            "dtype": "DT_FLOAT",
+            "tensorShape": {},
+            "floatVal": [
+              0.0
+            ]
+          }
+        },
+        "dtype": {
+          "type": "DT_FLOAT"
+        }
+      }
+    },
+    {
+      "name": "layer2/weights/truncated_normal/stddev",
+      "op": "Const",
+      "attr": {
+        "value": {
+          "tensor": {
+            "dtype": "DT_FLOAT",
+            "tensorShape": {},
+            "floatVal": [
+              0.10000000149011612
+            ]
+          }
+        },
+        "dtype": {
+          "type": "DT_FLOAT"
+        }
+      }
+    },
+    {
+      "name": "layer2/weights/truncated_normal/TruncatedNormal",
+      "op": "TruncatedNormal",
+      "input": [
+        "layer2/weights/truncated_normal/shape"
+      ],
+      "attr": {
+        "seed": {
+          "i": "0"
+        },
+        "seed2": {
+          "i": "0"
+        },
+        "dtype": {
+          "type": "DT_FLOAT"
+        },
+        "T": {
+          "type": "DT_INT32"
+        }
+      }
+    },
+    {
+      "name": "layer2/weights/truncated_normal/mul",
+      "op": "Mul",
+      "input": [
+        "layer2/weights/truncated_normal/TruncatedNormal",
+        "layer2/weights/truncated_normal/stddev"
+      ],
+      "attr": {
+        "T": {
+          "type": "DT_FLOAT"
+        }
+      }
+    },
+    {
+      "name": "layer2/weights/truncated_normal",
+      "op": "Add",
+      "input": [
+        "layer2/weights/truncated_normal/mul",
+        "layer2/weights/truncated_normal/mean"
+      ],
+      "attr": {
+        "T": {
+          "type": "DT_FLOAT"
+        }
+      }
+    },
+    {
+      "name": "layer2/weights/Variable",
+      "op": "VariableV2",
+      "attr": {
+        "shape": {
+          "shape": {
+            "dim": [
+              {
+                "size": "500"
+              },
+              {
+                "size": "10"
+              }
+            ]
+          }
+        },
+        "dtype": {
+          "type": "DT_FLOAT"
+        },
+        "container": {
+          "s": ""
+        },
+        "shared_name": {
+          "s": ""
+        }
+      }
+    },
+    {
+      "name": "layer2/weights/Variable/Assign",
+      "op": "Assign",
+      "input": [
+        "layer2/weights/Variable",
+        "layer2/weights/truncated_normal"
+      ],
+      "attr": {
+        "T": {
+          "type": "DT_FLOAT"
+        },
+        "validate_shape": {
+          "b": true
+        },
+        "use_locking": {
+          "b": true
+        },
+        "_class": {
+          "list": {
+            "s": [
+              "bG9jOkBsYXllcjIvd2VpZ2h0cy9WYXJpYWJsZQ=="
+            ]
+          }
+        }
+      }
+    },
+    {
+      "name": "layer2/weights/Variable/read",
+      "op": "Identity",
+      "input": [
+        "layer2/weights/Variable"
+      ],
+      "attr": {
+        "T": {
+          "type": "DT_FLOAT"
+        },
+        "_class": {
+          "list": {
+            "s": [
+              "bG9jOkBsYXllcjIvd2VpZ2h0cy9WYXJpYWJsZQ=="
+            ]
+          }
+        }
+      }
+    },
+    {
+      "name": "layer2/weights/summaries/Rank",
+      "op": "Const",
+      "attr": {
+        "value": {
+          "tensor": {
+            "dtype": "DT_INT32",
+            "tensorShape": {},
+            "intVal": [
+              2
+            ]
+          }
+        },
+        "dtype": {
+          "type": "DT_INT32"
+        }
+      }
+    },
+    {
+      "name": "layer2/weights/summaries/range/start",
+      "op": "Const",
+      "attr": {
+        "value": {
+          "tensor": {
+            "dtype": "DT_INT32",
+            "tensorShape": {},
+            "intVal": [
+              0
+            ]
+          }
+        },
+        "dtype": {
+          "type": "DT_INT32"
+        }
+      }
+    },
+    {
+      "name": "layer2/weights/summaries/range/delta",
+      "op": "Const",
+      "attr": {
+        "value": {
+          "tensor": {
+            "dtype": "DT_INT32",
+            "tensorShape": {},
+            "intVal": [
+              1
+            ]
+          }
+        },
+        "dtype": {
+          "type": "DT_INT32"
+        }
+      }
+    },
+    {
+      "name": "layer2/weights/summaries/range",
+      "op": "Range",
+      "input": [
+        "layer2/weights/summaries/range/start",
+        "layer2/weights/summaries/Rank",
+        "layer2/weights/summaries/range/delta"
+      ],
+      "attr": {
+        "Tidx": {
+          "type": "DT_INT32"
+        }
+      }
+    },
+    {
+      "name": "layer2/weights/summaries/Mean",
+      "op": "Mean",
+      "input": [
+        "layer2/weights/Variable/read",
+        "layer2/weights/summaries/range"
+      ],
+      "attr": {
+        "keep_dims": {
+          "b": false
+        },
+        "T": {
+          "type": "DT_FLOAT"
+        },
+        "Tidx": {
+          "type": "DT_INT32"
+        }
+      }
+    },
+    {
+      "name": "layer2/weights/summaries/mean/tags",
+      "op": "Const",
+      "attr": {
+        "value": {
+          "tensor": {
+            "dtype": "DT_STRING",
+            "tensorShape": {},
+            "stringVal": [
+              "bGF5ZXIyL3dlaWdodHMvc3VtbWFyaWVzL21lYW4="
+            ]
+          }
+        },
+        "dtype": {
+          "type": "DT_STRING"
+        }
+      }
+    },
+    {
+      "name": "layer2/weights/summaries/mean",
+      "op": "ScalarSummary",
+      "input": [
+        "layer2/weights/summaries/mean/tags",
+        "layer2/weights/summaries/Mean"
+      ],
+      "attr": {
+        "T": {
+          "type": "DT_FLOAT"
+        }
+      }
+    },
+    {
+      "name": "layer2/weights/summaries/stddev/sub",
+      "op": "Sub",
+      "input": [
+        "layer2/weights/Variable/read",
+        "layer2/weights/summaries/Mean"
+      ],
+      "attr": {
+        "T": {
+          "type": "DT_FLOAT"
+        }
+      }
+    },
+    {
+      "name": "layer2/weights/summaries/stddev/Square",
+      "op": "Square",
+      "input": [
+        "layer2/weights/summaries/stddev/sub"
+      ],
+      "attr": {
+        "T": {
+          "type": "DT_FLOAT"
+        }
+      }
+    },
+    {
+      "name": "layer2/weights/summaries/stddev/Const",
+      "op": "Const",
+      "attr": {
+        "value": {
+          "tensor": {
+            "dtype": "DT_INT32",
+            "tensorShape": {
+              "dim": [
+                {
+                  "size": "2"
+                }
+              ]
+            },
+            "tensorContent": "AAAAAAEAAAA="
+          }
+        },
+        "dtype": {
+          "type": "DT_INT32"
+        }
+      }
+    },
+    {
+      "name": "layer2/weights/summaries/stddev/Mean",
+      "op": "Mean",
+      "input": [
+        "layer2/weights/summaries/stddev/Square",
+        "layer2/weights/summaries/stddev/Const"
+      ],
+      "attr": {
+        "keep_dims": {
+          "b": false
+        },
+        "T": {
+          "type": "DT_FLOAT"
+        },
+        "Tidx": {
+          "type": "DT_INT32"
+        }
+      }
+    },
+    {
+      "name": "layer2/weights/summaries/stddev/Sqrt",
+      "op": "Sqrt",
+      "input": [
+        "layer2/weights/summaries/stddev/Mean"
+      ],
+      "attr": {
+        "T": {
+          "type": "DT_FLOAT"
+        }
+      }
+    },
+    {
+      "name": "layer2/weights/summaries/stddev_1/tags",
+      "op": "Const",
+      "attr": {
+        "value": {
+          "tensor": {
+            "dtype": "DT_STRING",
+            "tensorShape": {},
+            "stringVal": [
+              "bGF5ZXIyL3dlaWdodHMvc3VtbWFyaWVzL3N0ZGRldl8x"
+            ]
+          }
+        },
+        "dtype": {
+          "type": "DT_STRING"
+        }
+      }
+    },
+    {
+      "name": "layer2/weights/summaries/stddev_1",
+      "op": "ScalarSummary",
+      "input": [
+        "layer2/weights/summaries/stddev_1/tags",
+        "layer2/weights/summaries/stddev/Sqrt"
+      ],
+      "attr": {
+        "T": {
+          "type": "DT_FLOAT"
+        }
+      }
+    },
+    {
+      "name": "layer2/weights/summaries/Rank_1",
+      "op": "Const",
+      "attr": {
+        "value": {
+          "tensor": {
+            "dtype": "DT_INT32",
+            "tensorShape": {},
+            "intVal": [
+              2
+            ]
+          }
+        },
+        "dtype": {
+          "type": "DT_INT32"
+        }
+      }
+    },
+    {
+      "name": "layer2/weights/summaries/range_1/start",
+      "op": "Const",
+      "attr": {
+        "value": {
+          "tensor": {
+            "dtype": "DT_INT32",
+            "tensorShape": {},
+            "intVal": [
+              0
+            ]
+          }
+        },
+        "dtype": {
+          "type": "DT_INT32"
+        }
+      }
+    },
+    {
+      "name": "layer2/weights/summaries/range_1/delta",
+      "op": "Const",
+      "attr": {
+        "value": {
+          "tensor": {
+            "dtype": "DT_INT32",
+            "tensorShape": {},
+            "intVal": [
+              1
+            ]
+          }
+        },
+        "dtype": {
+          "type": "DT_INT32"
+        }
+      }
+    },
+    {
+      "name": "layer2/weights/summaries/range_1",
+      "op": "Range",
+      "input": [
+        "layer2/weights/summaries/range_1/start",
+        "layer2/weights/summaries/Rank_1",
+        "layer2/weights/summaries/range_1/delta"
+      ],
+      "attr": {
+        "Tidx": {
+          "type": "DT_INT32"
+        }
+      }
+    },
+    {
+      "name": "layer2/weights/summaries/Max",
+      "op": "Max",
+      "input": [
+        "layer2/weights/Variable/read",
+        "layer2/weights/summaries/range_1"
+      ],
+      "attr": {
+        "keep_dims": {
+          "b": false
+        },
+        "T": {
+          "type": "DT_FLOAT"
+        },
+        "Tidx": {
+          "type": "DT_INT32"
+        }
+      }
+    },
+    {
+      "name": "layer2/weights/summaries/max/tags",
+      "op": "Const",
+      "attr": {
+        "value": {
+          "tensor": {
+            "dtype": "DT_STRING",
+            "tensorShape": {},
+            "stringVal": [
+              "bGF5ZXIyL3dlaWdodHMvc3VtbWFyaWVzL21heA=="
+            ]
+          }
+        },
+        "dtype": {
+          "type": "DT_STRING"
+        }
+      }
+    },
+    {
+      "name": "layer2/weights/summaries/max",
+      "op": "ScalarSummary",
+      "input": [
+        "layer2/weights/summaries/max/tags",
+        "layer2/weights/summaries/Max"
+      ],
+      "attr": {
+        "T": {
+          "type": "DT_FLOAT"
+        }
+      }
+    },
+    {
+      "name": "layer2/weights/summaries/Rank_2",
+      "op": "Const",
+      "attr": {
+        "value": {
+          "tensor": {
+            "dtype": "DT_INT32",
+            "tensorShape": {},
+            "intVal": [
+              2
+            ]
+          }
+        },
+        "dtype": {
+          "type": "DT_INT32"
+        }
+      }
+    },
+    {
+      "name": "layer2/weights/summaries/range_2/start",
+      "op": "Const",
+      "attr": {
+        "value": {
+          "tensor": {
+            "dtype": "DT_INT32",
+            "tensorShape": {},
+            "intVal": [
+              0
+            ]
+          }
+        },
+        "dtype": {
+          "type": "DT_INT32"
+        }
+      }
+    },
+    {
+      "name": "layer2/weights/summaries/range_2/delta",
+      "op": "Const",
+      "attr": {
+        "value": {
+          "tensor": {
+            "dtype": "DT_INT32",
+            "tensorShape": {},
+            "intVal": [
+              1
+            ]
+          }
+        },
+        "dtype": {
+          "type": "DT_INT32"
+        }
+      }
+    },
+    {
+      "name": "layer2/weights/summaries/range_2",
+      "op": "Range",
+      "input": [
+        "layer2/weights/summaries/range_2/start",
+        "layer2/weights/summaries/Rank_2",
+        "layer2/weights/summaries/range_2/delta"
+      ],
+      "attr": {
+        "Tidx": {
+          "type": "DT_INT32"
+        }
+      }
+    },
+    {
+      "name": "layer2/weights/summaries/Min",
+      "op": "Min",
+      "input": [
+        "layer2/weights/Variable/read",
+        "layer2/weights/summaries/range_2"
+      ],
+      "attr": {
+        "keep_dims": {
+          "b": false
+        },
+        "T": {
+          "type": "DT_FLOAT"
+        },
+        "Tidx": {
+          "type": "DT_INT32"
+        }
+      }
+    },
+    {
+      "name": "layer2/weights/summaries/min/tags",
+      "op": "Const",
+      "attr": {
+        "value": {
+          "tensor": {
+            "dtype": "DT_STRING",
+            "tensorShape": {},
+            "stringVal": [
+              "bGF5ZXIyL3dlaWdodHMvc3VtbWFyaWVzL21pbg=="
+            ]
+          }
+        },
+        "dtype": {
+          "type": "DT_STRING"
+        }
+      }
+    },
+    {
+      "name": "layer2/weights/summaries/min",
+      "op": "ScalarSummary",
+      "input": [
+        "layer2/weights/summaries/min/tags",
+        "layer2/weights/summaries/Min"
+      ],
+      "attr": {
+        "T": {
+          "type": "DT_FLOAT"
+        }
+      }
+    },
+    {
+      "name": "layer2/weights/summaries/histogram/tag",
+      "op": "Const",
+      "attr": {
+        "value": {
+          "tensor": {
+            "dtype": "DT_STRING",
+            "tensorShape": {},
+            "stringVal": [
+              "bGF5ZXIyL3dlaWdodHMvc3VtbWFyaWVzL2hpc3RvZ3JhbQ=="
+            ]
+          }
+        },
+        "dtype": {
+          "type": "DT_STRING"
+        }
+      }
+    },
+    {
+      "name": "layer2/weights/summaries/histogram",
+      "op": "HistogramSummary",
+      "input": [
+        "layer2/weights/summaries/histogram/tag",
+        "layer2/weights/Variable/read"
+      ],
+      "attr": {
+        "T": {
+          "type": "DT_FLOAT"
+        }
+      }
+    },
+    {
+      "name": "layer2/biases/Const",
+      "op": "Const",
+      "attr": {
+        "value": {
+          "tensor": {
+            "dtype": "DT_FLOAT",
+            "tensorShape": {
+              "dim": [
+                {
+                  "size": "10"
+                }
+              ]
+            },
+            "floatVal": [
+              0.10000000149011612
+            ]
+          }
+        },
+        "dtype": {
+          "type": "DT_FLOAT"
+        }
+      }
+    },
+    {
+      "name": "layer2/biases/Variable",
+      "op": "VariableV2",
+      "attr": {
+        "shape": {
+          "shape": {
+            "dim": [
+              {
+                "size": "10"
+              }
+            ]
+          }
+        },
+        "dtype": {
+          "type": "DT_FLOAT"
+        },
+        "container": {
+          "s": ""
+        },
+        "shared_name": {
+          "s": ""
+        }
+      }
+    },
+    {
+      "name": "layer2/biases/Variable/Assign",
+      "op": "Assign",
+      "input": [
+        "layer2/biases/Variable",
+        "layer2/biases/Const"
+      ],
+      "attr": {
+        "T": {
+          "type": "DT_FLOAT"
+        },
+        "validate_shape": {
+          "b": true
+        },
+        "use_locking": {
+          "b": true
+        },
+        "_class": {
+          "list": {
+            "s": [
+              "bG9jOkBsYXllcjIvYmlhc2VzL1ZhcmlhYmxl"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "name": "layer2/biases/Variable/read",
+      "op": "Identity",
+      "input": [
+        "layer2/biases/Variable"
+      ],
+      "attr": {
+        "T": {
+          "type": "DT_FLOAT"
+        },
+        "_class": {
+          "list": {
+            "s": [
+              "bG9jOkBsYXllcjIvYmlhc2VzL1ZhcmlhYmxl"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "name": "layer2/biases/summaries/Rank",
+      "op": "Const",
+      "attr": {
+        "value": {
+          "tensor": {
+            "dtype": "DT_INT32",
+            "tensorShape": {},
+            "intVal": [
+              1
+            ]
+          }
+        },
+        "dtype": {
+          "type": "DT_INT32"
+        }
+      }
+    },
+    {
+      "name": "layer2/biases/summaries/range/start",
+      "op": "Const",
+      "attr": {
+        "value": {
+          "tensor": {
+            "dtype": "DT_INT32",
+            "tensorShape": {},
+            "intVal": [
+              0
+            ]
+          }
+        },
+        "dtype": {
+          "type": "DT_INT32"
+        }
+      }
+    },
+    {
+      "name": "layer2/biases/summaries/range/delta",
+      "op": "Const",
+      "attr": {
+        "value": {
+          "tensor": {
+            "dtype": "DT_INT32",
+            "tensorShape": {},
+            "intVal": [
+              1
+            ]
+          }
+        },
+        "dtype": {
+          "type": "DT_INT32"
+        }
+      }
+    },
+    {
+      "name": "layer2/biases/summaries/range",
+      "op": "Range",
+      "input": [
+        "layer2/biases/summaries/range/start",
+        "layer2/biases/summaries/Rank",
+        "layer2/biases/summaries/range/delta"
+      ],
+      "attr": {
+        "Tidx": {
+          "type": "DT_INT32"
+        }
+      }
+    },
+    {
+      "name": "layer2/biases/summaries/Mean",
+      "op": "Mean",
+      "input": [
+        "layer2/biases/Variable/read",
+        "layer2/biases/summaries/range"
+      ],
+      "attr": {
+        "keep_dims": {
+          "b": false
+        },
+        "T": {
+          "type": "DT_FLOAT"
+        },
+        "Tidx": {
+          "type": "DT_INT32"
+        }
+      }
+    },
+    {
+      "name": "layer2/biases/summaries/mean/tags",
+      "op": "Const",
+      "attr": {
+        "value": {
+          "tensor": {
+            "dtype": "DT_STRING",
+            "tensorShape": {},
+            "stringVal": [
+              "bGF5ZXIyL2JpYXNlcy9zdW1tYXJpZXMvbWVhbg=="
+            ]
+          }
+        },
+        "dtype": {
+          "type": "DT_STRING"
+        }
+      }
+    },
+    {
+      "name": "layer2/biases/summaries/mean",
+      "op": "ScalarSummary",
+      "input": [
+        "layer2/biases/summaries/mean/tags",
+        "layer2/biases/summaries/Mean"
+      ],
+      "attr": {
+        "T": {
+          "type": "DT_FLOAT"
+        }
+      }
+    },
+    {
+      "name": "layer2/biases/summaries/stddev/sub",
+      "op": "Sub",
+      "input": [
+        "layer2/biases/Variable/read",
+        "layer2/biases/summaries/Mean"
+      ],
+      "attr": {
+        "T": {
+          "type": "DT_FLOAT"
+        }
+      }
+    },
+    {
+      "name": "layer2/biases/summaries/stddev/Square",
+      "op": "Square",
+      "input": [
+        "layer2/biases/summaries/stddev/sub"
+      ],
+      "attr": {
+        "T": {
+          "type": "DT_FLOAT"
+        }
+      }
+    },
+    {
+      "name": "layer2/biases/summaries/stddev/Const",
+      "op": "Const",
+      "attr": {
+        "value": {
+          "tensor": {
+            "dtype": "DT_INT32",
+            "tensorShape": {
+              "dim": [
+                {
+                  "size": "1"
+                }
+              ]
+            },
+            "intVal": [
+              0
+            ]
+          }
+        },
+        "dtype": {
+          "type": "DT_INT32"
+        }
+      }
+    },
+    {
+      "name": "layer2/biases/summaries/stddev/Mean",
+      "op": "Mean",
+      "input": [
+        "layer2/biases/summaries/stddev/Square",
+        "layer2/biases/summaries/stddev/Const"
+      ],
+      "attr": {
+        "keep_dims": {
+          "b": false
+        },
+        "T": {
+          "type": "DT_FLOAT"
+        },
+        "Tidx": {
+          "type": "DT_INT32"
+        }
+      }
+    },
+    {
+      "name": "layer2/biases/summaries/stddev/Sqrt",
+      "op": "Sqrt",
+      "input": [
+        "layer2/biases/summaries/stddev/Mean"
+      ],
+      "attr": {
+        "T": {
+          "type": "DT_FLOAT"
+        }
+      }
+    },
+    {
+      "name": "layer2/biases/summaries/stddev_1/tags",
+      "op": "Const",
+      "attr": {
+        "value": {
+          "tensor": {
+            "dtype": "DT_STRING",
+            "tensorShape": {},
+            "stringVal": [
+              "bGF5ZXIyL2JpYXNlcy9zdW1tYXJpZXMvc3RkZGV2XzE="
+            ]
+          }
+        },
+        "dtype": {
+          "type": "DT_STRING"
+        }
+      }
+    },
+    {
+      "name": "layer2/biases/summaries/stddev_1",
+      "op": "ScalarSummary",
+      "input": [
+        "layer2/biases/summaries/stddev_1/tags",
+        "layer2/biases/summaries/stddev/Sqrt"
+      ],
+      "attr": {
+        "T": {
+          "type": "DT_FLOAT"
+        }
+      }
+    },
+    {
+      "name": "layer2/biases/summaries/Rank_1",
+      "op": "Const",
+      "attr": {
+        "value": {
+          "tensor": {
+            "dtype": "DT_INT32",
+            "tensorShape": {},
+            "intVal": [
+              1
+            ]
+          }
+        },
+        "dtype": {
+          "type": "DT_INT32"
+        }
+      }
+    },
+    {
+      "name": "layer2/biases/summaries/range_1/start",
+      "op": "Const",
+      "attr": {
+        "value": {
+          "tensor": {
+            "dtype": "DT_INT32",
+            "tensorShape": {},
+            "intVal": [
+              0
+            ]
+          }
+        },
+        "dtype": {
+          "type": "DT_INT32"
+        }
+      }
+    },
+    {
+      "name": "layer2/biases/summaries/range_1/delta",
+      "op": "Const",
+      "attr": {
+        "value": {
+          "tensor": {
+            "dtype": "DT_INT32",
+            "tensorShape": {},
+            "intVal": [
+              1
+            ]
+          }
+        },
+        "dtype": {
+          "type": "DT_INT32"
+        }
+      }
+    },
+    {
+      "name": "layer2/biases/summaries/range_1",
+      "op": "Range",
+      "input": [
+        "layer2/biases/summaries/range_1/start",
+        "layer2/biases/summaries/Rank_1",
+        "layer2/biases/summaries/range_1/delta"
+      ],
+      "attr": {
+        "Tidx": {
+          "type": "DT_INT32"
+        }
+      }
+    },
+    {
+      "name": "layer2/biases/summaries/Max",
+      "op": "Max",
+      "input": [
+        "layer2/biases/Variable/read",
+        "layer2/biases/summaries/range_1"
+      ],
+      "attr": {
+        "keep_dims": {
+          "b": false
+        },
+        "T": {
+          "type": "DT_FLOAT"
+        },
+        "Tidx": {
+          "type": "DT_INT32"
+        }
+      }
+    },
+    {
+      "name": "layer2/biases/summaries/max/tags",
+      "op": "Const",
+      "attr": {
+        "value": {
+          "tensor": {
+            "dtype": "DT_STRING",
+            "tensorShape": {},
+            "stringVal": [
+              "bGF5ZXIyL2JpYXNlcy9zdW1tYXJpZXMvbWF4"
+            ]
+          }
+        },
+        "dtype": {
+          "type": "DT_STRING"
+        }
+      }
+    },
+    {
+      "name": "layer2/biases/summaries/max",
+      "op": "ScalarSummary",
+      "input": [
+        "layer2/biases/summaries/max/tags",
+        "layer2/biases/summaries/Max"
+      ],
+      "attr": {
+        "T": {
+          "type": "DT_FLOAT"
+        }
+      }
+    },
+    {
+      "name": "layer2/biases/summaries/Rank_2",
+      "op": "Const",
+      "attr": {
+        "value": {
+          "tensor": {
+            "dtype": "DT_INT32",
+            "tensorShape": {},
+            "intVal": [
+              1
+            ]
+          }
+        },
+        "dtype": {
+          "type": "DT_INT32"
+        }
+      }
+    },
+    {
+      "name": "layer2/biases/summaries/range_2/start",
+      "op": "Const",
+      "attr": {
+        "value": {
+          "tensor": {
+            "dtype": "DT_INT32",
+            "tensorShape": {},
+            "intVal": [
+              0
+            ]
+          }
+        },
+        "dtype": {
+          "type": "DT_INT32"
+        }
+      }
+    },
+    {
+      "name": "layer2/biases/summaries/range_2/delta",
+      "op": "Const",
+      "attr": {
+        "value": {
+          "tensor": {
+            "dtype": "DT_INT32",
+            "tensorShape": {},
+            "intVal": [
+              1
+            ]
+          }
+        },
+        "dtype": {
+          "type": "DT_INT32"
+        }
+      }
+    },
+    {
+      "name": "layer2/biases/summaries/range_2",
+      "op": "Range",
+      "input": [
+        "layer2/biases/summaries/range_2/start",
+        "layer2/biases/summaries/Rank_2",
+        "layer2/biases/summaries/range_2/delta"
+      ],
+      "attr": {
+        "Tidx": {
+          "type": "DT_INT32"
+        }
+      }
+    },
+    {
+      "name": "layer2/biases/summaries/Min",
+      "op": "Min",
+      "input": [
+        "layer2/biases/Variable/read",
+        "layer2/biases/summaries/range_2"
+      ],
+      "attr": {
+        "keep_dims": {
+          "b": false
+        },
+        "T": {
+          "type": "DT_FLOAT"
+        },
+        "Tidx": {
+          "type": "DT_INT32"
+        }
+      }
+    },
+    {
+      "name": "layer2/biases/summaries/min/tags",
+      "op": "Const",
+      "attr": {
+        "value": {
+          "tensor": {
+            "dtype": "DT_STRING",
+            "tensorShape": {},
+            "stringVal": [
+              "bGF5ZXIyL2JpYXNlcy9zdW1tYXJpZXMvbWlu"
+            ]
+          }
+        },
+        "dtype": {
+          "type": "DT_STRING"
+        }
+      }
+    },
+    {
+      "name": "layer2/biases/summaries/min",
+      "op": "ScalarSummary",
+      "input": [
+        "layer2/biases/summaries/min/tags",
+        "layer2/biases/summaries/Min"
+      ],
+      "attr": {
+        "T": {
+          "type": "DT_FLOAT"
+        }
+      }
+    },
+    {
+      "name": "layer2/biases/summaries/histogram/tag",
+      "op": "Const",
+      "attr": {
+        "value": {
+          "tensor": {
+            "dtype": "DT_STRING",
+            "tensorShape": {},
+            "stringVal": [
+              "bGF5ZXIyL2JpYXNlcy9zdW1tYXJpZXMvaGlzdG9ncmFt"
+            ]
+          }
+        },
+        "dtype": {
+          "type": "DT_STRING"
+        }
+      }
+    },
+    {
+      "name": "layer2/biases/summaries/histogram",
+      "op": "HistogramSummary",
+      "input": [
+        "layer2/biases/summaries/histogram/tag",
+        "layer2/biases/Variable/read"
+      ],
+      "attr": {
+        "T": {
+          "type": "DT_FLOAT"
+        }
+      }
+    },
+    {
+      "name": "layer2/Wx_plus_b/MatMul",
+      "op": "MatMul",
+      "input": [
+        "dropout/dropout/mul",
+        "layer2/weights/Variable/read"
+      ],
+      "attr": {
+        "transpose_a": {
+          "b": false
+        },
+        "transpose_b": {
+          "b": false
+        },
+        "T": {
+          "type": "DT_FLOAT"
+        }
+      }
+    },
+    {
+      "name": "layer2/Wx_plus_b/add",
+      "op": "Add",
+      "input": [
+        "layer2/Wx_plus_b/MatMul",
+        "layer2/biases/Variable/read"
+      ],
+      "attr": {
+        "T": {
+          "type": "DT_FLOAT"
+        }
+      }
+    },
+    {
+      "name": "layer2/Wx_plus_b/pre_activations/tag",
+      "op": "Const",
+      "attr": {
+        "value": {
+          "tensor": {
+            "dtype": "DT_STRING",
+            "tensorShape": {},
+            "stringVal": [
+              "bGF5ZXIyL1d4X3BsdXNfYi9wcmVfYWN0aXZhdGlvbnM="
+            ]
+          }
+        },
+        "dtype": {
+          "type": "DT_STRING"
+        }
+      }
+    },
+    {
+      "name": "layer2/Wx_plus_b/pre_activations",
+      "op": "HistogramSummary",
+      "input": [
+        "layer2/Wx_plus_b/pre_activations/tag",
+        "layer2/Wx_plus_b/add"
+      ],
+      "attr": {
+        "T": {
+          "type": "DT_FLOAT"
+        }
+      }
+    },
+    {
+      "name": "layer2/activation",
+      "op": "Identity",
+      "input": [
+        "layer2/Wx_plus_b/add"
+      ],
+      "attr": {
+        "T": {
+          "type": "DT_FLOAT"
+        }
+      }
+    },
+    {
+      "name": "layer2/activations/tag",
+      "op": "Const",
+      "attr": {
+        "value": {
+          "tensor": {
+            "dtype": "DT_STRING",
+            "tensorShape": {},
+            "stringVal": [
+              "bGF5ZXIyL2FjdGl2YXRpb25z"
+            ]
+          }
+        },
+        "dtype": {
+          "type": "DT_STRING"
+        }
+      }
+    },
+    {
+      "name": "layer2/activations",
+      "op": "HistogramSummary",
+      "input": [
+        "layer2/activations/tag",
+        "layer2/activation"
+      ],
+      "attr": {
+        "T": {
+          "type": "DT_FLOAT"
+        }
+      }
+    },
+    {
+      "name": "cross_entropy/total/sparse_softmax_cross_entropy_loss/Const",
+      "op": "Const",
+      "attr": {
+        "value": {
+          "tensor": {
+            "dtype": "DT_FLOAT",
+            "tensorShape": {},
+            "floatVal": [
+              1.0
+            ]
+          }
+        },
+        "dtype": {
+          "type": "DT_FLOAT"
+        }
+      }
+    },
+    {
+      "name": "cross_entropy/total/sparse_softmax_cross_entropy_loss/xentropy/Shape",
+      "op": "Shape",
+      "input": [
+        "input/y-input"
+      ],
+      "attr": {
+        "T": {
+          "type": "DT_INT64"
+        },
+        "out_type": {
+          "type": "DT_INT32"
+        }
+      }
+    },
+    {
+      "name": "cross_entropy/total/sparse_softmax_cross_entropy_loss/xentropy/xentropy",
+      "op": "SparseSoftmaxCrossEntropyWithLogits",
+      "input": [
+        "layer2/activation",
+        "input/y-input"
+      ],
+      "attr": {
+        "T": {
+          "type": "DT_FLOAT"
+        },
+        "Tlabels": {
+          "type": "DT_INT64"
+        }
+      }
+    },
+    {
+      "name": "cross_entropy/total/sparse_softmax_cross_entropy_loss/assert_broadcastable/weights/shape",
+      "op": "Const",
+      "attr": {
+        "value": {
+          "tensor": {
+            "dtype": "DT_INT32",
+            "tensorShape": {
+              "dim": [
+                {}
+              ]
+            }
+          }
+        },
+        "dtype": {
+          "type": "DT_INT32"
+        }
+      }
+    },
+    {
+      "name": "cross_entropy/total/sparse_softmax_cross_entropy_loss/assert_broadcastable/weights/rank",
+      "op": "Const",
+      "attr": {
+        "value": {
+          "tensor": {
+            "dtype": "DT_INT32",
+            "tensorShape": {},
+            "intVal": [
+              0
+            ]
+          }
+        },
+        "dtype": {
+          "type": "DT_INT32"
+        }
+      }
+    },
+    {
+      "name": "cross_entropy/total/sparse_softmax_cross_entropy_loss/assert_broadcastable/values/shape",
+      "op": "Shape",
+      "input": [
+        "cross_entropy/total/sparse_softmax_cross_entropy_loss/xentropy/xentropy"
+      ],
+      "attr": {
+        "T": {
+          "type": "DT_FLOAT"
+        },
+        "out_type": {
+          "type": "DT_INT32"
+        }
+      }
+    },
+    {
+      "name": "cross_entropy/total/sparse_softmax_cross_entropy_loss/assert_broadcastable/values/rank",
+      "op": "Const",
+      "attr": {
+        "value": {
+          "tensor": {
+            "dtype": "DT_INT32",
+            "tensorShape": {},
+            "intVal": [
+              1
+            ]
+          }
+        },
+        "dtype": {
+          "type": "DT_INT32"
+        }
+      }
+    },
+    {
+      "name": "cross_entropy/total/sparse_softmax_cross_entropy_loss/assert_broadcastable/static_scalar_check_success",
+      "op": "NoOp"
+    },
+    {
+      "name": "cross_entropy/total/sparse_softmax_cross_entropy_loss/Mul",
+      "op": "Mul",
+      "input": [
+        "cross_entropy/total/sparse_softmax_cross_entropy_loss/xentropy/xentropy",
+        "cross_entropy/total/sparse_softmax_cross_entropy_loss/Const",
+        "^cross_entropy/total/sparse_softmax_cross_entropy_loss/assert_broadcastable/static_scalar_check_success"
+      ],
+      "attr": {
+        "T": {
+          "type": "DT_FLOAT"
+        }
+      }
+    },
+    {
+      "name": "cross_entropy/total/sparse_softmax_cross_entropy_loss/Const_1",
+      "op": "Const",
+      "input": [
+        "^cross_entropy/total/sparse_softmax_cross_entropy_loss/assert_broadcastable/static_scalar_check_success"
+      ],
+      "attr": {
+        "value": {
+          "tensor": {
+            "dtype": "DT_INT32",
+            "tensorShape": {
+              "dim": [
+                {
+                  "size": "1"
+                }
+              ]
+            },
+            "intVal": [
+              0
+            ]
+          }
+        },
+        "dtype": {
+          "type": "DT_INT32"
+        }
+      }
+    },
+    {
+      "name": "cross_entropy/total/sparse_softmax_cross_entropy_loss/Sum",
+      "op": "Sum",
+      "input": [
+        "cross_entropy/total/sparse_softmax_cross_entropy_loss/Mul",
+        "cross_entropy/total/sparse_softmax_cross_entropy_loss/Const_1"
+      ],
+      "attr": {
+        "keep_dims": {
+          "b": false
+        },
+        "T": {
+          "type": "DT_FLOAT"
+        },
+        "Tidx": {
+          "type": "DT_INT32"
+        }
+      }
+    },
+    {
+      "name": "cross_entropy/total/sparse_softmax_cross_entropy_loss/num_present/Equal/y",
+      "op": "Const",
+      "input": [
+        "^cross_entropy/total/sparse_softmax_cross_entropy_loss/assert_broadcastable/static_scalar_check_success"
+      ],
+      "attr": {
+        "value": {
+          "tensor": {
+            "dtype": "DT_FLOAT",
+            "tensorShape": {},
+            "floatVal": [
+              0.0
+            ]
+          }
+        },
+        "dtype": {
+          "type": "DT_FLOAT"
+        }
+      }
+    },
+    {
+      "name": "cross_entropy/total/sparse_softmax_cross_entropy_loss/num_present/Equal",
+      "op": "Equal",
+      "input": [
+        "cross_entropy/total/sparse_softmax_cross_entropy_loss/Const",
+        "cross_entropy/total/sparse_softmax_cross_entropy_loss/num_present/Equal/y"
+      ],
+      "attr": {
+        "T": {
+          "type": "DT_FLOAT"
+        }
+      }
+    },
+    {
+      "name": "cross_entropy/total/sparse_softmax_cross_entropy_loss/num_present/zeros_like",
+      "op": "Const",
+      "input": [
+        "^cross_entropy/total/sparse_softmax_cross_entropy_loss/assert_broadcastable/static_scalar_check_success"
+      ],
+      "attr": {
+        "value": {
+          "tensor": {
+            "dtype": "DT_FLOAT",
+            "tensorShape": {},
+            "floatVal": [
+              0.0
+            ]
+          }
+        },
+        "dtype": {
+          "type": "DT_FLOAT"
+        }
+      }
+    },
+    {
+      "name": "cross_entropy/total/sparse_softmax_cross_entropy_loss/num_present/ones_like/Shape",
+      "op": "Const",
+      "input": [
+        "^cross_entropy/total/sparse_softmax_cross_entropy_loss/assert_broadcastable/static_scalar_check_success"
+      ],
+      "attr": {
+        "value": {
+          "tensor": {
+            "dtype": "DT_INT32",
+            "tensorShape": {
+              "dim": [
+                {}
+              ]
+            }
+          }
+        },
+        "dtype": {
+          "type": "DT_INT32"
+        }
+      }
+    },
+    {
+      "name": "cross_entropy/total/sparse_softmax_cross_entropy_loss/num_present/ones_like/Const",
+      "op": "Const",
+      "input": [
+        "^cross_entropy/total/sparse_softmax_cross_entropy_loss/assert_broadcastable/static_scalar_check_success"
+      ],
+      "attr": {
+        "value": {
+          "tensor": {
+            "dtype": "DT_FLOAT",
+            "tensorShape": {},
+            "floatVal": [
+              1.0
+            ]
+          }
+        },
+        "dtype": {
+          "type": "DT_FLOAT"
+        }
+      }
+    },
+    {
+      "name": "cross_entropy/total/sparse_softmax_cross_entropy_loss/num_present/ones_like",
+      "op": "Fill",
+      "input": [
+        "cross_entropy/total/sparse_softmax_cross_entropy_loss/num_present/ones_like/Shape",
+        "cross_entropy/total/sparse_softmax_cross_entropy_loss/num_present/ones_like/Const"
+      ],
+      "attr": {
+        "T": {
+          "type": "DT_FLOAT"
+        }
+      }
+    },
+    {
+      "name": "cross_entropy/total/sparse_softmax_cross_entropy_loss/num_present/Select",
+      "op": "Select",
+      "input": [
+        "cross_entropy/total/sparse_softmax_cross_entropy_loss/num_present/Equal",
+        "cross_entropy/total/sparse_softmax_cross_entropy_loss/num_present/zeros_like",
+        "cross_entropy/total/sparse_softmax_cross_entropy_loss/num_present/ones_like"
+      ],
+      "attr": {
+        "T": {
+          "type": "DT_FLOAT"
+        }
+      }
+    },
+    {
+      "name": "cross_entropy/total/sparse_softmax_cross_entropy_loss/num_present/broadcast_weights/assert_broadcastable/weights/shape",
+      "op": "Const",
+      "input": [
+        "^cross_entropy/total/sparse_softmax_cross_entropy_loss/assert_broadcastable/static_scalar_check_success"
+      ],
+      "attr": {
+        "value": {
+          "tensor": {
+            "dtype": "DT_INT32",
+            "tensorShape": {
+              "dim": [
+                {}
+              ]
+            }
+          }
+        },
+        "dtype": {
+          "type": "DT_INT32"
+        }
+      }
+    },
+    {
+      "name": "cross_entropy/total/sparse_softmax_cross_entropy_loss/num_present/broadcast_weights/assert_broadcastable/weights/rank",
+      "op": "Const",
+      "input": [
+        "^cross_entropy/total/sparse_softmax_cross_entropy_loss/assert_broadcastable/static_scalar_check_success"
+      ],
+      "attr": {
+        "value": {
+          "tensor": {
+            "dtype": "DT_INT32",
+            "tensorShape": {},
+            "intVal": [
+              0
+            ]
+          }
+        },
+        "dtype": {
+          "type": "DT_INT32"
+        }
+      }
+    },
+    {
+      "name": "cross_entropy/total/sparse_softmax_cross_entropy_loss/num_present/broadcast_weights/assert_broadcastable/values/shape",
+      "op": "Shape",
+      "input": [
+        "cross_entropy/total/sparse_softmax_cross_entropy_loss/xentropy/xentropy",
+        "^cross_entropy/total/sparse_softmax_cross_entropy_loss/assert_broadcastable/static_scalar_check_success"
+      ],
+      "attr": {
+        "T": {
+          "type": "DT_FLOAT"
+        },
+        "out_type": {
+          "type": "DT_INT32"
+        }
+      }
+    },
+    {
+      "name": "cross_entropy/total/sparse_softmax_cross_entropy_loss/num_present/broadcast_weights/assert_broadcastable/values/rank",
+      "op": "Const",
+      "input": [
+        "^cross_entropy/total/sparse_softmax_cross_entropy_loss/assert_broadcastable/static_scalar_check_success"
+      ],
+      "attr": {
+        "value": {
+          "tensor": {
+            "dtype": "DT_INT32",
+            "tensorShape": {},
+            "intVal": [
+              1
+            ]
+          }
+        },
+        "dtype": {
+          "type": "DT_INT32"
+        }
+      }
+    },
+    {
+      "name": "cross_entropy/total/sparse_softmax_cross_entropy_loss/num_present/broadcast_weights/assert_broadcastable/static_scalar_check_success",
+      "op": "NoOp",
+      "input": [
+        "^cross_entropy/total/sparse_softmax_cross_entropy_loss/assert_broadcastable/static_scalar_check_success"
+      ]
+    },
+    {
+      "name": "cross_entropy/total/sparse_softmax_cross_entropy_loss/num_present/broadcast_weights/ones_like/Shape",
+      "op": "Shape",
+      "input": [
+        "cross_entropy/total/sparse_softmax_cross_entropy_loss/xentropy/xentropy",
+        "^cross_entropy/total/sparse_softmax_cross_entropy_loss/assert_broadcastable/static_scalar_check_success",
+        "^cross_entropy/total/sparse_softmax_cross_entropy_loss/num_present/broadcast_weights/assert_broadcastable/static_scalar_check_success"
+      ],
+      "attr": {
+        "T": {
+          "type": "DT_FLOAT"
+        },
+        "out_type": {
+          "type": "DT_INT32"
+        }
+      }
+    },
+    {
+      "name": "cross_entropy/total/sparse_softmax_cross_entropy_loss/num_present/broadcast_weights/ones_like/Const",
+      "op": "Const",
+      "input": [
+        "^cross_entropy/total/sparse_softmax_cross_entropy_loss/assert_broadcastable/static_scalar_check_success",
+        "^cross_entropy/total/sparse_softmax_cross_entropy_loss/num_present/broadcast_weights/assert_broadcastable/static_scalar_check_success"
+      ],
+      "attr": {
+        "value": {
+          "tensor": {
+            "dtype": "DT_FLOAT",
+            "tensorShape": {},
+            "floatVal": [
+              1.0
+            ]
+          }
+        },
+        "dtype": {
+          "type": "DT_FLOAT"
+        }
+      }
+    },
+    {
+      "name": "cross_entropy/total/sparse_softmax_cross_entropy_loss/num_present/broadcast_weights/ones_like",
+      "op": "Fill",
+      "input": [
+        "cross_entropy/total/sparse_softmax_cross_entropy_loss/num_present/broadcast_weights/ones_like/Shape",
+        "cross_entropy/total/sparse_softmax_cross_entropy_loss/num_present/broadcast_weights/ones_like/Const"
+      ],
+      "attr": {
+        "T": {
+          "type": "DT_FLOAT"
+        }
+      }
+    },
+    {
+      "name": "cross_entropy/total/sparse_softmax_cross_entropy_loss/num_present/broadcast_weights",
+      "op": "Mul",
+      "input": [
+        "cross_entropy/total/sparse_softmax_cross_entropy_loss/num_present/Select",
+        "cross_entropy/total/sparse_softmax_cross_entropy_loss/num_present/broadcast_weights/ones_like"
+      ],
+      "attr": {
+        "T": {
+          "type": "DT_FLOAT"
+        }
+      }
+    },
+    {
+      "name": "cross_entropy/total/sparse_softmax_cross_entropy_loss/num_present/Const",
+      "op": "Const",
+      "input": [
+        "^cross_entropy/total/sparse_softmax_cross_entropy_loss/assert_broadcastable/static_scalar_check_success"
+      ],
+      "attr": {
+        "value": {
+          "tensor": {
+            "dtype": "DT_INT32",
+            "tensorShape": {
+              "dim": [
+                {
+                  "size": "1"
+                }
+              ]
+            },
+            "intVal": [
+              0
+            ]
+          }
+        },
+        "dtype": {
+          "type": "DT_INT32"
+        }
+      }
+    },
+    {
+      "name": "cross_entropy/total/sparse_softmax_cross_entropy_loss/num_present",
+      "op": "Sum",
+      "input": [
+        "cross_entropy/total/sparse_softmax_cross_entropy_loss/num_present/broadcast_weights",
+        "cross_entropy/total/sparse_softmax_cross_entropy_loss/num_present/Const"
+      ],
+      "attr": {
+        "keep_dims": {
+          "b": false
+        },
+        "T": {
+          "type": "DT_FLOAT"
+        },
+        "Tidx": {
+          "type": "DT_INT32"
+        }
+      }
+    },
+    {
+      "name": "cross_entropy/total/sparse_softmax_cross_entropy_loss/Const_2",
+      "op": "Const",
+      "input": [
+        "^cross_entropy/total/sparse_softmax_cross_entropy_loss/assert_broadcastable/static_scalar_check_success"
+      ],
+      "attr": {
+        "value": {
+          "tensor": {
+            "dtype": "DT_INT32",
+            "tensorShape": {
+              "dim": [
+                {}
+              ]
+            }
+          }
+        },
+        "dtype": {
+          "type": "DT_INT32"
+        }
+      }
+    },
+    {
+      "name": "cross_entropy/total/sparse_softmax_cross_entropy_loss/Sum_1",
+      "op": "Sum",
+      "input": [
+        "cross_entropy/total/sparse_softmax_cross_entropy_loss/Sum",
+        "cross_entropy/total/sparse_softmax_cross_entropy_loss/Const_2"
+      ],
+      "attr": {
+        "keep_dims": {
+          "b": false
+        },
+        "T": {
+          "type": "DT_FLOAT"
+        },
+        "Tidx": {
+          "type": "DT_INT32"
+        }
+      }
+    },
+    {
+      "name": "cross_entropy/total/sparse_softmax_cross_entropy_loss/Greater/y",
+      "op": "Const",
+      "input": [
+        "^cross_entropy/total/sparse_softmax_cross_entropy_loss/assert_broadcastable/static_scalar_check_success"
+      ],
+      "attr": {
+        "value": {
+          "tensor": {
+            "dtype": "DT_FLOAT",
+            "tensorShape": {},
+            "floatVal": [
+              0.0
+            ]
+          }
+        },
+        "dtype": {
+          "type": "DT_FLOAT"
+        }
+      }
+    },
+    {
+      "name": "cross_entropy/total/sparse_softmax_cross_entropy_loss/Greater",
+      "op": "Greater",
+      "input": [
+        "cross_entropy/total/sparse_softmax_cross_entropy_loss/num_present",
+        "cross_entropy/total/sparse_softmax_cross_entropy_loss/Greater/y"
+      ],
+      "attr": {
+        "T": {
+          "type": "DT_FLOAT"
+        }
+      }
+    },
+    {
+      "name": "cross_entropy/total/sparse_softmax_cross_entropy_loss/Equal/y",
+      "op": "Const",
+      "input": [
+        "^cross_entropy/total/sparse_softmax_cross_entropy_loss/assert_broadcastable/static_scalar_check_success"
+      ],
+      "attr": {
+        "value": {
+          "tensor": {
+            "dtype": "DT_FLOAT",
+            "tensorShape": {},
+            "floatVal": [
+              0.0
+            ]
+          }
+        },
+        "dtype": {
+          "type": "DT_FLOAT"
+        }
+      }
+    },
+    {
+      "name": "cross_entropy/total/sparse_softmax_cross_entropy_loss/Equal",
+      "op": "Equal",
+      "input": [
+        "cross_entropy/total/sparse_softmax_cross_entropy_loss/num_present",
+        "cross_entropy/total/sparse_softmax_cross_entropy_loss/Equal/y"
+      ],
+      "attr": {
+        "T": {
+          "type": "DT_FLOAT"
+        }
+      }
+    },
+    {
+      "name": "cross_entropy/total/sparse_softmax_cross_entropy_loss/ones_like/Shape",
+      "op": "Const",
+      "input": [
+        "^cross_entropy/total/sparse_softmax_cross_entropy_loss/assert_broadcastable/static_scalar_check_success"
+      ],
+      "attr": {
+        "value": {
+          "tensor": {
+            "dtype": "DT_INT32",
+            "tensorShape": {
+              "dim": [
+                {}
+              ]
+            }
+          }
+        },
+        "dtype": {
+          "type": "DT_INT32"
+        }
+      }
+    },
+    {
+      "name": "cross_entropy/total/sparse_softmax_cross_entropy_loss/ones_like/Const",
+      "op": "Const",
+      "input": [
+        "^cross_entropy/total/sparse_softmax_cross_entropy_loss/assert_broadcastable/static_scalar_check_success"
+      ],
+      "attr": {
+        "value": {
+          "tensor": {
+            "dtype": "DT_FLOAT",
+            "tensorShape": {},
+            "floatVal": [
+              1.0
+            ]
+          }
+        },
+        "dtype": {
+          "type": "DT_FLOAT"
+        }
+      }
+    },
+    {
+      "name": "cross_entropy/total/sparse_softmax_cross_entropy_loss/ones_like",
+      "op": "Fill",
+      "input": [
+        "cross_entropy/total/sparse_softmax_cross_entropy_loss/ones_like/Shape",
+        "cross_entropy/total/sparse_softmax_cross_entropy_loss/ones_like/Const"
+      ],
+      "attr": {
+        "T": {
+          "type": "DT_FLOAT"
+        }
+      }
+    },
+    {
+      "name": "cross_entropy/total/sparse_softmax_cross_entropy_loss/Select",
+      "op": "Select",
+      "input": [
+        "cross_entropy/total/sparse_softmax_cross_entropy_loss/Equal",
+        "cross_entropy/total/sparse_softmax_cross_entropy_loss/ones_like",
+        "cross_entropy/total/sparse_softmax_cross_entropy_loss/num_present"
+      ],
+      "attr": {
+        "T": {
+          "type": "DT_FLOAT"
+        }
+      }
+    },
+    {
+      "name": "cross_entropy/total/sparse_softmax_cross_entropy_loss/div",
+      "op": "RealDiv",
+      "input": [
+        "cross_entropy/total/sparse_softmax_cross_entropy_loss/Sum_1",
+        "cross_entropy/total/sparse_softmax_cross_entropy_loss/Select"
+      ],
+      "attr": {
+        "T": {
+          "type": "DT_FLOAT"
+        }
+      }
+    },
+    {
+      "name": "cross_entropy/total/sparse_softmax_cross_entropy_loss/zeros_like",
+      "op": "Const",
+      "input": [
+        "^cross_entropy/total/sparse_softmax_cross_entropy_loss/assert_broadcastable/static_scalar_check_success"
+      ],
+      "attr": {
+        "value": {
+          "tensor": {
+            "dtype": "DT_FLOAT",
+            "tensorShape": {},
+            "floatVal": [
+              0.0
+            ]
+          }
+        },
+        "dtype": {
+          "type": "DT_FLOAT"
+        }
+      }
+    },
+    {
+      "name": "cross_entropy/total/sparse_softmax_cross_entropy_loss/value",
+      "op": "Select",
+      "input": [
+        "cross_entropy/total/sparse_softmax_cross_entropy_loss/Greater",
+        "cross_entropy/total/sparse_softmax_cross_entropy_loss/div",
+        "cross_entropy/total/sparse_softmax_cross_entropy_loss/zeros_like"
+      ],
+      "attr": {
+        "T": {
+          "type": "DT_FLOAT"
+        }
+      }
+    },
+    {
+      "name": "cross_entropy_1/tags",
+      "op": "Const",
+      "attr": {
+        "value": {
+          "tensor": {
+            "dtype": "DT_STRING",
+            "tensorShape": {},
+            "stringVal": [
+              "Y3Jvc3NfZW50cm9weV8x"
+            ]
+          }
+        },
+        "dtype": {
+          "type": "DT_STRING"
+        }
+      }
+    },
+    {
+      "name": "cross_entropy_1",
+      "op": "ScalarSummary",
+      "input": [
+        "cross_entropy_1/tags",
+        "cross_entropy/total/sparse_softmax_cross_entropy_loss/value"
+      ],
+      "attr": {
+        "T": {
+          "type": "DT_FLOAT"
+        }
+      }
+    },
+    {
+      "name": "train/gradients/Shape",
+      "op": "Const",
+      "attr": {
+        "value": {
+          "tensor": {
+            "dtype": "DT_INT32",
+            "tensorShape": {
+              "dim": [
+                {}
+              ]
+            }
+          }
+        },
+        "dtype": {
+          "type": "DT_INT32"
+        }
+      }
+    },
+    {
+      "name": "train/gradients/Const",
+      "op": "Const",
+      "attr": {
+        "value": {
+          "tensor": {
+            "dtype": "DT_FLOAT",
+            "tensorShape": {},
+            "floatVal": [
+              1.0
+            ]
+          }
+        },
+        "dtype": {
+          "type": "DT_FLOAT"
+        }
+      }
+    },
+    {
+      "name": "train/gradients/Fill",
+      "op": "Fill",
+      "input": [
+        "train/gradients/Shape",
+        "train/gradients/Const"
+      ],
+      "attr": {
+        "T": {
+          "type": "DT_FLOAT"
+        }
+      }
+    },
+    {
+      "name": "train/gradients/cross_entropy/total/sparse_softmax_cross_entropy_loss/value_grad/zeros_like",
+      "op": "Const",
+      "attr": {
+        "value": {
+          "tensor": {
+            "dtype": "DT_FLOAT",
+            "tensorShape": {},
+            "floatVal": [
+              0.0
+            ]
+          }
+        },
+        "dtype": {
+          "type": "DT_FLOAT"
+        }
+      }
+    },
+    {
+      "name": "train/gradients/cross_entropy/total/sparse_softmax_cross_entropy_loss/value_grad/Select",
+      "op": "Select",
+      "input": [
+        "cross_entropy/total/sparse_softmax_cross_entropy_loss/Greater",
+        "train/gradients/Fill",
+        "train/gradients/cross_entropy/total/sparse_softmax_cross_entropy_loss/value_grad/zeros_like"
+      ],
+      "attr": {
+        "T": {
+          "type": "DT_FLOAT"
+        }
+      }
+    },
+    {
+      "name": "train/gradients/cross_entropy/total/sparse_softmax_cross_entropy_loss/value_grad/Select_1",
+      "op": "Select",
+      "input": [
+        "cross_entropy/total/sparse_softmax_cross_entropy_loss/Greater",
+        "train/gradients/cross_entropy/total/sparse_softmax_cross_entropy_loss/value_grad/zeros_like",
+        "train/gradients/Fill"
+      ],
+      "attr": {
+        "T": {
+          "type": "DT_FLOAT"
+        }
+      }
+    },
+    {
+      "name": "train/gradients/cross_entropy/total/sparse_softmax_cross_entropy_loss/value_grad/tuple/group_deps",
+      "op": "NoOp",
+      "input": [
+        "^train/gradients/cross_entropy/total/sparse_softmax_cross_entropy_loss/value_grad/Select",
+        "^train/gradients/cross_entropy/total/sparse_softmax_cross_entropy_loss/value_grad/Select_1"
+      ]
+    },
+    {
+      "name": "train/gradients/cross_entropy/total/sparse_softmax_cross_entropy_loss/value_grad/tuple/control_dependency",
+      "op": "Identity",
+      "input": [
+        "train/gradients/cross_entropy/total/sparse_softmax_cross_entropy_loss/value_grad/Select",
+        "^train/gradients/cross_entropy/total/sparse_softmax_cross_entropy_loss/value_grad/tuple/group_deps"
+      ],
+      "attr": {
+        "T": {
+          "type": "DT_FLOAT"
+        },
+        "_class": {
+          "list": {
+            "s": [
+              "bG9jOkB0cmFpbi9ncmFkaWVudHMvY3Jvc3NfZW50cm9weS90b3RhbC9zcGFyc2Vfc29mdG1heF9jcm9zc19lbnRyb3B5X2xvc3MvdmFsdWVfZ3JhZC9TZWxlY3Q="
+            ]
+          }
+        }
+      }
+    },
+    {
+      "name": "train/gradients/cross_entropy/total/sparse_softmax_cross_entropy_loss/value_grad/tuple/control_dependency_1",
+      "op": "Identity",
+      "input": [
+        "train/gradients/cross_entropy/total/sparse_softmax_cross_entropy_loss/value_grad/Select_1",
+        "^train/gradients/cross_entropy/total/sparse_softmax_cross_entropy_loss/value_grad/tuple/group_deps"
+      ],
+      "attr": {
+        "T": {
+          "type": "DT_FLOAT"
+        },
+        "_class": {
+          "list": {
+            "s": [
+              "bG9jOkB0cmFpbi9ncmFkaWVudHMvY3Jvc3NfZW50cm9weS90b3RhbC9zcGFyc2Vfc29mdG1heF9jcm9zc19lbnRyb3B5X2xvc3MvdmFsdWVfZ3JhZC9TZWxlY3RfMQ=="
+            ]
+          }
+        }
+      }
+    },
+    {
+      "name": "train/gradients/cross_entropy/total/sparse_softmax_cross_entropy_loss/div_grad/Shape",
+      "op": "Const",
+      "attr": {
+        "value": {
+          "tensor": {
+            "dtype": "DT_INT32",
+            "tensorShape": {
+              "dim": [
+                {}
+              ]
+            }
+          }
+        },
+        "dtype": {
+          "type": "DT_INT32"
+        }
+      }
+    },
+    {
+      "name": "train/gradients/cross_entropy/total/sparse_softmax_cross_entropy_loss/div_grad/Shape_1",
+      "op": "Const",
+      "attr": {
+        "value": {
+          "tensor": {
+            "dtype": "DT_INT32",
+            "tensorShape": {
+              "dim": [
+                {}
+              ]
+            }
+          }
+        },
+        "dtype": {
+          "type": "DT_INT32"
+        }
+      }
+    },
+    {
+      "name": "train/gradients/cross_entropy/total/sparse_softmax_cross_entropy_loss/div_grad/BroadcastGradientArgs",
+      "op": "BroadcastGradientArgs",
+      "input": [
+        "train/gradients/cross_entropy/total/sparse_softmax_cross_entropy_loss/div_grad/Shape",
+        "train/gradients/cross_entropy/total/sparse_softmax_cross_entropy_loss/div_grad/Shape_1"
+      ],
+      "attr": {
+        "T": {
+          "type": "DT_INT32"
+        }
+      }
+    },
+    {
+      "name": "train/gradients/cross_entropy/total/sparse_softmax_cross_entropy_loss/div_grad/RealDiv",
+      "op": "RealDiv",
+      "input": [
+        "train/gradients/cross_entropy/total/sparse_softmax_cross_entropy_loss/value_grad/tuple/control_dependency",
+        "cross_entropy/total/sparse_softmax_cross_entropy_loss/Select"
+      ],
+      "attr": {
+        "T": {
+          "type": "DT_FLOAT"
+        }
+      }
+    },
+    {
+      "name": "train/gradients/cross_entropy/total/sparse_softmax_cross_entropy_loss/div_grad/Sum",
+      "op": "Sum",
+      "input": [
+        "train/gradients/cross_entropy/total/sparse_softmax_cross_entropy_loss/div_grad/RealDiv",
+        "train/gradients/cross_entropy/total/sparse_softmax_cross_entropy_loss/div_grad/BroadcastGradientArgs"
+      ],
+      "attr": {
+        "keep_dims": {
+          "b": false
+        },
+        "T": {
+          "type": "DT_FLOAT"
+        },
+        "Tidx": {
+          "type": "DT_INT32"
+        }
+      }
+    },
+    {
+      "name": "train/gradients/cross_entropy/total/sparse_softmax_cross_entropy_loss/div_grad/Reshape",
+      "op": "Reshape",
+      "input": [
+        "train/gradients/cross_entropy/total/sparse_softmax_cross_entropy_loss/div_grad/Sum",
+        "train/gradients/cross_entropy/total/sparse_softmax_cross_entropy_loss/div_grad/Shape"
+      ],
+      "attr": {
+        "T": {
+          "type": "DT_FLOAT"
+        },
+        "Tshape": {
+          "type": "DT_INT32"
+        }
+      }
+    },
+    {
+      "name": "train/gradients/cross_entropy/total/sparse_softmax_cross_entropy_loss/div_grad/Neg",
+      "op": "Neg",
+      "input": [
+        "cross_entropy/total/sparse_softmax_cross_entropy_loss/Sum_1"
+      ],
+      "attr": {
+        "T": {
+          "type": "DT_FLOAT"
+        }
+      }
+    },
+    {
+      "name": "train/gradients/cross_entropy/total/sparse_softmax_cross_entropy_loss/div_grad/RealDiv_1",
+      "op": "RealDiv",
+      "input": [
+        "train/gradients/cross_entropy/total/sparse_softmax_cross_entropy_loss/div_grad/Neg",
+        "cross_entropy/total/sparse_softmax_cross_entropy_loss/Select"
+      ],
+      "attr": {
+        "T": {
+          "type": "DT_FLOAT"
+        }
+      }
+    },
+    {
+      "name": "train/gradients/cross_entropy/total/sparse_softmax_cross_entropy_loss/div_grad/RealDiv_2",
+      "op": "RealDiv",
+      "input": [
+        "train/gradients/cross_entropy/total/sparse_softmax_cross_entropy_loss/div_grad/RealDiv_1",
+        "cross_entropy/total/sparse_softmax_cross_entropy_loss/Select"
+      ],
+      "attr": {
+        "T": {
+          "type": "DT_FLOAT"
+        }
+      }
+    },
+    {
+      "name": "train/gradients/cross_entropy/total/sparse_softmax_cross_entropy_loss/div_grad/mul",
+      "op": "Mul",
+      "input": [
+        "train/gradients/cross_entropy/total/sparse_softmax_cross_entropy_loss/value_grad/tuple/control_dependency",
+        "train/gradients/cross_entropy/total/sparse_softmax_cross_entropy_loss/div_grad/RealDiv_2"
+      ],
+      "attr": {
+        "T": {
+          "type": "DT_FLOAT"
+        }
+      }
+    },
+    {
+      "name": "train/gradients/cross_entropy/total/sparse_softmax_cross_entropy_loss/div_grad/Sum_1",
+      "op": "Sum",
+      "input": [
+        "train/gradients/cross_entropy/total/sparse_softmax_cross_entropy_loss/div_grad/mul",
+        "train/gradients/cross_entropy/total/sparse_softmax_cross_entropy_loss/div_grad/BroadcastGradientArgs:1"
+      ],
+      "attr": {
+        "keep_dims": {
+          "b": false
+        },
+        "T": {
+          "type": "DT_FLOAT"
+        },
+        "Tidx": {
+          "type": "DT_INT32"
+        }
+      }
+    },
+    {
+      "name": "train/gradients/cross_entropy/total/sparse_softmax_cross_entropy_loss/div_grad/Reshape_1",
+      "op": "Reshape",
+      "input": [
+        "train/gradients/cross_entropy/total/sparse_softmax_cross_entropy_loss/div_grad/Sum_1",
+        "train/gradients/cross_entropy/total/sparse_softmax_cross_entropy_loss/div_grad/Shape_1"
+      ],
+      "attr": {
+        "T": {
+          "type": "DT_FLOAT"
+        },
+        "Tshape": {
+          "type": "DT_INT32"
+        }
+      }
+    },
+    {
+      "name": "train/gradients/cross_entropy/total/sparse_softmax_cross_entropy_loss/div_grad/tuple/group_deps",
+      "op": "NoOp",
+      "input": [
+        "^train/gradients/cross_entropy/total/sparse_softmax_cross_entropy_loss/div_grad/Reshape",
+        "^train/gradients/cross_entropy/total/sparse_softmax_cross_entropy_loss/div_grad/Reshape_1"
+      ]
+    },
+    {
+      "name": "train/gradients/cross_entropy/total/sparse_softmax_cross_entropy_loss/div_grad/tuple/control_dependency",
+      "op": "Identity",
+      "input": [
+        "train/gradients/cross_entropy/total/sparse_softmax_cross_entropy_loss/div_grad/Reshape",
+        "^train/gradients/cross_entropy/total/sparse_softmax_cross_entropy_loss/div_grad/tuple/group_deps"
+      ],
+      "attr": {
+        "T": {
+          "type": "DT_FLOAT"
+        },
+        "_class": {
+          "list": {
+            "s": [
+              "bG9jOkB0cmFpbi9ncmFkaWVudHMvY3Jvc3NfZW50cm9weS90b3RhbC9zcGFyc2Vfc29mdG1heF9jcm9zc19lbnRyb3B5X2xvc3MvZGl2X2dyYWQvUmVzaGFwZQ=="
+            ]
+          }
+        }
+      }
+    },
+    {
+      "name": "train/gradients/cross_entropy/total/sparse_softmax_cross_entropy_loss/div_grad/tuple/control_dependency_1",
+      "op": "Identity",
+      "input": [
+        "train/gradients/cross_entropy/total/sparse_softmax_cross_entropy_loss/div_grad/Reshape_1",
+        "^train/gradients/cross_entropy/total/sparse_softmax_cross_entropy_loss/div_grad/tuple/group_deps"
+      ],
+      "attr": {
+        "T": {
+          "type": "DT_FLOAT"
+        },
+        "_class": {
+          "list": {
+            "s": [
+              "bG9jOkB0cmFpbi9ncmFkaWVudHMvY3Jvc3NfZW50cm9weS90b3RhbC9zcGFyc2Vfc29mdG1heF9jcm9zc19lbnRyb3B5X2xvc3MvZGl2X2dyYWQvUmVzaGFwZV8x"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "name": "train/gradients/cross_entropy/total/sparse_softmax_cross_entropy_loss/Sum_1_grad/Reshape/shape",
+      "op": "Const",
+      "attr": {
+        "value": {
+          "tensor": {
+            "dtype": "DT_INT32",
+            "tensorShape": {
+              "dim": [
+                {}
+              ]
+            }
+          }
+        },
+        "dtype": {
+          "type": "DT_INT32"
+        }
+      }
+    },
+    {
+      "name": "train/gradients/cross_entropy/total/sparse_softmax_cross_entropy_loss/Sum_1_grad/Reshape",
+      "op": "Reshape",
+      "input": [
+        "train/gradients/cross_entropy/total/sparse_softmax_cross_entropy_loss/div_grad/tuple/control_dependency",
+        "train/gradients/cross_entropy/total/sparse_softmax_cross_entropy_loss/Sum_1_grad/Reshape/shape"
+      ],
+      "attr": {
+        "T": {
+          "type": "DT_FLOAT"
+        },
+        "Tshape": {
+          "type": "DT_INT32"
+        }
+      }
+    },
+    {
+      "name": "train/gradients/cross_entropy/total/sparse_softmax_cross_entropy_loss/Sum_1_grad/Tile/multiples",
+      "op": "Const",
+      "attr": {
+        "value": {
+          "tensor": {
+            "dtype": "DT_INT32",
+            "tensorShape": {
+              "dim": [
+                {}
+              ]
+            }
+          }
+        },
+        "dtype": {
+          "type": "DT_INT32"
+        }
+      }
+    },
+    {
+      "name": "train/gradients/cross_entropy/total/sparse_softmax_cross_entropy_loss/Sum_1_grad/Tile",
+      "op": "Tile",
+      "input": [
+        "train/gradients/cross_entropy/total/sparse_softmax_cross_entropy_loss/Sum_1_grad/Reshape",
+        "train/gradients/cross_entropy/total/sparse_softmax_cross_entropy_loss/Sum_1_grad/Tile/multiples"
+      ],
+      "attr": {
+        "T": {
+          "type": "DT_FLOAT"
+        },
+        "Tmultiples": {
+          "type": "DT_INT32"
+        }
+      }
+    },
+    {
+      "name": "train/gradients/cross_entropy/total/sparse_softmax_cross_entropy_loss/Select_grad/zeros_like",
+      "op": "Const",
+      "attr": {
+        "value": {
+          "tensor": {
+            "dtype": "DT_FLOAT",
+            "tensorShape": {},
+            "floatVal": [
+              0.0
+            ]
+          }
+        },
+        "dtype": {
+          "type": "DT_FLOAT"
+        }
+      }
+    },
+    {
+      "name": "train/gradients/cross_entropy/total/sparse_softmax_cross_entropy_loss/Select_grad/Select",
+      "op": "Select",
+      "input": [
+        "cross_entropy/total/sparse_softmax_cross_entropy_loss/Equal",
+        "train/gradients/cross_entropy/total/sparse_softmax_cross_entropy_loss/div_grad/tuple/control_dependency_1",
+        "train/gradients/cross_entropy/total/sparse_softmax_cross_entropy_loss/Select_grad/zeros_like"
+      ],
+      "attr": {
+        "T": {
+          "type": "DT_FLOAT"
+        }
+      }
+    },
+    {
+      "name": "train/gradients/cross_entropy/total/sparse_softmax_cross_entropy_loss/Select_grad/Select_1",
+      "op": "Select",
+      "input": [
+        "cross_entropy/total/sparse_softmax_cross_entropy_loss/Equal",
+        "train/gradients/cross_entropy/total/sparse_softmax_cross_entropy_loss/Select_grad/zeros_like",
+        "train/gradients/cross_entropy/total/sparse_softmax_cross_entropy_loss/div_grad/tuple/control_dependency_1"
+      ],
+      "attr": {
+        "T": {
+          "type": "DT_FLOAT"
+        }
+      }
+    },
+    {
+      "name": "train/gradients/cross_entropy/total/sparse_softmax_cross_entropy_loss/Select_grad/tuple/group_deps",
+      "op": "NoOp",
+      "input": [
+        "^train/gradients/cross_entropy/total/sparse_softmax_cross_entropy_loss/Select_grad/Select",
+        "^train/gradients/cross_entropy/total/sparse_softmax_cross_entropy_loss/Select_grad/Select_1"
+      ]
+    },
+    {
+      "name": "train/gradients/cross_entropy/total/sparse_softmax_cross_entropy_loss/Select_grad/tuple/control_dependency",
+      "op": "Identity",
+      "input": [
+        "train/gradients/cross_entropy/total/sparse_softmax_cross_entropy_loss/Select_grad/Select",
+        "^train/gradients/cross_entropy/total/sparse_softmax_cross_entropy_loss/Select_grad/tuple/group_deps"
+      ],
+      "attr": {
+        "T": {
+          "type": "DT_FLOAT"
+        },
+        "_class": {
+          "list": {
+            "s": [
+              "bG9jOkB0cmFpbi9ncmFkaWVudHMvY3Jvc3NfZW50cm9weS90b3RhbC9zcGFyc2Vfc29mdG1heF9jcm9zc19lbnRyb3B5X2xvc3MvU2VsZWN0X2dyYWQvU2VsZWN0"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "name": "train/gradients/cross_entropy/total/sparse_softmax_cross_entropy_loss/Select_grad/tuple/control_dependency_1",
+      "op": "Identity",
+      "input": [
+        "train/gradients/cross_entropy/total/sparse_softmax_cross_entropy_loss/Select_grad/Select_1",
+        "^train/gradients/cross_entropy/total/sparse_softmax_cross_entropy_loss/Select_grad/tuple/group_deps"
+      ],
+      "attr": {
+        "T": {
+          "type": "DT_FLOAT"
+        },
+        "_class": {
+          "list": {
+            "s": [
+              "bG9jOkB0cmFpbi9ncmFkaWVudHMvY3Jvc3NfZW50cm9weS90b3RhbC9zcGFyc2Vfc29mdG1heF9jcm9zc19lbnRyb3B5X2xvc3MvU2VsZWN0X2dyYWQvU2VsZWN0XzE="
+            ]
+          }
+        }
+      }
+    },
+    {
+      "name": "train/gradients/cross_entropy/total/sparse_softmax_cross_entropy_loss/Sum_grad/Reshape/shape",
+      "op": "Const",
+      "attr": {
+        "value": {
+          "tensor": {
+            "dtype": "DT_INT32",
+            "tensorShape": {
+              "dim": [
+                {
+                  "size": "1"
+                }
+              ]
+            },
+            "intVal": [
+              1
+            ]
+          }
+        },
+        "dtype": {
+          "type": "DT_INT32"
+        }
+      }
+    },
+    {
+      "name": "train/gradients/cross_entropy/total/sparse_softmax_cross_entropy_loss/Sum_grad/Reshape",
+      "op": "Reshape",
+      "input": [
+        "train/gradients/cross_entropy/total/sparse_softmax_cross_entropy_loss/Sum_1_grad/Tile",
+        "train/gradients/cross_entropy/total/sparse_softmax_cross_entropy_loss/Sum_grad/Reshape/shape"
+      ],
+      "attr": {
+        "T": {
+          "type": "DT_FLOAT"
+        },
+        "Tshape": {
+          "type": "DT_INT32"
+        }
+      }
+    },
+    {
+      "name": "train/gradients/cross_entropy/total/sparse_softmax_cross_entropy_loss/Sum_grad/Shape",
+      "op": "Shape",
+      "input": [
+        "cross_entropy/total/sparse_softmax_cross_entropy_loss/Mul"
+      ],
+      "attr": {
+        "T": {
+          "type": "DT_FLOAT"
+        },
+        "out_type": {
+          "type": "DT_INT32"
+        }
+      }
+    },
+    {
+      "name": "train/gradients/cross_entropy/total/sparse_softmax_cross_entropy_loss/Sum_grad/Tile",
+      "op": "Tile",
+      "input": [
+        "train/gradients/cross_entropy/total/sparse_softmax_cross_entropy_loss/Sum_grad/Reshape",
+        "train/gradients/cross_entropy/total/sparse_softmax_cross_entropy_loss/Sum_grad/Shape"
+      ],
+      "attr": {
+        "T": {
+          "type": "DT_FLOAT"
+        },
+        "Tmultiples": {
+          "type": "DT_INT32"
+        }
+      }
+    },
+    {
+      "name": "train/gradients/cross_entropy/total/sparse_softmax_cross_entropy_loss/Mul_grad/Shape",
+      "op": "Shape",
+      "input": [
+        "cross_entropy/total/sparse_softmax_cross_entropy_loss/xentropy/xentropy"
+      ],
+      "attr": {
+        "T": {
+          "type": "DT_FLOAT"
+        },
+        "out_type": {
+          "type": "DT_INT32"
+        }
+      }
+    },
+    {
+      "name": "train/gradients/cross_entropy/total/sparse_softmax_cross_entropy_loss/Mul_grad/Shape_1",
+      "op": "Const",
+      "attr": {
+        "value": {
+          "tensor": {
+            "dtype": "DT_INT32",
+            "tensorShape": {
+              "dim": [
+                {}
+              ]
+            }
+          }
+        },
+        "dtype": {
+          "type": "DT_INT32"
+        }
+      }
+    },
+    {
+      "name": "train/gradients/cross_entropy/total/sparse_softmax_cross_entropy_loss/Mul_grad/BroadcastGradientArgs",
+      "op": "BroadcastGradientArgs",
+      "input": [
+        "train/gradients/cross_entropy/total/sparse_softmax_cross_entropy_loss/Mul_grad/Shape",
+        "train/gradients/cross_entropy/total/sparse_softmax_cross_entropy_loss/Mul_grad/Shape_1"
+      ],
+      "attr": {
+        "T": {
+          "type": "DT_INT32"
+        }
+      }
+    },
+    {
+      "name": "train/gradients/cross_entropy/total/sparse_softmax_cross_entropy_loss/Mul_grad/mul",
+      "op": "Mul",
+      "input": [
+        "train/gradients/cross_entropy/total/sparse_softmax_cross_entropy_loss/Sum_grad/Tile",
+        "cross_entropy/total/sparse_softmax_cross_entropy_loss/Const"
+      ],
+      "attr": {
+        "T": {
+          "type": "DT_FLOAT"
+        }
+      }
+    },
+    {
+      "name": "train/gradients/cross_entropy/total/sparse_softmax_cross_entropy_loss/Mul_grad/Sum",
+      "op": "Sum",
+      "input": [
+        "train/gradients/cross_entropy/total/sparse_softmax_cross_entropy_loss/Mul_grad/mul",
+        "train/gradients/cross_entropy/total/sparse_softmax_cross_entropy_loss/Mul_grad/BroadcastGradientArgs"
+      ],
+      "attr": {
+        "keep_dims": {
+          "b": false
+        },
+        "T": {
+          "type": "DT_FLOAT"
+        },
+        "Tidx": {
+          "type": "DT_INT32"
+        }
+      }
+    },
+    {
+      "name": "train/gradients/cross_entropy/total/sparse_softmax_cross_entropy_loss/Mul_grad/Reshape",
+      "op": "Reshape",
+      "input": [
+        "train/gradients/cross_entropy/total/sparse_softmax_cross_entropy_loss/Mul_grad/Sum",
+        "train/gradients/cross_entropy/total/sparse_softmax_cross_entropy_loss/Mul_grad/Shape"
+      ],
+      "attr": {
+        "T": {
+          "type": "DT_FLOAT"
+        },
+        "Tshape": {
+          "type": "DT_INT32"
+        }
+      }
+    },
+    {
+      "name": "train/gradients/cross_entropy/total/sparse_softmax_cross_entropy_loss/Mul_grad/mul_1",
+      "op": "Mul",
+      "input": [
+        "cross_entropy/total/sparse_softmax_cross_entropy_loss/xentropy/xentropy",
+        "train/gradients/cross_entropy/total/sparse_softmax_cross_entropy_loss/Sum_grad/Tile"
+      ],
+      "attr": {
+        "T": {
+          "type": "DT_FLOAT"
+        }
+      }
+    },
+    {
+      "name": "train/gradients/cross_entropy/total/sparse_softmax_cross_entropy_loss/Mul_grad/Sum_1",
+      "op": "Sum",
+      "input": [
+        "train/gradients/cross_entropy/total/sparse_softmax_cross_entropy_loss/Mul_grad/mul_1",
+        "train/gradients/cross_entropy/total/sparse_softmax_cross_entropy_loss/Mul_grad/BroadcastGradientArgs:1"
+      ],
+      "attr": {
+        "keep_dims": {
+          "b": false
+        },
+        "T": {
+          "type": "DT_FLOAT"
+        },
+        "Tidx": {
+          "type": "DT_INT32"
+        }
+      }
+    },
+    {
+      "name": "train/gradients/cross_entropy/total/sparse_softmax_cross_entropy_loss/Mul_grad/Reshape_1",
+      "op": "Reshape",
+      "input": [
+        "train/gradients/cross_entropy/total/sparse_softmax_cross_entropy_loss/Mul_grad/Sum_1",
+        "train/gradients/cross_entropy/total/sparse_softmax_cross_entropy_loss/Mul_grad/Shape_1"
+      ],
+      "attr": {
+        "T": {
+          "type": "DT_FLOAT"
+        },
+        "Tshape": {
+          "type": "DT_INT32"
+        }
+      }
+    },
+    {
+      "name": "train/gradients/cross_entropy/total/sparse_softmax_cross_entropy_loss/Mul_grad/tuple/group_deps",
+      "op": "NoOp",
+      "input": [
+        "^train/gradients/cross_entropy/total/sparse_softmax_cross_entropy_loss/Mul_grad/Reshape",
+        "^train/gradients/cross_entropy/total/sparse_softmax_cross_entropy_loss/Mul_grad/Reshape_1"
+      ]
+    },
+    {
+      "name": "train/gradients/cross_entropy/total/sparse_softmax_cross_entropy_loss/Mul_grad/tuple/control_dependency",
+      "op": "Identity",
+      "input": [
+        "train/gradients/cross_entropy/total/sparse_softmax_cross_entropy_loss/Mul_grad/Reshape",
+        "^train/gradients/cross_entropy/total/sparse_softmax_cross_entropy_loss/Mul_grad/tuple/group_deps"
+      ],
+      "attr": {
+        "T": {
+          "type": "DT_FLOAT"
+        },
+        "_class": {
+          "list": {
+            "s": [
+              "bG9jOkB0cmFpbi9ncmFkaWVudHMvY3Jvc3NfZW50cm9weS90b3RhbC9zcGFyc2Vfc29mdG1heF9jcm9zc19lbnRyb3B5X2xvc3MvTXVsX2dyYWQvUmVzaGFwZQ=="
+            ]
+          }
+        }
+      }
+    },
+    {
+      "name": "train/gradients/cross_entropy/total/sparse_softmax_cross_entropy_loss/Mul_grad/tuple/control_dependency_1",
+      "op": "Identity",
+      "input": [
+        "train/gradients/cross_entropy/total/sparse_softmax_cross_entropy_loss/Mul_grad/Reshape_1",
+        "^train/gradients/cross_entropy/total/sparse_softmax_cross_entropy_loss/Mul_grad/tuple/group_deps"
+      ],
+      "attr": {
+        "T": {
+          "type": "DT_FLOAT"
+        },
+        "_class": {
+          "list": {
+            "s": [
+              "bG9jOkB0cmFpbi9ncmFkaWVudHMvY3Jvc3NfZW50cm9weS90b3RhbC9zcGFyc2Vfc29mdG1heF9jcm9zc19lbnRyb3B5X2xvc3MvTXVsX2dyYWQvUmVzaGFwZV8x"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "name": "train/gradients/cross_entropy/total/sparse_softmax_cross_entropy_loss/num_present_grad/Reshape/shape",
+      "op": "Const",
+      "attr": {
+        "value": {
+          "tensor": {
+            "dtype": "DT_INT32",
+            "tensorShape": {
+              "dim": [
+                {
+                  "size": "1"
+                }
+              ]
+            },
+            "intVal": [
+              1
+            ]
+          }
+        },
+        "dtype": {
+          "type": "DT_INT32"
+        }
+      }
+    },
+    {
+      "name": "train/gradients/cross_entropy/total/sparse_softmax_cross_entropy_loss/num_present_grad/Reshape",
+      "op": "Reshape",
+      "input": [
+        "train/gradients/cross_entropy/total/sparse_softmax_cross_entropy_loss/Select_grad/tuple/control_dependency_1",
+        "train/gradients/cross_entropy/total/sparse_softmax_cross_entropy_loss/num_present_grad/Reshape/shape"
+      ],
+      "attr": {
+        "T": {
+          "type": "DT_FLOAT"
+        },
+        "Tshape": {
+          "type": "DT_INT32"
+        }
+      }
+    },
+    {
+      "name": "train/gradients/cross_entropy/total/sparse_softmax_cross_entropy_loss/num_present_grad/Shape",
+      "op": "Shape",
+      "input": [
+        "cross_entropy/total/sparse_softmax_cross_entropy_loss/num_present/broadcast_weights"
+      ],
+      "attr": {
+        "T": {
+          "type": "DT_FLOAT"
+        },
+        "out_type": {
+          "type": "DT_INT32"
+        }
+      }
+    },
+    {
+      "name": "train/gradients/cross_entropy/total/sparse_softmax_cross_entropy_loss/num_present_grad/Tile",
+      "op": "Tile",
+      "input": [
+        "train/gradients/cross_entropy/total/sparse_softmax_cross_entropy_loss/num_present_grad/Reshape",
+        "train/gradients/cross_entropy/total/sparse_softmax_cross_entropy_loss/num_present_grad/Shape"
+      ],
+      "attr": {
+        "T": {
+          "type": "DT_FLOAT"
+        },
+        "Tmultiples": {
+          "type": "DT_INT32"
+        }
+      }
+    },
+    {
+      "name": "train/gradients/cross_entropy/total/sparse_softmax_cross_entropy_loss/num_present/broadcast_weights_grad/Shape",
+      "op": "Const",
+      "attr": {
+        "value": {
+          "tensor": {
+            "dtype": "DT_INT32",
+            "tensorShape": {
+              "dim": [
+                {}
+              ]
+            }
+          }
+        },
+        "dtype": {
+          "type": "DT_INT32"
+        }
+      }
+    },
+    {
+      "name": "train/gradients/cross_entropy/total/sparse_softmax_cross_entropy_loss/num_present/broadcast_weights_grad/Shape_1",
+      "op": "Shape",
+      "input": [
+        "cross_entropy/total/sparse_softmax_cross_entropy_loss/num_present/broadcast_weights/ones_like"
+      ],
+      "attr": {
+        "T": {
+          "type": "DT_FLOAT"
+        },
+        "out_type": {
+          "type": "DT_INT32"
+        }
+      }
+    },
+    {
+      "name": "train/gradients/cross_entropy/total/sparse_softmax_cross_entropy_loss/num_present/broadcast_weights_grad/BroadcastGradientArgs",
+      "op": "BroadcastGradientArgs",
+      "input": [
+        "train/gradients/cross_entropy/total/sparse_softmax_cross_entropy_loss/num_present/broadcast_weights_grad/Shape",
+        "train/gradients/cross_entropy/total/sparse_softmax_cross_entropy_loss/num_present/broadcast_weights_grad/Shape_1"
+      ],
+      "attr": {
+        "T": {
+          "type": "DT_INT32"
+        }
+      }
+    },
+    {
+      "name": "train/gradients/cross_entropy/total/sparse_softmax_cross_entropy_loss/num_present/broadcast_weights_grad/mul",
+      "op": "Mul",
+      "input": [
+        "train/gradients/cross_entropy/total/sparse_softmax_cross_entropy_loss/num_present_grad/Tile",
+        "cross_entropy/total/sparse_softmax_cross_entropy_loss/num_present/broadcast_weights/ones_like"
+      ],
+      "attr": {
+        "T": {
+          "type": "DT_FLOAT"
+        }
+      }
+    },
+    {
+      "name": "train/gradients/cross_entropy/total/sparse_softmax_cross_entropy_loss/num_present/broadcast_weights_grad/Sum",
+      "op": "Sum",
+      "input": [
+        "train/gradients/cross_entropy/total/sparse_softmax_cross_entropy_loss/num_present/broadcast_weights_grad/mul",
+        "train/gradients/cross_entropy/total/sparse_softmax_cross_entropy_loss/num_present/broadcast_weights_grad/BroadcastGradientArgs"
+      ],
+      "attr": {
+        "keep_dims": {
+          "b": false
+        },
+        "T": {
+          "type": "DT_FLOAT"
+        },
+        "Tidx": {
+          "type": "DT_INT32"
+        }
+      }
+    },
+    {
+      "name": "train/gradients/cross_entropy/total/sparse_softmax_cross_entropy_loss/num_present/broadcast_weights_grad/Reshape",
+      "op": "Reshape",
+      "input": [
+        "train/gradients/cross_entropy/total/sparse_softmax_cross_entropy_loss/num_present/broadcast_weights_grad/Sum",
+        "train/gradients/cross_entropy/total/sparse_softmax_cross_entropy_loss/num_present/broadcast_weights_grad/Shape"
+      ],
+      "attr": {
+        "T": {
+          "type": "DT_FLOAT"
+        },
+        "Tshape": {
+          "type": "DT_INT32"
+        }
+      }
+    },
+    {
+      "name": "train/gradients/cross_entropy/total/sparse_softmax_cross_entropy_loss/num_present/broadcast_weights_grad/mul_1",
+      "op": "Mul",
+      "input": [
+        "cross_entropy/total/sparse_softmax_cross_entropy_loss/num_present/Select",
+        "train/gradients/cross_entropy/total/sparse_softmax_cross_entropy_loss/num_present_grad/Tile"
+      ],
+      "attr": {
+        "T": {
+          "type": "DT_FLOAT"
+        }
+      }
+    },
+    {
+      "name": "train/gradients/cross_entropy/total/sparse_softmax_cross_entropy_loss/num_present/broadcast_weights_grad/Sum_1",
+      "op": "Sum",
+      "input": [
+        "train/gradients/cross_entropy/total/sparse_softmax_cross_entropy_loss/num_present/broadcast_weights_grad/mul_1",
+        "train/gradients/cross_entropy/total/sparse_softmax_cross_entropy_loss/num_present/broadcast_weights_grad/BroadcastGradientArgs:1"
+      ],
+      "attr": {
+        "keep_dims": {
+          "b": false
+        },
+        "T": {
+          "type": "DT_FLOAT"
+        },
+        "Tidx": {
+          "type": "DT_INT32"
+        }
+      }
+    },
+    {
+      "name": "train/gradients/cross_entropy/total/sparse_softmax_cross_entropy_loss/num_present/broadcast_weights_grad/Reshape_1",
+      "op": "Reshape",
+      "input": [
+        "train/gradients/cross_entropy/total/sparse_softmax_cross_entropy_loss/num_present/broadcast_weights_grad/Sum_1",
+        "train/gradients/cross_entropy/total/sparse_softmax_cross_entropy_loss/num_present/broadcast_weights_grad/Shape_1"
+      ],
+      "attr": {
+        "T": {
+          "type": "DT_FLOAT"
+        },
+        "Tshape": {
+          "type": "DT_INT32"
+        }
+      }
+    },
+    {
+      "name": "train/gradients/cross_entropy/total/sparse_softmax_cross_entropy_loss/num_present/broadcast_weights_grad/tuple/group_deps",
+      "op": "NoOp",
+      "input": [
+        "^train/gradients/cross_entropy/total/sparse_softmax_cross_entropy_loss/num_present/broadcast_weights_grad/Reshape",
+        "^train/gradients/cross_entropy/total/sparse_softmax_cross_entropy_loss/num_present/broadcast_weights_grad/Reshape_1"
+      ]
+    },
+    {
+      "name": "train/gradients/cross_entropy/total/sparse_softmax_cross_entropy_loss/num_present/broadcast_weights_grad/tuple/control_dependency",
+      "op": "Identity",
+      "input": [
+        "train/gradients/cross_entropy/total/sparse_softmax_cross_entropy_loss/num_present/broadcast_weights_grad/Reshape",
+        "^train/gradients/cross_entropy/total/sparse_softmax_cross_entropy_loss/num_present/broadcast_weights_grad/tuple/group_deps"
+      ],
+      "attr": {
+        "T": {
+          "type": "DT_FLOAT"
+        },
+        "_class": {
+          "list": {
+            "s": [
+              "bG9jOkB0cmFpbi9ncmFkaWVudHMvY3Jvc3NfZW50cm9weS90b3RhbC9zcGFyc2Vfc29mdG1heF9jcm9zc19lbnRyb3B5X2xvc3MvbnVtX3ByZXNlbnQvYnJvYWRjYXN0X3dlaWdodHNfZ3JhZC9SZXNoYXBl"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "name": "train/gradients/cross_entropy/total/sparse_softmax_cross_entropy_loss/num_present/broadcast_weights_grad/tuple/control_dependency_1",
+      "op": "Identity",
+      "input": [
+        "train/gradients/cross_entropy/total/sparse_softmax_cross_entropy_loss/num_present/broadcast_weights_grad/Reshape_1",
+        "^train/gradients/cross_entropy/total/sparse_softmax_cross_entropy_loss/num_present/broadcast_weights_grad/tuple/group_deps"
+      ],
+      "attr": {
+        "T": {
+          "type": "DT_FLOAT"
+        },
+        "_class": {
+          "list": {
+            "s": [
+              "bG9jOkB0cmFpbi9ncmFkaWVudHMvY3Jvc3NfZW50cm9weS90b3RhbC9zcGFyc2Vfc29mdG1heF9jcm9zc19lbnRyb3B5X2xvc3MvbnVtX3ByZXNlbnQvYnJvYWRjYXN0X3dlaWdodHNfZ3JhZC9SZXNoYXBlXzE="
+            ]
+          }
+        }
+      }
+    },
+    {
+      "name": "train/gradients/cross_entropy/total/sparse_softmax_cross_entropy_loss/num_present/broadcast_weights/ones_like_grad/Const",
+      "op": "Const",
+      "attr": {
+        "value": {
+          "tensor": {
+            "dtype": "DT_INT32",
+            "tensorShape": {
+              "dim": [
+                {
+                  "size": "1"
+                }
+              ]
+            },
+            "intVal": [
+              0
+            ]
+          }
+        },
+        "dtype": {
+          "type": "DT_INT32"
+        }
+      }
+    },
+    {
+      "name": "train/gradients/cross_entropy/total/sparse_softmax_cross_entropy_loss/num_present/broadcast_weights/ones_like_grad/Sum",
+      "op": "Sum",
+      "input": [
+        "train/gradients/cross_entropy/total/sparse_softmax_cross_entropy_loss/num_present/broadcast_weights_grad/tuple/control_dependency_1",
+        "train/gradients/cross_entropy/total/sparse_softmax_cross_entropy_loss/num_present/broadcast_weights/ones_like_grad/Const"
+      ],
+      "attr": {
+        "keep_dims": {
+          "b": false
+        },
+        "T": {
+          "type": "DT_FLOAT"
+        },
+        "Tidx": {
+          "type": "DT_INT32"
+        }
+      }
+    },
+    {
+      "name": "train/gradients/zeros_like",
+      "op": "ZerosLike",
+      "input": [
+        "cross_entropy/total/sparse_softmax_cross_entropy_loss/xentropy/xentropy:1"
+      ],
+      "attr": {
+        "T": {
+          "type": "DT_FLOAT"
+        }
+      }
+    },
+    {
+      "name": "train/gradients/cross_entropy/total/sparse_softmax_cross_entropy_loss/xentropy/xentropy_grad/PreventGradient",
+      "op": "PreventGradient",
+      "input": [
+        "cross_entropy/total/sparse_softmax_cross_entropy_loss/xentropy/xentropy:1"
+      ],
+      "attr": {
+        "T": {
+          "type": "DT_FLOAT"
+        },
+        "message": {
+          "s": "Q3VycmVudGx5IHRoZXJlIGlzIG5vIHdheSB0byB0YWtlIHRoZSBzZWNvbmQgZGVyaXZhdGl2ZSBvZiBzcGFyc2Vfc29mdG1heF9jcm9zc19lbnRyb3B5X3dpdGhfbG9naXRzIGR1ZSB0byB0aGUgZnVzZWQgaW1wbGVtZW50YXRpb24ncyBpbnRlcmFjdGlvbiB3aXRoIHRmLmdyYWRpZW50cygp"
+        }
+      }
+    },
+    {
+      "name": "train/gradients/cross_entropy/total/sparse_softmax_cross_entropy_loss/xentropy/xentropy_grad/ExpandDims/dim",
+      "op": "Const",
+      "attr": {
+        "value": {
+          "tensor": {
+            "dtype": "DT_INT32",
+            "tensorShape": {},
+            "intVal": [
+              -1
+            ]
+          }
+        },
+        "dtype": {
+          "type": "DT_INT32"
+        }
+      }
+    },
+    {
+      "name": "train/gradients/cross_entropy/total/sparse_softmax_cross_entropy_loss/xentropy/xentropy_grad/ExpandDims",
+      "op": "ExpandDims",
+      "input": [
+        "train/gradients/cross_entropy/total/sparse_softmax_cross_entropy_loss/Mul_grad/tuple/control_dependency",
+        "train/gradients/cross_entropy/total/sparse_softmax_cross_entropy_loss/xentropy/xentropy_grad/ExpandDims/dim"
+      ],
+      "attr": {
+        "T": {
+          "type": "DT_FLOAT"
+        },
+        "Tdim": {
+          "type": "DT_INT32"
+        }
+      }
+    },
+    {
+      "name": "train/gradients/cross_entropy/total/sparse_softmax_cross_entropy_loss/xentropy/xentropy_grad/mul",
+      "op": "Mul",
+      "input": [
+        "train/gradients/cross_entropy/total/sparse_softmax_cross_entropy_loss/xentropy/xentropy_grad/ExpandDims",
+        "train/gradients/cross_entropy/total/sparse_softmax_cross_entropy_loss/xentropy/xentropy_grad/PreventGradient"
+      ],
+      "attr": {
+        "T": {
+          "type": "DT_FLOAT"
+        }
+      }
+    },
+    {
+      "name": "train/gradients/layer2/Wx_plus_b/add_grad/Shape",
+      "op": "Shape",
+      "input": [
+        "layer2/Wx_plus_b/MatMul"
+      ],
+      "attr": {
+        "T": {
+          "type": "DT_FLOAT"
+        },
+        "out_type": {
+          "type": "DT_INT32"
+        }
+      }
+    },
+    {
+      "name": "train/gradients/layer2/Wx_plus_b/add_grad/Shape_1",
+      "op": "Const",
+      "attr": {
+        "value": {
+          "tensor": {
+            "dtype": "DT_INT32",
+            "tensorShape": {
+              "dim": [
+                {
+                  "size": "1"
+                }
+              ]
+            },
+            "intVal": [
+              10
+            ]
+          }
+        },
+        "dtype": {
+          "type": "DT_INT32"
+        }
+      }
+    },
+    {
+      "name": "train/gradients/layer2/Wx_plus_b/add_grad/BroadcastGradientArgs",
+      "op": "BroadcastGradientArgs",
+      "input": [
+        "train/gradients/layer2/Wx_plus_b/add_grad/Shape",
+        "train/gradients/layer2/Wx_plus_b/add_grad/Shape_1"
+      ],
+      "attr": {
+        "T": {
+          "type": "DT_INT32"
+        }
+      }
+    },
+    {
+      "name": "train/gradients/layer2/Wx_plus_b/add_grad/Sum",
+      "op": "Sum",
+      "input": [
+        "train/gradients/cross_entropy/total/sparse_softmax_cross_entropy_loss/xentropy/xentropy_grad/mul",
+        "train/gradients/layer2/Wx_plus_b/add_grad/BroadcastGradientArgs"
+      ],
+      "attr": {
+        "keep_dims": {
+          "b": false
+        },
+        "T": {
+          "type": "DT_FLOAT"
+        },
+        "Tidx": {
+          "type": "DT_INT32"
+        }
+      }
+    },
+    {
+      "name": "train/gradients/layer2/Wx_plus_b/add_grad/Reshape",
+      "op": "Reshape",
+      "input": [
+        "train/gradients/layer2/Wx_plus_b/add_grad/Sum",
+        "train/gradients/layer2/Wx_plus_b/add_grad/Shape"
+      ],
+      "attr": {
+        "T": {
+          "type": "DT_FLOAT"
+        },
+        "Tshape": {
+          "type": "DT_INT32"
+        }
+      }
+    },
+    {
+      "name": "train/gradients/layer2/Wx_plus_b/add_grad/Sum_1",
+      "op": "Sum",
+      "input": [
+        "train/gradients/cross_entropy/total/sparse_softmax_cross_entropy_loss/xentropy/xentropy_grad/mul",
+        "train/gradients/layer2/Wx_plus_b/add_grad/BroadcastGradientArgs:1"
+      ],
+      "attr": {
+        "keep_dims": {
+          "b": false
+        },
+        "T": {
+          "type": "DT_FLOAT"
+        },
+        "Tidx": {
+          "type": "DT_INT32"
+        }
+      }
+    },
+    {
+      "name": "train/gradients/layer2/Wx_plus_b/add_grad/Reshape_1",
+      "op": "Reshape",
+      "input": [
+        "train/gradients/layer2/Wx_plus_b/add_grad/Sum_1",
+        "train/gradients/layer2/Wx_plus_b/add_grad/Shape_1"
+      ],
+      "attr": {
+        "T": {
+          "type": "DT_FLOAT"
+        },
+        "Tshape": {
+          "type": "DT_INT32"
+        }
+      }
+    },
+    {
+      "name": "train/gradients/layer2/Wx_plus_b/add_grad/tuple/group_deps",
+      "op": "NoOp",
+      "input": [
+        "^train/gradients/layer2/Wx_plus_b/add_grad/Reshape",
+        "^train/gradients/layer2/Wx_plus_b/add_grad/Reshape_1"
+      ]
+    },
+    {
+      "name": "train/gradients/layer2/Wx_plus_b/add_grad/tuple/control_dependency",
+      "op": "Identity",
+      "input": [
+        "train/gradients/layer2/Wx_plus_b/add_grad/Reshape",
+        "^train/gradients/layer2/Wx_plus_b/add_grad/tuple/group_deps"
+      ],
+      "attr": {
+        "T": {
+          "type": "DT_FLOAT"
+        },
+        "_class": {
+          "list": {
+            "s": [
+              "bG9jOkB0cmFpbi9ncmFkaWVudHMvbGF5ZXIyL1d4X3BsdXNfYi9hZGRfZ3JhZC9SZXNoYXBl"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "name": "train/gradients/layer2/Wx_plus_b/add_grad/tuple/control_dependency_1",
+      "op": "Identity",
+      "input": [
+        "train/gradients/layer2/Wx_plus_b/add_grad/Reshape_1",
+        "^train/gradients/layer2/Wx_plus_b/add_grad/tuple/group_deps"
+      ],
+      "attr": {
+        "T": {
+          "type": "DT_FLOAT"
+        },
+        "_class": {
+          "list": {
+            "s": [
+              "bG9jOkB0cmFpbi9ncmFkaWVudHMvbGF5ZXIyL1d4X3BsdXNfYi9hZGRfZ3JhZC9SZXNoYXBlXzE="
+            ]
+          }
+        }
+      }
+    },
+    {
+      "name": "train/gradients/layer2/Wx_plus_b/MatMul_grad/MatMul",
+      "op": "MatMul",
+      "input": [
+        "train/gradients/layer2/Wx_plus_b/add_grad/tuple/control_dependency",
+        "layer2/weights/Variable/read"
+      ],
+      "attr": {
+        "transpose_a": {
+          "b": false
+        },
+        "transpose_b": {
+          "b": true
+        },
+        "T": {
+          "type": "DT_FLOAT"
+        }
+      }
+    },
+    {
+      "name": "train/gradients/layer2/Wx_plus_b/MatMul_grad/MatMul_1",
+      "op": "MatMul",
+      "input": [
+        "dropout/dropout/mul",
+        "train/gradients/layer2/Wx_plus_b/add_grad/tuple/control_dependency"
+      ],
+      "attr": {
+        "transpose_a": {
+          "b": true
+        },
+        "transpose_b": {
+          "b": false
+        },
+        "T": {
+          "type": "DT_FLOAT"
+        }
+      }
+    },
+    {
+      "name": "train/gradients/layer2/Wx_plus_b/MatMul_grad/tuple/group_deps",
+      "op": "NoOp",
+      "input": [
+        "^train/gradients/layer2/Wx_plus_b/MatMul_grad/MatMul",
+        "^train/gradients/layer2/Wx_plus_b/MatMul_grad/MatMul_1"
+      ]
+    },
+    {
+      "name": "train/gradients/layer2/Wx_plus_b/MatMul_grad/tuple/control_dependency",
+      "op": "Identity",
+      "input": [
+        "train/gradients/layer2/Wx_plus_b/MatMul_grad/MatMul",
+        "^train/gradients/layer2/Wx_plus_b/MatMul_grad/tuple/group_deps"
+      ],
+      "attr": {
+        "T": {
+          "type": "DT_FLOAT"
+        },
+        "_class": {
+          "list": {
+            "s": [
+              "bG9jOkB0cmFpbi9ncmFkaWVudHMvbGF5ZXIyL1d4X3BsdXNfYi9NYXRNdWxfZ3JhZC9NYXRNdWw="
+            ]
+          }
+        }
+      }
+    },
+    {
+      "name": "train/gradients/layer2/Wx_plus_b/MatMul_grad/tuple/control_dependency_1",
+      "op": "Identity",
+      "input": [
+        "train/gradients/layer2/Wx_plus_b/MatMul_grad/MatMul_1",
+        "^train/gradients/layer2/Wx_plus_b/MatMul_grad/tuple/group_deps"
+      ],
+      "attr": {
+        "T": {
+          "type": "DT_FLOAT"
+        },
+        "_class": {
+          "list": {
+            "s": [
+              "bG9jOkB0cmFpbi9ncmFkaWVudHMvbGF5ZXIyL1d4X3BsdXNfYi9NYXRNdWxfZ3JhZC9NYXRNdWxfMQ=="
+            ]
+          }
+        }
+      }
+    },
+    {
+      "name": "train/gradients/dropout/dropout/mul_grad/Shape",
+      "op": "Shape",
+      "input": [
+        "dropout/dropout/div"
+      ],
+      "attr": {
+        "T": {
+          "type": "DT_FLOAT"
+        },
+        "out_type": {
+          "type": "DT_INT32"
+        }
+      }
+    },
+    {
+      "name": "train/gradients/dropout/dropout/mul_grad/Shape_1",
+      "op": "Shape",
+      "input": [
+        "dropout/dropout/Floor"
+      ],
+      "attr": {
+        "T": {
+          "type": "DT_FLOAT"
+        },
+        "out_type": {
+          "type": "DT_INT32"
+        }
+      }
+    },
+    {
+      "name": "train/gradients/dropout/dropout/mul_grad/BroadcastGradientArgs",
+      "op": "BroadcastGradientArgs",
+      "input": [
+        "train/gradients/dropout/dropout/mul_grad/Shape",
+        "train/gradients/dropout/dropout/mul_grad/Shape_1"
+      ],
+      "attr": {
+        "T": {
+          "type": "DT_INT32"
+        }
+      }
+    },
+    {
+      "name": "train/gradients/dropout/dropout/mul_grad/mul",
+      "op": "Mul",
+      "input": [
+        "train/gradients/layer2/Wx_plus_b/MatMul_grad/tuple/control_dependency",
+        "dropout/dropout/Floor"
+      ],
+      "attr": {
+        "T": {
+          "type": "DT_FLOAT"
+        }
+      }
+    },
+    {
+      "name": "train/gradients/dropout/dropout/mul_grad/Sum",
+      "op": "Sum",
+      "input": [
+        "train/gradients/dropout/dropout/mul_grad/mul",
+        "train/gradients/dropout/dropout/mul_grad/BroadcastGradientArgs"
+      ],
+      "attr": {
+        "keep_dims": {
+          "b": false
+        },
+        "T": {
+          "type": "DT_FLOAT"
+        },
+        "Tidx": {
+          "type": "DT_INT32"
+        }
+      }
+    },
+    {
+      "name": "train/gradients/dropout/dropout/mul_grad/Reshape",
+      "op": "Reshape",
+      "input": [
+        "train/gradients/dropout/dropout/mul_grad/Sum",
+        "train/gradients/dropout/dropout/mul_grad/Shape"
+      ],
+      "attr": {
+        "T": {
+          "type": "DT_FLOAT"
+        },
+        "Tshape": {
+          "type": "DT_INT32"
+        }
+      }
+    },
+    {
+      "name": "train/gradients/dropout/dropout/mul_grad/mul_1",
+      "op": "Mul",
+      "input": [
+        "dropout/dropout/div",
+        "train/gradients/layer2/Wx_plus_b/MatMul_grad/tuple/control_dependency"
+      ],
+      "attr": {
+        "T": {
+          "type": "DT_FLOAT"
+        }
+      }
+    },
+    {
+      "name": "train/gradients/dropout/dropout/mul_grad/Sum_1",
+      "op": "Sum",
+      "input": [
+        "train/gradients/dropout/dropout/mul_grad/mul_1",
+        "train/gradients/dropout/dropout/mul_grad/BroadcastGradientArgs:1"
+      ],
+      "attr": {
+        "keep_dims": {
+          "b": false
+        },
+        "T": {
+          "type": "DT_FLOAT"
+        },
+        "Tidx": {
+          "type": "DT_INT32"
+        }
+      }
+    },
+    {
+      "name": "train/gradients/dropout/dropout/mul_grad/Reshape_1",
+      "op": "Reshape",
+      "input": [
+        "train/gradients/dropout/dropout/mul_grad/Sum_1",
+        "train/gradients/dropout/dropout/mul_grad/Shape_1"
+      ],
+      "attr": {
+        "T": {
+          "type": "DT_FLOAT"
+        },
+        "Tshape": {
+          "type": "DT_INT32"
+        }
+      }
+    },
+    {
+      "name": "train/gradients/dropout/dropout/mul_grad/tuple/group_deps",
+      "op": "NoOp",
+      "input": [
+        "^train/gradients/dropout/dropout/mul_grad/Reshape",
+        "^train/gradients/dropout/dropout/mul_grad/Reshape_1"
+      ]
+    },
+    {
+      "name": "train/gradients/dropout/dropout/mul_grad/tuple/control_dependency",
+      "op": "Identity",
+      "input": [
+        "train/gradients/dropout/dropout/mul_grad/Reshape",
+        "^train/gradients/dropout/dropout/mul_grad/tuple/group_deps"
+      ],
+      "attr": {
+        "T": {
+          "type": "DT_FLOAT"
+        },
+        "_class": {
+          "list": {
+            "s": [
+              "bG9jOkB0cmFpbi9ncmFkaWVudHMvZHJvcG91dC9kcm9wb3V0L211bF9ncmFkL1Jlc2hhcGU="
+            ]
+          }
+        }
+      }
+    },
+    {
+      "name": "train/gradients/dropout/dropout/mul_grad/tuple/control_dependency_1",
+      "op": "Identity",
+      "input": [
+        "train/gradients/dropout/dropout/mul_grad/Reshape_1",
+        "^train/gradients/dropout/dropout/mul_grad/tuple/group_deps"
+      ],
+      "attr": {
+        "T": {
+          "type": "DT_FLOAT"
+        },
+        "_class": {
+          "list": {
+            "s": [
+              "bG9jOkB0cmFpbi9ncmFkaWVudHMvZHJvcG91dC9kcm9wb3V0L211bF9ncmFkL1Jlc2hhcGVfMQ=="
+            ]
+          }
+        }
+      }
+    },
+    {
+      "name": "train/gradients/dropout/dropout/div_grad/Shape",
+      "op": "Shape",
+      "input": [
+        "layer1/activation"
+      ],
+      "attr": {
+        "T": {
+          "type": "DT_FLOAT"
+        },
+        "out_type": {
+          "type": "DT_INT32"
+        }
+      }
+    },
+    {
+      "name": "train/gradients/dropout/dropout/div_grad/Shape_1",
+      "op": "Shape",
+      "input": [
+        "dropout/Placeholder"
+      ],
+      "attr": {
+        "T": {
+          "type": "DT_FLOAT"
+        },
+        "out_type": {
+          "type": "DT_INT32"
+        }
+      }
+    },
+    {
+      "name": "train/gradients/dropout/dropout/div_grad/BroadcastGradientArgs",
+      "op": "BroadcastGradientArgs",
+      "input": [
+        "train/gradients/dropout/dropout/div_grad/Shape",
+        "train/gradients/dropout/dropout/div_grad/Shape_1"
+      ],
+      "attr": {
+        "T": {
+          "type": "DT_INT32"
+        }
+      }
+    },
+    {
+      "name": "train/gradients/dropout/dropout/div_grad/RealDiv",
+      "op": "RealDiv",
+      "input": [
+        "train/gradients/dropout/dropout/mul_grad/tuple/control_dependency",
+        "dropout/Placeholder"
+      ],
+      "attr": {
+        "T": {
+          "type": "DT_FLOAT"
+        }
+      }
+    },
+    {
+      "name": "train/gradients/dropout/dropout/div_grad/Sum",
+      "op": "Sum",
+      "input": [
+        "train/gradients/dropout/dropout/div_grad/RealDiv",
+        "train/gradients/dropout/dropout/div_grad/BroadcastGradientArgs"
+      ],
+      "attr": {
+        "keep_dims": {
+          "b": false
+        },
+        "T": {
+          "type": "DT_FLOAT"
+        },
+        "Tidx": {
+          "type": "DT_INT32"
+        }
+      }
+    },
+    {
+      "name": "train/gradients/dropout/dropout/div_grad/Reshape",
+      "op": "Reshape",
+      "input": [
+        "train/gradients/dropout/dropout/div_grad/Sum",
+        "train/gradients/dropout/dropout/div_grad/Shape"
+      ],
+      "attr": {
+        "T": {
+          "type": "DT_FLOAT"
+        },
+        "Tshape": {
+          "type": "DT_INT32"
+        }
+      }
+    },
+    {
+      "name": "train/gradients/dropout/dropout/div_grad/Neg",
+      "op": "Neg",
+      "input": [
+        "layer1/activation"
+      ],
+      "attr": {
+        "T": {
+          "type": "DT_FLOAT"
+        }
+      }
+    },
+    {
+      "name": "train/gradients/dropout/dropout/div_grad/RealDiv_1",
+      "op": "RealDiv",
+      "input": [
+        "train/gradients/dropout/dropout/div_grad/Neg",
+        "dropout/Placeholder"
+      ],
+      "attr": {
+        "T": {
+          "type": "DT_FLOAT"
+        }
+      }
+    },
+    {
+      "name": "train/gradients/dropout/dropout/div_grad/RealDiv_2",
+      "op": "RealDiv",
+      "input": [
+        "train/gradients/dropout/dropout/div_grad/RealDiv_1",
+        "dropout/Placeholder"
+      ],
+      "attr": {
+        "T": {
+          "type": "DT_FLOAT"
+        }
+      }
+    },
+    {
+      "name": "train/gradients/dropout/dropout/div_grad/mul",
+      "op": "Mul",
+      "input": [
+        "train/gradients/dropout/dropout/mul_grad/tuple/control_dependency",
+        "train/gradients/dropout/dropout/div_grad/RealDiv_2"
+      ],
+      "attr": {
+        "T": {
+          "type": "DT_FLOAT"
+        }
+      }
+    },
+    {
+      "name": "train/gradients/dropout/dropout/div_grad/Sum_1",
+      "op": "Sum",
+      "input": [
+        "train/gradients/dropout/dropout/div_grad/mul",
+        "train/gradients/dropout/dropout/div_grad/BroadcastGradientArgs:1"
+      ],
+      "attr": {
+        "keep_dims": {
+          "b": false
+        },
+        "T": {
+          "type": "DT_FLOAT"
+        },
+        "Tidx": {
+          "type": "DT_INT32"
+        }
+      }
+    },
+    {
+      "name": "train/gradients/dropout/dropout/div_grad/Reshape_1",
+      "op": "Reshape",
+      "input": [
+        "train/gradients/dropout/dropout/div_grad/Sum_1",
+        "train/gradients/dropout/dropout/div_grad/Shape_1"
+      ],
+      "attr": {
+        "T": {
+          "type": "DT_FLOAT"
+        },
+        "Tshape": {
+          "type": "DT_INT32"
+        }
+      }
+    },
+    {
+      "name": "train/gradients/dropout/dropout/div_grad/tuple/group_deps",
+      "op": "NoOp",
+      "input": [
+        "^train/gradients/dropout/dropout/div_grad/Reshape",
+        "^train/gradients/dropout/dropout/div_grad/Reshape_1"
+      ]
+    },
+    {
+      "name": "train/gradients/dropout/dropout/div_grad/tuple/control_dependency",
+      "op": "Identity",
+      "input": [
+        "train/gradients/dropout/dropout/div_grad/Reshape",
+        "^train/gradients/dropout/dropout/div_grad/tuple/group_deps"
+      ],
+      "attr": {
+        "T": {
+          "type": "DT_FLOAT"
+        },
+        "_class": {
+          "list": {
+            "s": [
+              "bG9jOkB0cmFpbi9ncmFkaWVudHMvZHJvcG91dC9kcm9wb3V0L2Rpdl9ncmFkL1Jlc2hhcGU="
+            ]
+          }
+        }
+      }
+    },
+    {
+      "name": "train/gradients/dropout/dropout/div_grad/tuple/control_dependency_1",
+      "op": "Identity",
+      "input": [
+        "train/gradients/dropout/dropout/div_grad/Reshape_1",
+        "^train/gradients/dropout/dropout/div_grad/tuple/group_deps"
+      ],
+      "attr": {
+        "T": {
+          "type": "DT_FLOAT"
+        },
+        "_class": {
+          "list": {
+            "s": [
+              "bG9jOkB0cmFpbi9ncmFkaWVudHMvZHJvcG91dC9kcm9wb3V0L2Rpdl9ncmFkL1Jlc2hhcGVfMQ=="
+            ]
+          }
+        }
+      }
+    },
+    {
+      "name": "train/gradients/layer1/activation_grad/ReluGrad",
+      "op": "ReluGrad",
+      "input": [
+        "train/gradients/dropout/dropout/div_grad/tuple/control_dependency",
+        "layer1/activation"
+      ],
+      "attr": {
+        "T": {
+          "type": "DT_FLOAT"
+        }
+      }
+    },
+    {
+      "name": "train/gradients/layer1/Wx_plus_b/add_grad/Shape",
+      "op": "Shape",
+      "input": [
+        "layer1/Wx_plus_b/MatMul"
+      ],
+      "attr": {
+        "T": {
+          "type": "DT_FLOAT"
+        },
+        "out_type": {
+          "type": "DT_INT32"
+        }
+      }
+    },
+    {
+      "name": "train/gradients/layer1/Wx_plus_b/add_grad/Shape_1",
+      "op": "Const",
+      "attr": {
+        "value": {
+          "tensor": {
+            "dtype": "DT_INT32",
+            "tensorShape": {
+              "dim": [
+                {
+                  "size": "1"
+                }
+              ]
+            },
+            "intVal": [
+              500
+            ]
+          }
+        },
+        "dtype": {
+          "type": "DT_INT32"
+        }
+      }
+    },
+    {
+      "name": "train/gradients/layer1/Wx_plus_b/add_grad/BroadcastGradientArgs",
+      "op": "BroadcastGradientArgs",
+      "input": [
+        "train/gradients/layer1/Wx_plus_b/add_grad/Shape",
+        "train/gradients/layer1/Wx_plus_b/add_grad/Shape_1"
+      ],
+      "attr": {
+        "T": {
+          "type": "DT_INT32"
+        }
+      }
+    },
+    {
+      "name": "train/gradients/layer1/Wx_plus_b/add_grad/Sum",
+      "op": "Sum",
+      "input": [
+        "train/gradients/layer1/activation_grad/ReluGrad",
+        "train/gradients/layer1/Wx_plus_b/add_grad/BroadcastGradientArgs"
+      ],
+      "attr": {
+        "keep_dims": {
+          "b": false
+        },
+        "T": {
+          "type": "DT_FLOAT"
+        },
+        "Tidx": {
+          "type": "DT_INT32"
+        }
+      }
+    },
+    {
+      "name": "train/gradients/layer1/Wx_plus_b/add_grad/Reshape",
+      "op": "Reshape",
+      "input": [
+        "train/gradients/layer1/Wx_plus_b/add_grad/Sum",
+        "train/gradients/layer1/Wx_plus_b/add_grad/Shape"
+      ],
+      "attr": {
+        "T": {
+          "type": "DT_FLOAT"
+        },
+        "Tshape": {
+          "type": "DT_INT32"
+        }
+      }
+    },
+    {
+      "name": "train/gradients/layer1/Wx_plus_b/add_grad/Sum_1",
+      "op": "Sum",
+      "input": [
+        "train/gradients/layer1/activation_grad/ReluGrad",
+        "train/gradients/layer1/Wx_plus_b/add_grad/BroadcastGradientArgs:1"
+      ],
+      "attr": {
+        "keep_dims": {
+          "b": false
+        },
+        "T": {
+          "type": "DT_FLOAT"
+        },
+        "Tidx": {
+          "type": "DT_INT32"
+        }
+      }
+    },
+    {
+      "name": "train/gradients/layer1/Wx_plus_b/add_grad/Reshape_1",
+      "op": "Reshape",
+      "input": [
+        "train/gradients/layer1/Wx_plus_b/add_grad/Sum_1",
+        "train/gradients/layer1/Wx_plus_b/add_grad/Shape_1"
+      ],
+      "attr": {
+        "T": {
+          "type": "DT_FLOAT"
+        },
+        "Tshape": {
+          "type": "DT_INT32"
+        }
+      }
+    },
+    {
+      "name": "train/gradients/layer1/Wx_plus_b/add_grad/tuple/group_deps",
+      "op": "NoOp",
+      "input": [
+        "^train/gradients/layer1/Wx_plus_b/add_grad/Reshape",
+        "^train/gradients/layer1/Wx_plus_b/add_grad/Reshape_1"
+      ]
+    },
+    {
+      "name": "train/gradients/layer1/Wx_plus_b/add_grad/tuple/control_dependency",
+      "op": "Identity",
+      "input": [
+        "train/gradients/layer1/Wx_plus_b/add_grad/Reshape",
+        "^train/gradients/layer1/Wx_plus_b/add_grad/tuple/group_deps"
+      ],
+      "attr": {
+        "T": {
+          "type": "DT_FLOAT"
+        },
+        "_class": {
+          "list": {
+            "s": [
+              "bG9jOkB0cmFpbi9ncmFkaWVudHMvbGF5ZXIxL1d4X3BsdXNfYi9hZGRfZ3JhZC9SZXNoYXBl"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "name": "train/gradients/layer1/Wx_plus_b/add_grad/tuple/control_dependency_1",
+      "op": "Identity",
+      "input": [
+        "train/gradients/layer1/Wx_plus_b/add_grad/Reshape_1",
+        "^train/gradients/layer1/Wx_plus_b/add_grad/tuple/group_deps"
+      ],
+      "attr": {
+        "T": {
+          "type": "DT_FLOAT"
+        },
+        "_class": {
+          "list": {
+            "s": [
+              "bG9jOkB0cmFpbi9ncmFkaWVudHMvbGF5ZXIxL1d4X3BsdXNfYi9hZGRfZ3JhZC9SZXNoYXBlXzE="
+            ]
+          }
+        }
+      }
+    },
+    {
+      "name": "train/gradients/layer1/Wx_plus_b/MatMul_grad/MatMul",
+      "op": "MatMul",
+      "input": [
+        "train/gradients/layer1/Wx_plus_b/add_grad/tuple/control_dependency",
+        "layer1/weights/Variable/read"
+      ],
+      "attr": {
+        "transpose_a": {
+          "b": false
+        },
+        "transpose_b": {
+          "b": true
+        },
+        "T": {
+          "type": "DT_FLOAT"
+        }
+      }
+    },
+    {
+      "name": "train/gradients/layer1/Wx_plus_b/MatMul_grad/MatMul_1",
+      "op": "MatMul",
+      "input": [
+        "input/x-input",
+        "train/gradients/layer1/Wx_plus_b/add_grad/tuple/control_dependency"
+      ],
+      "attr": {
+        "transpose_a": {
+          "b": true
+        },
+        "transpose_b": {
+          "b": false
+        },
+        "T": {
+          "type": "DT_FLOAT"
+        }
+      }
+    },
+    {
+      "name": "train/gradients/layer1/Wx_plus_b/MatMul_grad/tuple/group_deps",
+      "op": "NoOp",
+      "input": [
+        "^train/gradients/layer1/Wx_plus_b/MatMul_grad/MatMul",
+        "^train/gradients/layer1/Wx_plus_b/MatMul_grad/MatMul_1"
+      ]
+    },
+    {
+      "name": "train/gradients/layer1/Wx_plus_b/MatMul_grad/tuple/control_dependency",
+      "op": "Identity",
+      "input": [
+        "train/gradients/layer1/Wx_plus_b/MatMul_grad/MatMul",
+        "^train/gradients/layer1/Wx_plus_b/MatMul_grad/tuple/group_deps"
+      ],
+      "attr": {
+        "T": {
+          "type": "DT_FLOAT"
+        },
+        "_class": {
+          "list": {
+            "s": [
+              "bG9jOkB0cmFpbi9ncmFkaWVudHMvbGF5ZXIxL1d4X3BsdXNfYi9NYXRNdWxfZ3JhZC9NYXRNdWw="
+            ]
+          }
+        }
+      }
+    },
+    {
+      "name": "train/gradients/layer1/Wx_plus_b/MatMul_grad/tuple/control_dependency_1",
+      "op": "Identity",
+      "input": [
+        "train/gradients/layer1/Wx_plus_b/MatMul_grad/MatMul_1",
+        "^train/gradients/layer1/Wx_plus_b/MatMul_grad/tuple/group_deps"
+      ],
+      "attr": {
+        "T": {
+          "type": "DT_FLOAT"
+        },
+        "_class": {
+          "list": {
+            "s": [
+              "bG9jOkB0cmFpbi9ncmFkaWVudHMvbGF5ZXIxL1d4X3BsdXNfYi9NYXRNdWxfZ3JhZC9NYXRNdWxfMQ=="
+            ]
+          }
+        }
+      }
+    },
+    {
+      "name": "train/beta1_power/initial_value",
+      "op": "Const",
+      "attr": {
+        "value": {
+          "tensor": {
+            "dtype": "DT_FLOAT",
+            "tensorShape": {},
+            "floatVal": [
+              0.8999999761581421
+            ]
+          }
+        },
+        "dtype": {
+          "type": "DT_FLOAT"
+        },
+        "_class": {
+          "list": {
+            "s": [
+              "bG9jOkBsYXllcjEvYmlhc2VzL1ZhcmlhYmxl"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "name": "train/beta1_power",
+      "op": "VariableV2",
+      "attr": {
+        "shape": {
+          "shape": {}
+        },
+        "dtype": {
+          "type": "DT_FLOAT"
+        },
+        "container": {
+          "s": ""
+        },
+        "shared_name": {
+          "s": ""
+        },
+        "_class": {
+          "list": {
+            "s": [
+              "bG9jOkBsYXllcjEvYmlhc2VzL1ZhcmlhYmxl"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "name": "train/beta1_power/Assign",
+      "op": "Assign",
+      "input": [
+        "train/beta1_power",
+        "train/beta1_power/initial_value"
+      ],
+      "attr": {
+        "T": {
+          "type": "DT_FLOAT"
+        },
+        "validate_shape": {
+          "b": true
+        },
+        "use_locking": {
+          "b": true
+        },
+        "_class": {
+          "list": {
+            "s": [
+              "bG9jOkBsYXllcjEvYmlhc2VzL1ZhcmlhYmxl"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "name": "train/beta1_power/read",
+      "op": "Identity",
+      "input": [
+        "train/beta1_power"
+      ],
+      "attr": {
+        "T": {
+          "type": "DT_FLOAT"
+        },
+        "_class": {
+          "list": {
+            "s": [
+              "bG9jOkBsYXllcjEvYmlhc2VzL1ZhcmlhYmxl"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "name": "train/beta2_power/initial_value",
+      "op": "Const",
+      "attr": {
+        "value": {
+          "tensor": {
+            "dtype": "DT_FLOAT",
+            "tensorShape": {},
+            "floatVal": [
+              0.9990000128746033
+            ]
+          }
+        },
+        "dtype": {
+          "type": "DT_FLOAT"
+        },
+        "_class": {
+          "list": {
+            "s": [
+              "bG9jOkBsYXllcjEvYmlhc2VzL1ZhcmlhYmxl"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "name": "train/beta2_power",
+      "op": "VariableV2",
+      "attr": {
+        "shape": {
+          "shape": {}
+        },
+        "dtype": {
+          "type": "DT_FLOAT"
+        },
+        "container": {
+          "s": ""
+        },
+        "shared_name": {
+          "s": ""
+        },
+        "_class": {
+          "list": {
+            "s": [
+              "bG9jOkBsYXllcjEvYmlhc2VzL1ZhcmlhYmxl"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "name": "train/beta2_power/Assign",
+      "op": "Assign",
+      "input": [
+        "train/beta2_power",
+        "train/beta2_power/initial_value"
+      ],
+      "attr": {
+        "T": {
+          "type": "DT_FLOAT"
+        },
+        "validate_shape": {
+          "b": true
+        },
+        "use_locking": {
+          "b": true
+        },
+        "_class": {
+          "list": {
+            "s": [
+              "bG9jOkBsYXllcjEvYmlhc2VzL1ZhcmlhYmxl"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "name": "train/beta2_power/read",
+      "op": "Identity",
+      "input": [
+        "train/beta2_power"
+      ],
+      "attr": {
+        "T": {
+          "type": "DT_FLOAT"
+        },
+        "_class": {
+          "list": {
+            "s": [
+              "bG9jOkBsYXllcjEvYmlhc2VzL1ZhcmlhYmxl"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "name": "layer1/weights/Variable/Adam/Initializer/zeros",
+      "op": "Const",
+      "attr": {
+        "value": {
+          "tensor": {
+            "dtype": "DT_FLOAT",
+            "tensorShape": {
+              "dim": [
+                {
+                  "size": "784"
+                },
+                {
+                  "size": "500"
+                }
+              ]
+            },
+            "floatVal": [
+              0.0
+            ]
+          }
+        },
+        "dtype": {
+          "type": "DT_FLOAT"
+        },
+        "_class": {
+          "list": {
+            "s": [
+              "bG9jOkBsYXllcjEvd2VpZ2h0cy9WYXJpYWJsZQ=="
+            ]
+          }
+        }
+      }
+    },
+    {
+      "name": "layer1/weights/Variable/Adam",
+      "op": "VariableV2",
+      "attr": {
+        "shape": {
+          "shape": {
+            "dim": [
+              {
+                "size": "784"
+              },
+              {
+                "size": "500"
+              }
+            ]
+          }
+        },
+        "dtype": {
+          "type": "DT_FLOAT"
+        },
+        "container": {
+          "s": ""
+        },
+        "shared_name": {
+          "s": ""
+        },
+        "_class": {
+          "list": {
+            "s": [
+              "bG9jOkBsYXllcjEvd2VpZ2h0cy9WYXJpYWJsZQ=="
+            ]
+          }
+        }
+      }
+    },
+    {
+      "name": "layer1/weights/Variable/Adam/Assign",
+      "op": "Assign",
+      "input": [
+        "layer1/weights/Variable/Adam",
+        "layer1/weights/Variable/Adam/Initializer/zeros"
+      ],
+      "attr": {
+        "T": {
+          "type": "DT_FLOAT"
+        },
+        "validate_shape": {
+          "b": true
+        },
+        "use_locking": {
+          "b": true
+        },
+        "_class": {
+          "list": {
+            "s": [
+              "bG9jOkBsYXllcjEvd2VpZ2h0cy9WYXJpYWJsZQ=="
+            ]
+          }
+        }
+      }
+    },
+    {
+      "name": "layer1/weights/Variable/Adam/read",
+      "op": "Identity",
+      "input": [
+        "layer1/weights/Variable/Adam"
+      ],
+      "attr": {
+        "T": {
+          "type": "DT_FLOAT"
+        },
+        "_class": {
+          "list": {
+            "s": [
+              "bG9jOkBsYXllcjEvd2VpZ2h0cy9WYXJpYWJsZQ=="
+            ]
+          }
+        }
+      }
+    },
+    {
+      "name": "layer1/weights/Variable/Adam_1/Initializer/zeros",
+      "op": "Const",
+      "attr": {
+        "value": {
+          "tensor": {
+            "dtype": "DT_FLOAT",
+            "tensorShape": {
+              "dim": [
+                {
+                  "size": "784"
+                },
+                {
+                  "size": "500"
+                }
+              ]
+            },
+            "floatVal": [
+              0.0
+            ]
+          }
+        },
+        "dtype": {
+          "type": "DT_FLOAT"
+        },
+        "_class": {
+          "list": {
+            "s": [
+              "bG9jOkBsYXllcjEvd2VpZ2h0cy9WYXJpYWJsZQ=="
+            ]
+          }
+        }
+      }
+    },
+    {
+      "name": "layer1/weights/Variable/Adam_1",
+      "op": "VariableV2",
+      "attr": {
+        "shape": {
+          "shape": {
+            "dim": [
+              {
+                "size": "784"
+              },
+              {
+                "size": "500"
+              }
+            ]
+          }
+        },
+        "dtype": {
+          "type": "DT_FLOAT"
+        },
+        "container": {
+          "s": ""
+        },
+        "shared_name": {
+          "s": ""
+        },
+        "_class": {
+          "list": {
+            "s": [
+              "bG9jOkBsYXllcjEvd2VpZ2h0cy9WYXJpYWJsZQ=="
+            ]
+          }
+        }
+      }
+    },
+    {
+      "name": "layer1/weights/Variable/Adam_1/Assign",
+      "op": "Assign",
+      "input": [
+        "layer1/weights/Variable/Adam_1",
+        "layer1/weights/Variable/Adam_1/Initializer/zeros"
+      ],
+      "attr": {
+        "T": {
+          "type": "DT_FLOAT"
+        },
+        "validate_shape": {
+          "b": true
+        },
+        "use_locking": {
+          "b": true
+        },
+        "_class": {
+          "list": {
+            "s": [
+              "bG9jOkBsYXllcjEvd2VpZ2h0cy9WYXJpYWJsZQ=="
+            ]
+          }
+        }
+      }
+    },
+    {
+      "name": "layer1/weights/Variable/Adam_1/read",
+      "op": "Identity",
+      "input": [
+        "layer1/weights/Variable/Adam_1"
+      ],
+      "attr": {
+        "T": {
+          "type": "DT_FLOAT"
+        },
+        "_class": {
+          "list": {
+            "s": [
+              "bG9jOkBsYXllcjEvd2VpZ2h0cy9WYXJpYWJsZQ=="
+            ]
+          }
+        }
+      }
+    },
+    {
+      "name": "layer1/biases/Variable/Adam/Initializer/zeros",
+      "op": "Const",
+      "attr": {
+        "value": {
+          "tensor": {
+            "dtype": "DT_FLOAT",
+            "tensorShape": {
+              "dim": [
+                {
+                  "size": "500"
+                }
+              ]
+            },
+            "floatVal": [
+              0.0
+            ]
+          }
+        },
+        "dtype": {
+          "type": "DT_FLOAT"
+        },
+        "_class": {
+          "list": {
+            "s": [
+              "bG9jOkBsYXllcjEvYmlhc2VzL1ZhcmlhYmxl"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "name": "layer1/biases/Variable/Adam",
+      "op": "VariableV2",
+      "attr": {
+        "shape": {
+          "shape": {
+            "dim": [
+              {
+                "size": "500"
+              }
+            ]
+          }
+        },
+        "dtype": {
+          "type": "DT_FLOAT"
+        },
+        "container": {
+          "s": ""
+        },
+        "shared_name": {
+          "s": ""
+        },
+        "_class": {
+          "list": {
+            "s": [
+              "bG9jOkBsYXllcjEvYmlhc2VzL1ZhcmlhYmxl"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "name": "layer1/biases/Variable/Adam/Assign",
+      "op": "Assign",
+      "input": [
+        "layer1/biases/Variable/Adam",
+        "layer1/biases/Variable/Adam/Initializer/zeros"
+      ],
+      "attr": {
+        "T": {
+          "type": "DT_FLOAT"
+        },
+        "validate_shape": {
+          "b": true
+        },
+        "use_locking": {
+          "b": true
+        },
+        "_class": {
+          "list": {
+            "s": [
+              "bG9jOkBsYXllcjEvYmlhc2VzL1ZhcmlhYmxl"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "name": "layer1/biases/Variable/Adam/read",
+      "op": "Identity",
+      "input": [
+        "layer1/biases/Variable/Adam"
+      ],
+      "attr": {
+        "T": {
+          "type": "DT_FLOAT"
+        },
+        "_class": {
+          "list": {
+            "s": [
+              "bG9jOkBsYXllcjEvYmlhc2VzL1ZhcmlhYmxl"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "name": "layer1/biases/Variable/Adam_1/Initializer/zeros",
+      "op": "Const",
+      "attr": {
+        "value": {
+          "tensor": {
+            "dtype": "DT_FLOAT",
+            "tensorShape": {
+              "dim": [
+                {
+                  "size": "500"
+                }
+              ]
+            },
+            "floatVal": [
+              0.0
+            ]
+          }
+        },
+        "dtype": {
+          "type": "DT_FLOAT"
+        },
+        "_class": {
+          "list": {
+            "s": [
+              "bG9jOkBsYXllcjEvYmlhc2VzL1ZhcmlhYmxl"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "name": "layer1/biases/Variable/Adam_1",
+      "op": "VariableV2",
+      "attr": {
+        "shape": {
+          "shape": {
+            "dim": [
+              {
+                "size": "500"
+              }
+            ]
+          }
+        },
+        "dtype": {
+          "type": "DT_FLOAT"
+        },
+        "container": {
+          "s": ""
+        },
+        "shared_name": {
+          "s": ""
+        },
+        "_class": {
+          "list": {
+            "s": [
+              "bG9jOkBsYXllcjEvYmlhc2VzL1ZhcmlhYmxl"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "name": "layer1/biases/Variable/Adam_1/Assign",
+      "op": "Assign",
+      "input": [
+        "layer1/biases/Variable/Adam_1",
+        "layer1/biases/Variable/Adam_1/Initializer/zeros"
+      ],
+      "attr": {
+        "T": {
+          "type": "DT_FLOAT"
+        },
+        "validate_shape": {
+          "b": true
+        },
+        "use_locking": {
+          "b": true
+        },
+        "_class": {
+          "list": {
+            "s": [
+              "bG9jOkBsYXllcjEvYmlhc2VzL1ZhcmlhYmxl"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "name": "layer1/biases/Variable/Adam_1/read",
+      "op": "Identity",
+      "input": [
+        "layer1/biases/Variable/Adam_1"
+      ],
+      "attr": {
+        "T": {
+          "type": "DT_FLOAT"
+        },
+        "_class": {
+          "list": {
+            "s": [
+              "bG9jOkBsYXllcjEvYmlhc2VzL1ZhcmlhYmxl"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "name": "layer2/weights/Variable/Adam/Initializer/zeros",
+      "op": "Const",
+      "attr": {
+        "value": {
+          "tensor": {
+            "dtype": "DT_FLOAT",
+            "tensorShape": {
+              "dim": [
+                {
+                  "size": "500"
+                },
+                {
+                  "size": "10"
+                }
+              ]
+            },
+            "floatVal": [
+              0.0
+            ]
+          }
+        },
+        "dtype": {
+          "type": "DT_FLOAT"
+        },
+        "_class": {
+          "list": {
+            "s": [
+              "bG9jOkBsYXllcjIvd2VpZ2h0cy9WYXJpYWJsZQ=="
+            ]
+          }
+        }
+      }
+    },
+    {
+      "name": "layer2/weights/Variable/Adam",
+      "op": "VariableV2",
+      "attr": {
+        "shape": {
+          "shape": {
+            "dim": [
+              {
+                "size": "500"
+              },
+              {
+                "size": "10"
+              }
+            ]
+          }
+        },
+        "dtype": {
+          "type": "DT_FLOAT"
+        },
+        "container": {
+          "s": ""
+        },
+        "shared_name": {
+          "s": ""
+        },
+        "_class": {
+          "list": {
+            "s": [
+              "bG9jOkBsYXllcjIvd2VpZ2h0cy9WYXJpYWJsZQ=="
+            ]
+          }
+        }
+      }
+    },
+    {
+      "name": "layer2/weights/Variable/Adam/Assign",
+      "op": "Assign",
+      "input": [
+        "layer2/weights/Variable/Adam",
+        "layer2/weights/Variable/Adam/Initializer/zeros"
+      ],
+      "attr": {
+        "T": {
+          "type": "DT_FLOAT"
+        },
+        "validate_shape": {
+          "b": true
+        },
+        "use_locking": {
+          "b": true
+        },
+        "_class": {
+          "list": {
+            "s": [
+              "bG9jOkBsYXllcjIvd2VpZ2h0cy9WYXJpYWJsZQ=="
+            ]
+          }
+        }
+      }
+    },
+    {
+      "name": "layer2/weights/Variable/Adam/read",
+      "op": "Identity",
+      "input": [
+        "layer2/weights/Variable/Adam"
+      ],
+      "attr": {
+        "T": {
+          "type": "DT_FLOAT"
+        },
+        "_class": {
+          "list": {
+            "s": [
+              "bG9jOkBsYXllcjIvd2VpZ2h0cy9WYXJpYWJsZQ=="
+            ]
+          }
+        }
+      }
+    },
+    {
+      "name": "layer2/weights/Variable/Adam_1/Initializer/zeros",
+      "op": "Const",
+      "attr": {
+        "value": {
+          "tensor": {
+            "dtype": "DT_FLOAT",
+            "tensorShape": {
+              "dim": [
+                {
+                  "size": "500"
+                },
+                {
+                  "size": "10"
+                }
+              ]
+            },
+            "floatVal": [
+              0.0
+            ]
+          }
+        },
+        "dtype": {
+          "type": "DT_FLOAT"
+        },
+        "_class": {
+          "list": {
+            "s": [
+              "bG9jOkBsYXllcjIvd2VpZ2h0cy9WYXJpYWJsZQ=="
+            ]
+          }
+        }
+      }
+    },
+    {
+      "name": "layer2/weights/Variable/Adam_1",
+      "op": "VariableV2",
+      "attr": {
+        "shape": {
+          "shape": {
+            "dim": [
+              {
+                "size": "500"
+              },
+              {
+                "size": "10"
+              }
+            ]
+          }
+        },
+        "dtype": {
+          "type": "DT_FLOAT"
+        },
+        "container": {
+          "s": ""
+        },
+        "shared_name": {
+          "s": ""
+        },
+        "_class": {
+          "list": {
+            "s": [
+              "bG9jOkBsYXllcjIvd2VpZ2h0cy9WYXJpYWJsZQ=="
+            ]
+          }
+        }
+      }
+    },
+    {
+      "name": "layer2/weights/Variable/Adam_1/Assign",
+      "op": "Assign",
+      "input": [
+        "layer2/weights/Variable/Adam_1",
+        "layer2/weights/Variable/Adam_1/Initializer/zeros"
+      ],
+      "attr": {
+        "T": {
+          "type": "DT_FLOAT"
+        },
+        "validate_shape": {
+          "b": true
+        },
+        "use_locking": {
+          "b": true
+        },
+        "_class": {
+          "list": {
+            "s": [
+              "bG9jOkBsYXllcjIvd2VpZ2h0cy9WYXJpYWJsZQ=="
+            ]
+          }
+        }
+      }
+    },
+    {
+      "name": "layer2/weights/Variable/Adam_1/read",
+      "op": "Identity",
+      "input": [
+        "layer2/weights/Variable/Adam_1"
+      ],
+      "attr": {
+        "T": {
+          "type": "DT_FLOAT"
+        },
+        "_class": {
+          "list": {
+            "s": [
+              "bG9jOkBsYXllcjIvd2VpZ2h0cy9WYXJpYWJsZQ=="
+            ]
+          }
+        }
+      }
+    },
+    {
+      "name": "layer2/biases/Variable/Adam/Initializer/zeros",
+      "op": "Const",
+      "attr": {
+        "value": {
+          "tensor": {
+            "dtype": "DT_FLOAT",
+            "tensorShape": {
+              "dim": [
+                {
+                  "size": "10"
+                }
+              ]
+            },
+            "floatVal": [
+              0.0
+            ]
+          }
+        },
+        "dtype": {
+          "type": "DT_FLOAT"
+        },
+        "_class": {
+          "list": {
+            "s": [
+              "bG9jOkBsYXllcjIvYmlhc2VzL1ZhcmlhYmxl"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "name": "layer2/biases/Variable/Adam",
+      "op": "VariableV2",
+      "attr": {
+        "shape": {
+          "shape": {
+            "dim": [
+              {
+                "size": "10"
+              }
+            ]
+          }
+        },
+        "dtype": {
+          "type": "DT_FLOAT"
+        },
+        "container": {
+          "s": ""
+        },
+        "shared_name": {
+          "s": ""
+        },
+        "_class": {
+          "list": {
+            "s": [
+              "bG9jOkBsYXllcjIvYmlhc2VzL1ZhcmlhYmxl"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "name": "layer2/biases/Variable/Adam/Assign",
+      "op": "Assign",
+      "input": [
+        "layer2/biases/Variable/Adam",
+        "layer2/biases/Variable/Adam/Initializer/zeros"
+      ],
+      "attr": {
+        "T": {
+          "type": "DT_FLOAT"
+        },
+        "validate_shape": {
+          "b": true
+        },
+        "use_locking": {
+          "b": true
+        },
+        "_class": {
+          "list": {
+            "s": [
+              "bG9jOkBsYXllcjIvYmlhc2VzL1ZhcmlhYmxl"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "name": "layer2/biases/Variable/Adam/read",
+      "op": "Identity",
+      "input": [
+        "layer2/biases/Variable/Adam"
+      ],
+      "attr": {
+        "T": {
+          "type": "DT_FLOAT"
+        },
+        "_class": {
+          "list": {
+            "s": [
+              "bG9jOkBsYXllcjIvYmlhc2VzL1ZhcmlhYmxl"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "name": "layer2/biases/Variable/Adam_1/Initializer/zeros",
+      "op": "Const",
+      "attr": {
+        "value": {
+          "tensor": {
+            "dtype": "DT_FLOAT",
+            "tensorShape": {
+              "dim": [
+                {
+                  "size": "10"
+                }
+              ]
+            },
+            "floatVal": [
+              0.0
+            ]
+          }
+        },
+        "dtype": {
+          "type": "DT_FLOAT"
+        },
+        "_class": {
+          "list": {
+            "s": [
+              "bG9jOkBsYXllcjIvYmlhc2VzL1ZhcmlhYmxl"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "name": "layer2/biases/Variable/Adam_1",
+      "op": "VariableV2",
+      "attr": {
+        "shape": {
+          "shape": {
+            "dim": [
+              {
+                "size": "10"
+              }
+            ]
+          }
+        },
+        "dtype": {
+          "type": "DT_FLOAT"
+        },
+        "container": {
+          "s": ""
+        },
+        "shared_name": {
+          "s": ""
+        },
+        "_class": {
+          "list": {
+            "s": [
+              "bG9jOkBsYXllcjIvYmlhc2VzL1ZhcmlhYmxl"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "name": "layer2/biases/Variable/Adam_1/Assign",
+      "op": "Assign",
+      "input": [
+        "layer2/biases/Variable/Adam_1",
+        "layer2/biases/Variable/Adam_1/Initializer/zeros"
+      ],
+      "attr": {
+        "T": {
+          "type": "DT_FLOAT"
+        },
+        "validate_shape": {
+          "b": true
+        },
+        "use_locking": {
+          "b": true
+        },
+        "_class": {
+          "list": {
+            "s": [
+              "bG9jOkBsYXllcjIvYmlhc2VzL1ZhcmlhYmxl"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "name": "layer2/biases/Variable/Adam_1/read",
+      "op": "Identity",
+      "input": [
+        "layer2/biases/Variable/Adam_1"
+      ],
+      "attr": {
+        "T": {
+          "type": "DT_FLOAT"
+        },
+        "_class": {
+          "list": {
+            "s": [
+              "bG9jOkBsYXllcjIvYmlhc2VzL1ZhcmlhYmxl"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "name": "train/Adam/learning_rate",
+      "op": "Const",
+      "attr": {
+        "value": {
+          "tensor": {
+            "dtype": "DT_FLOAT",
+            "tensorShape": {},
+            "floatVal": [
+              0.0010000000474974513
+            ]
+          }
+        },
+        "dtype": {
+          "type": "DT_FLOAT"
+        }
+      }
+    },
+    {
+      "name": "train/Adam/beta1",
+      "op": "Const",
+      "attr": {
+        "value": {
+          "tensor": {
+            "dtype": "DT_FLOAT",
+            "tensorShape": {},
+            "floatVal": [
+              0.8999999761581421
+            ]
+          }
+        },
+        "dtype": {
+          "type": "DT_FLOAT"
+        }
+      }
+    },
+    {
+      "name": "train/Adam/beta2",
+      "op": "Const",
+      "attr": {
+        "value": {
+          "tensor": {
+            "dtype": "DT_FLOAT",
+            "tensorShape": {},
+            "floatVal": [
+              0.9990000128746033
+            ]
+          }
+        },
+        "dtype": {
+          "type": "DT_FLOAT"
+        }
+      }
+    },
+    {
+      "name": "train/Adam/epsilon",
+      "op": "Const",
+      "attr": {
+        "value": {
+          "tensor": {
+            "dtype": "DT_FLOAT",
+            "tensorShape": {},
+            "floatVal": [
+              9.99999993922529e-09
+            ]
+          }
+        },
+        "dtype": {
+          "type": "DT_FLOAT"
+        }
+      }
+    },
+    {
+      "name": "train/Adam/update_layer1/weights/Variable/ApplyAdam",
+      "op": "ApplyAdam",
+      "input": [
+        "layer1/weights/Variable",
+        "layer1/weights/Variable/Adam",
+        "layer1/weights/Variable/Adam_1",
+        "train/beta1_power/read",
+        "train/beta2_power/read",
+        "train/Adam/learning_rate",
+        "train/Adam/beta1",
+        "train/Adam/beta2",
+        "train/Adam/epsilon",
+        "train/gradients/layer1/Wx_plus_b/MatMul_grad/tuple/control_dependency_1"
+      ],
+      "attr": {
+        "T": {
+          "type": "DT_FLOAT"
+        },
+        "use_locking": {
+          "b": false
+        },
+        "use_nesterov": {
+          "b": false
+        },
+        "_class": {
+          "list": {
+            "s": [
+              "bG9jOkBsYXllcjEvd2VpZ2h0cy9WYXJpYWJsZQ=="
+            ]
+          }
+        }
+      }
+    },
+    {
+      "name": "train/Adam/update_layer1/biases/Variable/ApplyAdam",
+      "op": "ApplyAdam",
+      "input": [
+        "layer1/biases/Variable",
+        "layer1/biases/Variable/Adam",
+        "layer1/biases/Variable/Adam_1",
+        "train/beta1_power/read",
+        "train/beta2_power/read",
+        "train/Adam/learning_rate",
+        "train/Adam/beta1",
+        "train/Adam/beta2",
+        "train/Adam/epsilon",
+        "train/gradients/layer1/Wx_plus_b/add_grad/tuple/control_dependency_1"
+      ],
+      "attr": {
+        "T": {
+          "type": "DT_FLOAT"
+        },
+        "use_locking": {
+          "b": false
+        },
+        "use_nesterov": {
+          "b": false
+        },
+        "_class": {
+          "list": {
+            "s": [
+              "bG9jOkBsYXllcjEvYmlhc2VzL1ZhcmlhYmxl"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "name": "train/Adam/update_layer2/weights/Variable/ApplyAdam",
+      "op": "ApplyAdam",
+      "input": [
+        "layer2/weights/Variable",
+        "layer2/weights/Variable/Adam",
+        "layer2/weights/Variable/Adam_1",
+        "train/beta1_power/read",
+        "train/beta2_power/read",
+        "train/Adam/learning_rate",
+        "train/Adam/beta1",
+        "train/Adam/beta2",
+        "train/Adam/epsilon",
+        "train/gradients/layer2/Wx_plus_b/MatMul_grad/tuple/control_dependency_1"
+      ],
+      "attr": {
+        "T": {
+          "type": "DT_FLOAT"
+        },
+        "use_locking": {
+          "b": false
+        },
+        "use_nesterov": {
+          "b": false
+        },
+        "_class": {
+          "list": {
+            "s": [
+              "bG9jOkBsYXllcjIvd2VpZ2h0cy9WYXJpYWJsZQ=="
+            ]
+          }
+        }
+      }
+    },
+    {
+      "name": "train/Adam/update_layer2/biases/Variable/ApplyAdam",
+      "op": "ApplyAdam",
+      "input": [
+        "layer2/biases/Variable",
+        "layer2/biases/Variable/Adam",
+        "layer2/biases/Variable/Adam_1",
+        "train/beta1_power/read",
+        "train/beta2_power/read",
+        "train/Adam/learning_rate",
+        "train/Adam/beta1",
+        "train/Adam/beta2",
+        "train/Adam/epsilon",
+        "train/gradients/layer2/Wx_plus_b/add_grad/tuple/control_dependency_1"
+      ],
+      "attr": {
+        "T": {
+          "type": "DT_FLOAT"
+        },
+        "use_locking": {
+          "b": false
+        },
+        "use_nesterov": {
+          "b": false
+        },
+        "_class": {
+          "list": {
+            "s": [
+              "bG9jOkBsYXllcjIvYmlhc2VzL1ZhcmlhYmxl"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "name": "train/Adam/mul",
+      "op": "Mul",
+      "input": [
+        "train/beta1_power/read",
+        "train/Adam/beta1",
+        "^train/Adam/update_layer1/weights/Variable/ApplyAdam",
+        "^train/Adam/update_layer1/biases/Variable/ApplyAdam",
+        "^train/Adam/update_layer2/weights/Variable/ApplyAdam",
+        "^train/Adam/update_layer2/biases/Variable/ApplyAdam"
+      ],
+      "attr": {
+        "T": {
+          "type": "DT_FLOAT"
+        },
+        "_class": {
+          "list": {
+            "s": [
+              "bG9jOkBsYXllcjEvYmlhc2VzL1ZhcmlhYmxl"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "name": "train/Adam/Assign",
+      "op": "Assign",
+      "input": [
+        "train/beta1_power",
+        "train/Adam/mul"
+      ],
+      "attr": {
+        "T": {
+          "type": "DT_FLOAT"
+        },
+        "validate_shape": {
+          "b": true
+        },
+        "use_locking": {
+          "b": false
+        },
+        "_class": {
+          "list": {
+            "s": [
+              "bG9jOkBsYXllcjEvYmlhc2VzL1ZhcmlhYmxl"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "name": "train/Adam/mul_1",
+      "op": "Mul",
+      "input": [
+        "train/beta2_power/read",
+        "train/Adam/beta2",
+        "^train/Adam/update_layer1/weights/Variable/ApplyAdam",
+        "^train/Adam/update_layer1/biases/Variable/ApplyAdam",
+        "^train/Adam/update_layer2/weights/Variable/ApplyAdam",
+        "^train/Adam/update_layer2/biases/Variable/ApplyAdam"
+      ],
+      "attr": {
+        "T": {
+          "type": "DT_FLOAT"
+        },
+        "_class": {
+          "list": {
+            "s": [
+              "bG9jOkBsYXllcjEvYmlhc2VzL1ZhcmlhYmxl"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "name": "train/Adam/Assign_1",
+      "op": "Assign",
+      "input": [
+        "train/beta2_power",
+        "train/Adam/mul_1"
+      ],
+      "attr": {
+        "T": {
+          "type": "DT_FLOAT"
+        },
+        "validate_shape": {
+          "b": true
+        },
+        "use_locking": {
+          "b": false
+        },
+        "_class": {
+          "list": {
+            "s": [
+              "bG9jOkBsYXllcjEvYmlhc2VzL1ZhcmlhYmxl"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "name": "train/Adam",
+      "op": "NoOp",
+      "input": [
+        "^train/Adam/update_layer1/weights/Variable/ApplyAdam",
+        "^train/Adam/update_layer1/biases/Variable/ApplyAdam",
+        "^train/Adam/update_layer2/weights/Variable/ApplyAdam",
+        "^train/Adam/update_layer2/biases/Variable/ApplyAdam",
+        "^train/Adam/Assign",
+        "^train/Adam/Assign_1"
+      ]
+    },
+    {
+      "name": "accuracy/correct_prediction/ArgMax/dimension",
+      "op": "Const",
+      "attr": {
+        "value": {
+          "tensor": {
+            "dtype": "DT_INT32",
+            "tensorShape": {},
+            "intVal": [
+              1
+            ]
+          }
+        },
+        "dtype": {
+          "type": "DT_INT32"
+        }
+      }
+    },
+    {
+      "name": "accuracy/correct_prediction/ArgMax",
+      "op": "ArgMax",
+      "input": [
+        "layer2/activation",
+        "accuracy/correct_prediction/ArgMax/dimension"
+      ],
+      "attr": {
+        "T": {
+          "type": "DT_FLOAT"
+        },
+        "Tidx": {
+          "type": "DT_INT32"
+        },
+        "output_type": {
+          "type": "DT_INT64"
+        }
+      }
+    },
+    {
+      "name": "accuracy/correct_prediction/Equal",
+      "op": "Equal",
+      "input": [
+        "accuracy/correct_prediction/ArgMax",
+        "input/y-input"
+      ],
+      "attr": {
+        "T": {
+          "type": "DT_INT64"
+        }
+      }
+    },
+    {
+      "name": "accuracy/accuracy/Cast",
+      "op": "Cast",
+      "input": [
+        "accuracy/correct_prediction/Equal"
+      ],
+      "attr": {
+        "SrcT": {
+          "type": "DT_BOOL"
+        },
+        "DstT": {
+          "type": "DT_FLOAT"
+        }
+      }
+    },
+    {
+      "name": "accuracy/accuracy/Const",
+      "op": "Const",
+      "attr": {
+        "value": {
+          "tensor": {
+            "dtype": "DT_INT32",
+            "tensorShape": {
+              "dim": [
+                {
+                  "size": "1"
+                }
+              ]
+            },
+            "intVal": [
+              0
+            ]
+          }
+        },
+        "dtype": {
+          "type": "DT_INT32"
+        }
+      }
+    },
+    {
+      "name": "accuracy/accuracy/Mean",
+      "op": "Mean",
+      "input": [
+        "accuracy/accuracy/Cast",
+        "accuracy/accuracy/Const"
+      ],
+      "attr": {
+        "keep_dims": {
+          "b": false
+        },
+        "T": {
+          "type": "DT_FLOAT"
+        },
+        "Tidx": {
+          "type": "DT_INT32"
+        }
+      }
+    },
+    {
+      "name": "accuracy_1/tags",
+      "op": "Const",
+      "attr": {
+        "value": {
+          "tensor": {
+            "dtype": "DT_STRING",
+            "tensorShape": {},
+            "stringVal": [
+              "YWNjdXJhY3lfMQ=="
+            ]
+          }
+        },
+        "dtype": {
+          "type": "DT_STRING"
+        }
+      }
+    },
+    {
+      "name": "accuracy_1",
+      "op": "ScalarSummary",
+      "input": [
+        "accuracy_1/tags",
+        "accuracy/accuracy/Mean"
+      ],
+      "attr": {
+        "T": {
+          "type": "DT_FLOAT"
+        }
+      }
+    },
+    {
+      "name": "Merge/MergeSummary",
+      "op": "MergeSummary",
+      "input": [
+        "input_reshape/input",
+        "layer1/weights/summaries/mean",
+        "layer1/weights/summaries/stddev_1",
+        "layer1/weights/summaries/max",
+        "layer1/weights/summaries/min",
+        "layer1/weights/summaries/histogram",
+        "layer1/biases/summaries/mean",
+        "layer1/biases/summaries/stddev_1",
+        "layer1/biases/summaries/max",
+        "layer1/biases/summaries/min",
+        "layer1/biases/summaries/histogram",
+        "layer1/Wx_plus_b/pre_activations",
+        "layer1/activations",
+        "dropout/dropout_keep_probability",
+        "layer2/weights/summaries/mean",
+        "layer2/weights/summaries/stddev_1",
+        "layer2/weights/summaries/max",
+        "layer2/weights/summaries/min",
+        "layer2/weights/summaries/histogram",
+        "layer2/biases/summaries/mean",
+        "layer2/biases/summaries/stddev_1",
+        "layer2/biases/summaries/max",
+        "layer2/biases/summaries/min",
+        "layer2/biases/summaries/histogram",
+        "layer2/Wx_plus_b/pre_activations",
+        "layer2/activations",
+        "cross_entropy_1",
+        "accuracy_1"
+      ],
+      "attr": {
+        "N": {
+          "i": "28"
+        }
+      }
+    },
+    {
+      "name": "init",
+      "op": "NoOp",
+      "input": [
+        "^layer1/weights/Variable/Assign",
+        "^layer1/biases/Variable/Assign",
+        "^layer2/weights/Variable/Assign",
+        "^layer2/biases/Variable/Assign",
+        "^train/beta1_power/Assign",
+        "^train/beta2_power/Assign",
+        "^layer1/weights/Variable/Adam/Assign",
+        "^layer1/weights/Variable/Adam_1/Assign",
+        "^layer1/biases/Variable/Adam/Assign",
+        "^layer1/biases/Variable/Adam_1/Assign",
+        "^layer2/weights/Variable/Adam/Assign",
+        "^layer2/weights/Variable/Adam_1/Assign",
+        "^layer2/biases/Variable/Adam/Assign",
+        "^layer2/biases/Variable/Adam_1/Assign"
+      ]
+    }
+  ],
+  "versions": {
+    "producer": 24
+  }
+}
