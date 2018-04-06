@@ -1,0 +1,648 @@
+***********************************************************************************
+__ZerosLike__
+$
+def F(node,graph):
+  return util.link_input(node,graph)
+@
+__BroadcastGradientArgs__
+$
+def F(node,graph):
+  return util.link_input(node,graph)#<-------------link2
+@
+__Identity__
+$
+def F(node,graph):
+  return util.link_input(node,graph)
+@
+__RandomUniform__
+$
+def F(node,graph):
+  return util.link_input(node,graph)
+@
+__PreventGradient__
+$
+def F(node,graph):
+  return util.link_input(node,graph)
+@
+************************************************************************************************
+************************************************************************************
+__ResizeBilinear__
+$
+def F(node,graph):
+  return util.link_input(node,graph)
+@
+__BatchNormWithGlobalNormalization__
+$
+def F(node,graph):
+  return util.link_input(node,graph)
+@
+__AvgPool__
+$
+def F(node,graph):
+  return util.link_input(node,graph)
+@
+__MaxPool__
+$
+def F(node,graph):
+  return util.link_input(node,graph)
+@
+__Concat__
+$
+def F(node,graph):
+  return util.concat(node,graph)
+@
+__Conv2D__
+$
+def F(node,graph):
+  return util.link_input(node,graph)
+@
+__DecodeJpeg__
+$
+def F(node,graph,attributes):
+  return util.decodejpeg(node,graph,attributes)
+@
+__SparseSoftmaxCrossEntropyWithLogits__
+$
+def F(node,graph):
+  return util.link_input(node,graph)#<-------------link2
+@
+*************************************************************************************
+__InitializeTableFromTextFileV2__
+$
+def F(node,graph):
+  return util.link_input(node,graph)
+@
+__TruncatedNormal__
+$
+def F(node,graph):
+  return util.link_input(node,graph)
+@
+__Add__
+$
+def F(node,graph):
+  return util.link_input(node,graph)
+@
+__Mul__
+$
+def F(node,graph):
+  return util.link_input(node,graph)
+@
+__ApplyAdam__
+$
+def F(node,graph):
+  return util.link_input(node,graph)
+@
+__Assign__
+$
+def F(node,graph):
+  return util.link_input(node,graph)
+@
+__CheckNumerics__
+$
+def F(node,graph):
+  return util.link_input(node,graph)
+@
+__Cast__
+$
+def F(node,graph):
+  return util.link_input(node,graph)
+@
+__Equal__
+$
+def F(node,graph):
+  return util.link_input(node,graph)
+@
+__Fill__
+$
+def F(node,graph):
+  return util.link_input(node,graph)
+@
+__Greater__
+$
+def F(node,graph):
+  return util.link_input(node,graph)
+@
+__Sub__
+$
+def F(node,graph):
+  return util.link_input(node,graph)
+@
+__Neg__
+$
+def F(node,graph):
+  return util.link_input(node,graph)
+@
+__Sqrt__
+$
+def F(node,graph):
+  return util.link_input(node,graph)
+@
+__Square__
+$
+def F(node,graph):
+  return util.link_input(node,graph)
+@
+__Relu__
+$
+def F(node,graph):
+  return util.link_input(node,graph)
+@
+__Min__
+$
+def F(node,graph):
+  return util.link_input(node,graph)
+@
+__Max__
+$
+def F(node,graph):
+  return util.link_input(node,graph)
+@
+__RealDiv__
+$
+def F(node,graph):
+  return util.link_input(node,graph)
+@
+__Floor__
+$
+def F(node,graph):
+  return util.link_input(node,graph)
+@
+__ReluGrad__
+$
+def F(node,graph):
+  return util.link_input(node,graph)
+@
+__Select__
+$
+def F(node,graph):
+  return util.link_input(node,graph)
+@
+__Reshape__
+$
+def F(node,graph):
+  return util.link_input(node,graph)
+@
+__Tile__
+$
+def F(node,graph):
+  return util.link_input(node,graph)
+  """
+  input1 = node.in_link[0]
+  input2 = node.in_link[1]
+  input_node1 = graph[input1[0]]
+  input_node2 = graph[input2[0]]
+  out_dim = []
+  dim1 = input_node1.out_link.dim
+  dim2 = input_node2.out_link.dim
+  #print (dim1)
+  #print (dim2)
+  for i in range (0,len(dim2)):
+    out_dim.append(dim1[i]*dim2[i])
+  computation = np.prod(out_dim)
+  util.check_dim(out_dim,node)
+  return computation,out_dim
+  """
+@
+__Transpose__
+$
+def F(node,graph):
+  return util.link_input(node,graph)
+@
+__Minimum__
+$
+def F(node,graph):
+  return util.link_input(node,graph)
+@
+__Gather__
+$
+def F(node,graph):
+  return util.link_input(node,graph)
+@
+__StridedSlice__
+$
+def F(node,graph):
+  return util.link_input(node,graph)
+@
+__ConcatV2__
+$
+def F(node,graph):
+  return util.link_input(node,graph)
+@
+__Pack__
+$
+def F(node,graph):
+  return util.link_input(node,graph)
+@
+__All__
+$
+def F(node,graph):
+  return util.link_input(node,graph)
+@
+__TensorArrayV3__
+$
+def F(node,graph):
+  return util.link_input(node,graph)
+@
+__TensorArrayScatterV3__
+$
+def F(node,graph):
+  return util.link_input(node,graph)
+@
+__ScatterSub__
+$
+def F(node,graph):
+  return util.link_input(node,graph)
+@
+__ApplyGradientDescent__
+$
+def F(node,graph):
+  return util.link_input(node,graph)
+@
+__Enter__
+$
+def F(node,graph):
+  return util.link_input(node,graph)
+@
+__AssignAdd__
+$
+def F(node,graph):
+  return util.link_input(node,graph)
+@
+__Less__
+$
+def F(node,graph):
+  return util.link_input(node,graph)
+@
+__LoopCond__
+$
+def F(node,graph):
+  return util.link_input(node,graph)
+@
+__ConcatOffset__
+$
+def F(node,graph):
+  return util.link_input(node,graph)
+@
+__Slice__
+$
+def F(node,graph):
+  return util.link_input(node,graph)
+@
+__DynamicStitch__
+$
+def F(node,graph):
+  return util.link_input(node,graph)
+@
+__Maximum__
+$
+def F(node,graph):
+  return util.link_input(node,graph)
+@
+__FloorDiv__
+$
+def F(node,graph):
+  return util.link_input(node,graph)
+@
+__RsqrtGrad__
+$
+def F(node,graph):
+  return util.link_input(node,graph)
+@
+__Split__
+$
+def F(node,graph):
+  return util.link_input(node,graph)
+@
+__Sigmoid__
+$
+def F(node,graph):
+  return util.link_input(node,graph)
+@
+__Tanh__
+$
+def F(node,graph):
+  return util.link_input(node,graph)
+@
+__GreaterEqual__
+$
+def F(node,graph):
+  return util.link_input(node,graph)
+@
+__TensorArrayWriteV3__
+$
+def F(node,graph):
+  return util.link_input(node,graph)
+@
+__TensorArrayGatherV3__
+$
+def F(node,graph):
+  return util.link_input(node,graph)
+@
+__ReverseSequence__
+$
+def F(node,graph):
+  return util.link_input(node,graph)
+@
+__Round__
+$
+def F(node,graph):
+  return util.link_input(node,graph)
+@
+__ListDiff__
+$
+def F(node,graph):
+  return util.link_input(node,graph)
+@
+__Prod__
+$
+def F(node,graph):
+  return util.link_input(node,graph)
+@
+__LogicalNot__
+$
+def F(node,graph):
+  return util.link_input(node,graph)
+@
+__Rsqrt__
+$
+def F(node,graph):
+  return util.link_input(node,graph)
+@
+__Softmax__
+$
+def F(node,graph):
+  return util.link_input(node,graph)
+@
+__NextIteration__
+$
+def F(node,graph):
+  return util.link_input(node,graph)
+@
+__Switch__
+$
+def F(node,graph):
+  return util.link_input(node,graph)
+@
+__BiasAdd__
+$
+def F(node,graph):
+  return util.link_input(node,graph)
+@
+__TensorArrayReadV3__
+$
+def F(node,graph):
+  return util.link_input(node,graph)
+@
+__LogicalOr__
+$
+def F(node,graph):
+  return util.link_input(node,graph)
+@
+__LogicalAnd__
+$
+def F(node,graph):
+  return util.link_input(node,graph)
+@
+__Log__
+$
+def F(node,graph):
+  return util.link_input(node,graph)
+@
+__Exp__
+$
+def F(node,graph):
+  return util.link_input(node,graph)
+@
+__Pow__
+$
+def F(node,graph):
+  return util.link_input(node,graph)
+@
+__InvertPermutation__
+$
+def F(node,graph):
+  return util.link_input(node,graph)
+@
+__TensorArrayGradV3__
+$
+def F(node,graph):
+  return util.link_input(node,graph)
+@
+__StackV2__
+$
+def F(node,graph):
+  return util.link_input(node,graph)
+@
+__AddN__
+$
+def F(node,graph):
+  return util.link_input(node,graph)
+@
+__StackPopV2__
+$
+def F(node,graph):
+  return util.link_input(node,graph)
+@
+__TanhGrad__
+$
+def F(node,graph):
+  return util.link_input(node,graph)
+@
+__SigmoidGrad__
+$
+def F(node,graph):
+  return util.link_input(node,graph)
+@
+__BiasAddGrad__
+$
+def F(node,graph):
+  return util.link_input(node,graph)
+@
+__FloorMod__
+$
+def F(node,graph):
+  return util.link_input(node,graph)
+@
+__Merge__
+$
+def F(node,graph):
+  return util.link_input2(node,graph)
+@
+******************************************************
+__BatchMatMul__
+$
+def F(node,graph):
+  return util.batchmatmul(node,graph)
+@
+__ArgMax__
+$
+def F(node,graph):
+  return util.argmax(node,graph)
+@
+__MatMul__
+$
+def F2(node,graph,tag):
+  return util.matmul(node,graph,tag)
+@
+__Sum__
+$
+def F(node,graph):
+  return util.reduce(node,graph)
+@
+__Mean__
+$
+def F(node,graph):
+  return util.reduce(node,graph)
+@
+__L2Loss__
+$
+def F(node,graph):
+  return util.reduce(node,graph)
+@
+***********************************************************
+__Exit__
+$
+def F(node,graph):
+  return util.const()
+@
+__TensorArraySizeV3__
+$
+def F(node,graph):
+  return util.const()
+@
+__Size__
+$
+def F(node,graph):
+  return util.const()
+@
+__Rank__
+$
+def F(node,graph):
+  return util.const()
+@
+__ParallelMapDataset__
+$
+def F(node,graph):
+  return util.const()
+@
+__PrefetchDataset__
+$
+def F(node,graph):
+  return util.const()
+@
+__GroupByWindowDataset__
+$
+def F(node,graph):
+  return util.const()
+@
+__MakeIterator__
+$
+def F(node,graph):
+  return util.const()
+@
+__IteratorGetNext__
+$
+def F(node,graph):
+  return util.const()
+@
+***********************************
+__Squeeze__
+$
+def F(node,graph):
+  return util.const()
+@
+__Assert__
+$
+def F(node,graph):
+  return util.const()
+@
+__ShuffleDataset__
+$
+def F(node,graph):
+  return util.const()
+@
+__SkipDataset__
+$
+def F(node,graph):
+  return util.const()
+@
+__MapDataset__
+$
+def F(node,graph):
+  return util.const()
+@
+__FilterDataset__
+$
+def F(node,graph):
+  return util.const()
+@
+__ZipDataset__
+$
+def F(node,graph):
+  return util.const()
+@
+__TextLineDataset__
+$
+def F(node,graph):
+  return util.const()
+@
+__RangeDataset__
+$
+def F(node,graph):
+  return util.const()
+@
+__LookupTableFindV2__
+$
+def F(node,graph):
+  return util.const()
+@
+__ImageSummary__
+$
+def F(node,graph):
+  return util.const()
+@
+__ScalarSummary__
+$
+def F(node,graph):
+  return util.const()
+@
+__HistogramSummary__
+$
+def F(node,graph):
+  return util.const()
+@
+__MergeSummary__
+$
+def F(node,graph):
+  return util.const()
+@
+__Range__
+$
+def F(node,graph):
+   return util.const()
+@
+__ExpandDims__
+$
+def F(node,graph):
+  return util.const()
+@
+__Shape__
+$
+def F(node,graph):
+  return util.const()
+@
+__ShapeN__
+$
+def F(node,graph):
+  return util.const()
+@
+__SaveV2__
+$
+def F(node,graph):
+  return util.const()
+@
+__RestoreV2__
+$
+def F(node,graph):
+  return util.const()
+@
