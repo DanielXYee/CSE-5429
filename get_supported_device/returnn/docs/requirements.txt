@@ -1,0 +1,9 @@
+numpy
+scipy
+h5py
+theano==0.9
+nose
+tensorflow
+numpydoc
+tornado
+futures
