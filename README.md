@@ -5,7 +5,7 @@ Generating graph corresponding sensor flow computation graph to scotch and metis
 
 Edges: Flow of data and dependency
 
-Edge weights: Dataflow
+Edge weights: size of data
 
 Vertex weights: Operation computation
 
