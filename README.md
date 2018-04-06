@@ -2,8 +2,11 @@
 
 Generate Graph:
 Generating graph corresponding sensor flow computation graph to scotch and metis graph representation format. 
+
 Edges: Flow of data and dependency
+
 Edge weights: Dataflow
+
 Vertex weights: Operation computation
 
 1. First, you need to get graph representation with Protobuf format from Tensorflow. 
