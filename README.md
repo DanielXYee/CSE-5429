@@ -26,4 +26,4 @@ def F(node,graph):
 ```
 you need to define a function same name as <funtion_name> in util.py to handle this new operation. The return value is the integer value representing the computation complexity of the <operation_name>
 
-3. For extracting the supported kernels (CPU/GPU) for each operation you can give the event log file in Get_graph directory to get_device.py in get_supported_device directory. it dumps three dictionaries. Node: device (CPU/GPU) map, Node:ID map and ID:Node map.
+3. For extracting the supported kernels (CPU/GPU) for each operation you can give the event log file in Get_graph directory to get_device.py in get_supported_device directory. it dumps three dictionaries. Node: device (CPU/GPU) map, Node:ID map and ID:Node map. You can load dictionaries with pickle package. 
