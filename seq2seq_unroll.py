@@ -1,7 +1,7 @@
 import numpy as np
 import tensorflow as tf
 import time
-
+import mnist_placement as mn
 
 
 def load_vocab(filename):
@@ -78,13 +78,14 @@ def seq2seq_model(params):
             #logits = tf.layers.dense(dec_outputs, units=len(char2numY), use_bias=True) 
 def train_seq2seq(Graph,init_op,params,loss,optimizer, pred_outputs,inputs,vocab ):
     with tf.Session(graph=Graph) as sess:
-        sess.run(init_op)
+        #sess.run(init_op)
         for epoch_i in range(params['epochs']):
             start_time = time.time()
             source_batch =  batch_data(params)
             #loss tf.get_default_graph().get_tensor_by_name("loss")
             op, batch_loss, T_P = sess.run([optimizer, loss, pred_outputs.sample_id],feed_dict = {inputs: source_batch})
-
+            #mn.apply_placement()
+            #mn.train()
             print (get_formatter(T_P[0],vocab))
             #accuracy = np.mean(batch_logits.argmax(axis=-1) == target_batch[:,1:])
             print('Epoch {:3} Loss: {:>6.3f} Epoch duration: {:>6.3f}s'.format(epoch_i, batch_loss, 
@@ -92,7 +93,6 @@ def train_seq2seq(Graph,init_op,params,loss,optimizer, pred_outputs,inputs,vocab
 
 def batch_data(params):
     input_embed = np.random.randn(params['batch_size'], params['number_of_clusters'], params['embed_size'])
-    #print (input_embed.shape) 
     return input_embed
 def get_rev_vocab(vocab):
     return {idx: key for key, idx in vocab.items()}
@@ -118,6 +118,9 @@ def main():
         'num_units': 256,
         'epochs': 10
     }
+    mn.initilaze()
+    mn.apply_placement()
+    mn.train()
     Graph,init_op,loss,optimizer, pred_outputs,inputs  = seq2seq_model(params)
 
     train_seq2seq(Graph,init_op,params,loss,optimizer, pred_outputs,inputs,vocab )
